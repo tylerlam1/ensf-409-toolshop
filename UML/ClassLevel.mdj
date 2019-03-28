@@ -1449,7 +1449,7 @@
 											"top": 833,
 											"width": 268,
 											"height": 13,
-											"text": "+printOrdersToFile(): void",
+											"text": "+printOrdersToScreen(): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2846,8 +2846,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 496,
-									"top": 640,
+									"left": 552,
+									"top": 752,
 									"width": 10,
 									"height": 10
 								},
@@ -2862,8 +2862,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 496,
-									"top": 640,
+									"left": 552,
+									"top": 752,
 									"width": 10,
 									"height": 10
 								}
@@ -7794,7 +7794,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFpxReUdjBF0og="
 							},
-							"name": "printOrdersToFile",
+							"name": "printOrdersToScreen",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
