@@ -8,8 +8,9 @@ import client.views.LoginView;
 public class LoginController {
 
   LoginView loginView;
+  Communication communication;
 
-  public LoginController(LoginView view) {
+  public LoginController(LoginView view, Communication communication) {
 
   }
 

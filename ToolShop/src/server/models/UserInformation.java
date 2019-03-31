@@ -1,4 +1,4 @@
-package server.controllers;
+package server.models;
 
 /**
  * UserInformation
