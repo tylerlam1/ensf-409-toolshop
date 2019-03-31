@@ -27,7 +27,7 @@ public class FrontEnd {
    * the actual shop has. This is made as a member variable for easier access from
    * all of the FrontEnd object's member functions.
    */
-  private Shop theShop;
+  private ToolShop theShop;
 
   /**
    * The constructor for FrontEnd. This calls the constructor for the ItemList and
@@ -39,7 +39,7 @@ public class FrontEnd {
    * @throws FileNotFoundException
    * @throws IOException
    */
-  public FrontEnd(Shop theShop) throws FileNotFoundException, IOException {
+  public FrontEnd(ToolShop theShop) throws FileNotFoundException, IOException {
     this.theShop = theShop;
     stdin = new BufferedReader(new InputStreamReader(System.in));
   }
@@ -47,7 +47,7 @@ public class FrontEnd {
   /**
    * @return the theShop
    */
-  public Shop getTheShop() {
+  public ToolShop getTheShop() {
     return theShop;
   }
 
@@ -297,7 +297,7 @@ public class FrontEnd {
     SupplierList suppliers = new SupplierList("suppliers.txt");
     // items needs suppliers to map a supplier to each item
     ItemList items = new ItemList("items.txt", suppliers);
-    Shop theShop = new Shop(suppliers, items);
+    ToolShop theShop = new ToolShop(suppliers, items);
     // FrontEnd contains the shop item.
     FrontEnd fe = new FrontEnd(theShop);
 

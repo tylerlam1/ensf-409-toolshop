@@ -13,4 +13,13 @@ public class Communication {
   private BufferedReader socketIn;
   private PrintWriter socketOut;
   private LoginController loginController;
+  private MainController mainController;
+
+  public Communication(String serverName, String portNumber, LoginController lc, MainController mc) {
+
+  }
+
+  public void communicateServer() {
+    
+  }
 }

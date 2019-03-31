@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * The Shop object that represents the entire Shop as a whole.
  */
-public class Shop implements Quantities {
+public class ToolShop implements Quantities {
 
   private SupplierList suppliers;
   private ItemList items;
@@ -20,7 +20,7 @@ public class Shop implements Quantities {
    * @param suppliers the list of suppliers the shop contacts
    * @param items the list of items in the shop
    */
-  public Shop(SupplierList suppliers, ItemList items) {
+  public ToolShop(SupplierList suppliers, ItemList items) {
     this.suppliers = suppliers;
     this.items = items;
     orders = new ArrayList<Order>();
