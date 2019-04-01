@@ -28,7 +28,7 @@ public interface DataCodes {
   public static final String SEARCH_TOOL_ID = "SEARCH_TOOL_ID";
   
   /**
-   * Send Item object, receive SEND_SUCCESS or SEND_ERROR back
+   *  Send description, quantity, price, supplierId, receive Item object back 
    */
   public static final String CREATE_ITEM = "CREATE_ITEM";
   
@@ -38,16 +38,17 @@ public interface DataCodes {
   public static final String DELETE_ITEM = "DELETE_ITEM";
 
   /**
-   * Send Item object, receive Item object back (or ArrayList? just need to update list)
+   * Send nothing after, restock then send ArrayList<Item> back
    */
   public static final String ORDER_ITEM = "ORDER_ITEM";
   /**
-   * Send Item object, receive Item object back (or ArrayList? just need to update list)
+   * Send Item object, send quantity to decrease, receive SEND_SUCCESS back
+   * Assume that getItems will be called after to update the list.
    */
   public static final String DECREASE_ITEM = "DECREASE_ITEM";
 
   /**
-   * Send nothing after, send SEND_SUCCESS back
+   * Send nothing after, receive SEND_SUCCESS back
    */
   public static final String QUIT = "QUIT";
 
