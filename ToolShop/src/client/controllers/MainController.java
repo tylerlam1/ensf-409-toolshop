@@ -53,26 +53,26 @@ public class MainController implements DataCodes {
     mainView.addCreateOrderListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ItemDialogView createItemPrompt = new ItemDialogView();
-        createItemPrompt.pack();
-        createItemPrompt.setVisible(true);
+        ItemDialogView itemPrompt = new ItemDialogView("Create Item");
+        itemPrompt.pack();
+        itemPrompt.setVisible(true);
 
-        createItemPrompt.addCreateItemListener(new ActionListener() {
+        itemPrompt.addCreateItemListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            String description = createItemPrompt.getDescription();
-            String supplierId = createItemPrompt.getSupplierId();
-            String quantity = createItemPrompt.getQuantity();
-            String price = createItemPrompt.getPrice();
+            String description = itemPrompt.getDescription();
+            String supplierId = itemPrompt.getSupplierId();
+            String quantity = itemPrompt.getQuantity();
+            String price = itemPrompt.getPrice();
 
             boolean hasEmptyField = description.length() == 0 || supplierId.length() == 0 || quantity.length() == 0
                 || price.length() == 0;
 
             if (hasEmptyField) {
-              createItemPrompt.setLabel("Please fill out all the fields.");
+              itemPrompt.setLabel("Please fill out all the fields.");
             } else {
               communication.sendItemInfo(description, quantity, price, supplierId);
-              createItemPrompt.setVisible(false);
+              itemPrompt.setVisible(false);
             }
           }
         });

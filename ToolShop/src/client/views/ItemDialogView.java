@@ -18,12 +18,12 @@ public class ItemDialogView extends JFrame {
     /**
      * text field for the item description
      */
-    private JTextField itemDescription;
+    private JTextField descriptionField;
 
     /**
      * text field for the item supplier ID
      */
-    private JTextField itemSupplierId;
+    private JTextField supplierIdField;
 
     /**
      * Label for displaying messages
@@ -32,12 +32,12 @@ public class ItemDialogView extends JFrame {
     /**
      * text field for item price
      */
-    private JTextField itemPrice;
+    private JTextField priceField;
 
     /**
      * text field for item quantity
      */
-    private JTextField itemQuantity;
+    private JTextField quantityField;
 
     /**
      * the Create Item button
@@ -55,7 +55,7 @@ public class ItemDialogView extends JFrame {
      * @return the item quantity
      */
     public String getQuantity() {
-        return itemQuantity.getText();
+        return quantityField.getText();
     }
 
     /**
@@ -64,7 +64,7 @@ public class ItemDialogView extends JFrame {
      * @return the item price
      */
     public String getPrice() {
-        return itemPrice.getText();
+        return priceField.getText();
     }
 
     /**
@@ -73,7 +73,7 @@ public class ItemDialogView extends JFrame {
      * @return the item supplier ID
      */
     public String getSupplierId() {
-        return itemSupplierId.getText();
+        return supplierIdField.getText();
     }
 
     /**
@@ -82,7 +82,7 @@ public class ItemDialogView extends JFrame {
      * @return the tool Description
      */
     public String getDescription() {
-        return itemDescription.getText();
+        return descriptionField.getText();
     }
 
     /**
@@ -111,19 +111,20 @@ public class ItemDialogView extends JFrame {
     /**
      * constructs the panels and Create Item window dialog with different components
      */
-    public ItemDialogView() {
-        itemDescription = new JTextField(6);
-        itemSupplierId = new JTextField(6);
-        itemQuantity = new JTextField(3);
-        itemPrice = new JTextField(5);
+    public ItemDialogView(String name) {
+        super(name);
+        descriptionField = new JTextField(6);
+        supplierIdField = new JTextField(6);
+        quantityField = new JTextField(3);
+        priceField = new JTextField(5);
 
         createItemBtn = new JButton("Create Item");
         returnBtn = new JButton("Exit Dialog Window");
 
         addCloseListeners();
 
-        JPanel createItemPanel = new JPanel();
-        createItemPanel.setLayout(new BoxLayout(createItemPanel, BoxLayout.Y_AXIS));
+        JPanel itemPanel = new JPanel();
+        itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
         JPanel firstPanel = new JPanel(new FlowLayout());
         JPanel secondPanel = new JPanel(new FlowLayout());
         JPanel thirdPanel = new JPanel(new FlowLayout());
@@ -132,23 +133,23 @@ public class ItemDialogView extends JFrame {
         JLabel title = new JLabel("Create a New Item");
         firstPanel.add(title);
         secondPanel.add(new JLabel("Item Description: "));
-        secondPanel.add(itemDescription);
+        secondPanel.add(descriptionField);
         secondPanel.add(new JLabel("Item Supplier ID: "));
-        secondPanel.add(itemSupplierId);
+        secondPanel.add(supplierIdField);
         thirdPanel.add(new JLabel("Item Quantity: "));
-        thirdPanel.add(itemQuantity);
+        thirdPanel.add(quantityField);
         thirdPanel.add(new JLabel("Item Price: "));
-        thirdPanel.add(itemPrice);
+        thirdPanel.add(priceField);
 
         fourthPanel.add(createItemBtn);
         fourthPanel.add(returnBtn);
 
-        createItemPanel.add(firstPanel);
-        createItemPanel.add(secondPanel);
-        createItemPanel.add(thirdPanel);
-        createItemPanel.add(fourthPanel);
+        itemPanel.add(firstPanel);
+        itemPanel.add(secondPanel);
+        itemPanel.add(thirdPanel);
+        itemPanel.add(fourthPanel);
 
-        add(createItemPanel);
+        add(itemPanel);
     }
 
     /**
