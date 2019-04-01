@@ -1,8 +1,10 @@
 package client.views;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -12,7 +14,7 @@ import javax.swing.JPanel;
  * @version 1.0.0
  * @since March 31, 2019
  */
-public class LoginView {
+public class LoginView extends JFrame {
   /**
    * login button used to allow for a client to login
    */
@@ -29,7 +31,11 @@ public class LoginView {
    * @param name the title name of the window
    */
   public LoginView(String name) {
-
+    super(name);
+    setLayout(new FlowLayout());
+    loginBtn = new JButton("Test");
+    add(loginBtn);
+    pack();
   }
 
   /**
@@ -39,7 +45,7 @@ public class LoginView {
    * @param l ActionListener used to handle login being clicked
    */
   public void addLoginListener(ActionListener l) {
-
+    loginBtn.addActionListener(l);
   }
 
   /**
