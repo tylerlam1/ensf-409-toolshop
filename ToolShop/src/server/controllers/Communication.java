@@ -27,7 +27,7 @@ public class Communication {
   private Socket aSocket;
 
   /**
-   * pool of threaads
+   * pool of threads
    */
   private ExecutorService pool;
 

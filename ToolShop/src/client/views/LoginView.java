@@ -24,9 +24,9 @@ public class LoginView {
   JPanel southPanel, mainPanel, northPanel;
 
   /**
-   * constructs....
+   * constructs the login view by setting the basic titles, panels and frames
    * 
-   * @param name
+   * @param name the title name of the window
    */
   public LoginView(String name) {
 
