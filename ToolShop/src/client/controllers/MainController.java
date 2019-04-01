@@ -2,7 +2,9 @@ package client.controllers;
 
 import java.awt.event.*;
 
+import client.views.ItemDialogView;
 import client.views.MainView;
+import utils.DataCodes;
 
 /**
  * Controller for the MainView GUI
@@ -11,7 +13,7 @@ import client.views.MainView;
  * @version 1.0.0
  * @since March 31, 2019
  */
-public class MainController {
+public class MainController implements DataCodes {
 
   /**
    * the MainView object used which will be used to control the main GUI screen
@@ -51,7 +53,29 @@ public class MainController {
     mainView.addCreateOrderListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        ItemDialogView createItemPrompt = new ItemDialogView();
+        createItemPrompt.pack();
+        createItemPrompt.setVisible(true);
 
+        createItemPrompt.addCreateItemListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            String description = createItemPrompt.getDescription();
+            String supplierId = createItemPrompt.getSupplierId();
+            String quantity = createItemPrompt.getQuantity();
+            String price = createItemPrompt.getPrice();
+
+            boolean hasEmptyField = description.length() == 0 || supplierId.length() == 0 || quantity.length() == 0
+                || price.length() == 0;
+
+            if (hasEmptyField) {
+              createItemPrompt.setLabel("Please fill out all the fields.");
+            } else {
+              communication.sendItemInfo(description, quantity, price, supplierId);
+              createItemPrompt.setVisible(false);
+            }
+          }
+        });
       }
     });
 
