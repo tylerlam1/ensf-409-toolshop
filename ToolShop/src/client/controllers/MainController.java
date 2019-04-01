@@ -1,5 +1,7 @@
 package client.controllers;
 
+import java.awt.event.*;
+
 import client.views.MainView;
 
 /**
@@ -29,7 +31,9 @@ public class MainController {
    * @param communication the communication object
    */
   public MainController(MainView view, Communication communication) {
-
+    mainView = view;
+    this.communication = communication;
+    addMainListeners();
   }
 
   /**
@@ -37,6 +41,32 @@ public class MainController {
    * being clicked
    */
   public void addMainListeners() {
+    mainView.addRestoreAllListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
 
+      }
+    });
+
+    mainView.addCreateOrderListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+
+      }
+    });
+
+    mainView.addDeleteItemListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+
+      }
+    });
+
+    mainView.addQuitListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+
+      }
+    });
   }
 }
