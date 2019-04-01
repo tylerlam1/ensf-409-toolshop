@@ -8,6 +8,7 @@ package utils;
  * @since April 1, 2019
  */
 public interface DataCodes {
+  /* Client codes */
   public static final String SEND_USERDATA = "SEND_USERDATA";
   public static final String GET_TOOLS = "GET_TOOLS";
   public static final String SEARCH_TOOL_NAME = "SEARCH_TOOL_NAME";
@@ -17,4 +18,11 @@ public interface DataCodes {
   public static final String ORDER_ITEM = "ORDER_ITEM";
   public static final String DECREASE_ITEM = "DECREASE_ITEM";
   public static final String QUIT = "QUIT";
+
+
+  /* Server Codes */
+  public static final String SEND_ERROR = "SEND_ERROR";
+
+  // Login
+  public static final String LOGIN_REQ = "LOGIN_REQ";
 }
