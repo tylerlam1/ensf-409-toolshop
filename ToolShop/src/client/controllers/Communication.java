@@ -1,8 +1,11 @@
 package client.controllers;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import utils.DataCodes;
 
 /**
  * Client class that allows for interaction with the server
@@ -11,7 +14,7 @@ import java.net.Socket;
  * @version 1.0.0
  * @since March 31, 2019
  */
-public class Communication {
+public class Communication implements DataCodes {
 
   /**
    * Main socket used for basic communication between client and server
@@ -21,24 +24,12 @@ public class Communication {
   /**
    * Input reader socket that allows the client to read in from the server
    */
-  private BufferedReader socketIn;
+  private ObjectInputStream socketIn;
 
   /**
    * the output reader socket that allows for writing out to the server
    */
-  private PrintWriter socketOut;
-
-  /**
-   * holds the main login controller object which is used for controlling the
-   * 'behind-the-scenes' of the login controller GUI
-   */
-  private LoginController loginController;
-
-  /**
-   * holds the main Tool Shop view controller object which is used for controlling
-   * the 'behind-the-scenes' of the toolshop GUI
-   */
-  private MainController mainController;
+  private ObjectOutputStream socketOut;
 
   /**
    * Constructs the basic functionality (port number, etc.) of the client
@@ -46,14 +37,31 @@ public class Communication {
    * 
    * @param serverName the name of the server
    * @param portNumber the port number used for communicating with server
-   * @param lc         the login controller object
-   * @param mc         the main view controller object
    */
-  public Communication(String serverName, String portNumber, LoginController lc, MainController mc) {
-
+  public Communication(String serverName, int portNumber) {
+    try {
+      aSocket = new Socket(serverName, portNumber);
+      socketOut = new ObjectOutputStream(aSocket.getOutputStream());
+      socketIn = new ObjectInputStream(aSocket.getInputStream());
+    } catch (IOException e) {
+      // TODO: Create formal error handling
+      e.printStackTrace();
+    }
   }
 
-  public void communicateServer() {
-
+  /**
+   * Function to send data to the backend.
+   * 
+   * @param dataType
+   * @param object
+   */
+  public void send(String dataType, Object object) {
+    try {
+      socketOut.writeObject(dataType);
+      socketOut.writeObject(object);
+    } catch (IOException e) {
+      // TODO: Create formal error handling
+      e.printStackTrace();
+    }
   }
 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -15,7 +16,7 @@ import javax.swing.JTextField;
  * @version 1.0.0
  * @since March 31, 2019
  */
-public class MainView {
+public class MainView extends JFrame {
 
   /**
    * buttons available on the main tool shop menu. This includes restore all -
