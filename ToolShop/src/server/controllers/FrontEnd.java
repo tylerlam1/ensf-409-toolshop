@@ -6,16 +6,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import server.models.*;
+
 /**
  * FrontEnd class that handles all logic pertaining to user input. Communicates
  * with the backend in order to handle shop logic.
  * 
- * 
+ * @author Navjot Brar, Jofred Cayabyab, and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class FrontEnd {
 
   // TODO: Delete this class later, as it is only used for reference
-  
+
   /**
    * The BufferedReader object that takes user input. This is made as a member
    * variable for easier access from all of the FrontEnd object's member
