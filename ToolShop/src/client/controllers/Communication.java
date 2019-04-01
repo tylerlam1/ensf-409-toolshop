@@ -69,8 +69,8 @@ public class Communication implements DataCodes {
       e.printStackTrace();
     } catch (ClassNotFoundException e) {
       System.out.println("Class not found.");
-    } finally {
-      return obj;
     }
+
+    return obj;
   }
 }
