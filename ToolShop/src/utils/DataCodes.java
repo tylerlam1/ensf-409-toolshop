@@ -8,7 +8,7 @@ package utils;
  * @since April 1, 2019
  */
 public interface DataCodes {
-  // Comment denote the procedure after the datacode is sent.
+  // Comments denote the procedure after the datacode is sent.
 
   /* Client codes */
 
@@ -18,32 +18,33 @@ public interface DataCodes {
   public static final String GET_TOOLS = "GET_TOOLS";
 
   /**
-   * Send String (name), receive Item object back
+   * Send String (name), receive Item object back (or index in ArrayList)
    */
   public static final String SEARCH_TOOL_NAME = "SEARCH_TOOL_NAME";
-  
+
   /**
-   * Send String (ID), receive Item object back
+   * Send String (ID), receive Item object back (or index in ArrayList)
    */
   public static final String SEARCH_TOOL_ID = "SEARCH_TOOL_ID";
-  
+
   /**
-   *  Send description, quantity, price, supplierId, receive Item object back 
+   * Send description, quantity, price, supplierId, receive ArrayList<Item> back
+   * Potentially just send Item object or SEND_SUCCESS back? The client can simply
+   * add it to its own ArrayList on the client-side
    */
   public static final String CREATE_ITEM = "CREATE_ITEM";
-  
+
   /**
-   * Send Item object, receive SEND_SUCCESS or SEND_ERROR back
+   * Send Item object, receive ArrayList<Item> or SEND_ERROR back
    */
   public static final String DELETE_ITEM = "DELETE_ITEM";
 
   /**
-   * Send nothing after, restock then send ArrayList<Item> back
+   * Send nothing after, restock on server then receive ArrayList<Item> back
    */
   public static final String ORDER_ITEM = "ORDER_ITEM";
   /**
-   * Send Item object, send quantity to decrease, receive SEND_SUCCESS back
-   * Assume that getItems will be called after to update the list.
+   * Send Item object, send quantity to decrease, receive ArrayList<Item> back
    */
   public static final String DECREASE_ITEM = "DECREASE_ITEM";
 
