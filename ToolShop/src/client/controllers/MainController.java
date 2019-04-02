@@ -2,7 +2,11 @@ package client.controllers;
 
 import java.awt.event.*;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import client.views.ItemDialogView;
+import client.views.LoginView;
 import client.views.MainView;
 import utils.DataCodes;
 
@@ -26,14 +30,20 @@ public class MainController implements DataCodes {
   Communication communication;
 
   /**
+   * the LoginView object used which will be opened upon quitting the Main view
+   */
+  LoginView loginView;
+
+  /**
    * Constructs the main controller by setting the MainView of the Controller as
    * well as the communication
    * 
    * @param view          the MainView object
    * @param communication the communication object
    */
-  public MainController(MainView view, Communication communication) {
+  public MainController(MainView view, LoginView loginView, Communication communication) {
     mainView = view;
+    this.loginView = loginView;
     this.communication = communication;
     addMainListeners();
   }
@@ -43,12 +53,6 @@ public class MainController implements DataCodes {
    * being clicked
    */
   public void addMainListeners() {
-    mainView.addRestoreAllListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-
-      }
-    });
 
     mainView.addCreateOrderListener(new ActionListener() {
       @Override
@@ -82,14 +86,17 @@ public class MainController implements DataCodes {
     mainView.addDeleteItemListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
+        // int row = mainView.getTextArea().getSelectedRow();
+        // TODO: Potentially pass the row to the server side to correctly retrieve the
+        // item to delete
       }
     });
 
     mainView.addQuitListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-
+        mainView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loginView.setVisible(true);
       }
     });
   }
