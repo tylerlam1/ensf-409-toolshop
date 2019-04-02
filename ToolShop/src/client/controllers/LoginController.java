@@ -60,7 +60,7 @@ public class LoginController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         System.out.println("Button clicked");
         // TODO: Change test login listener
-        communication.send(SEND_USERDATA, "test");
+        communication.sendObject(SEND_USERDATA, "test");
         // TODO: we need to validate user here
         loginView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainView.setVisible(true);
@@ -84,5 +84,6 @@ public class LoginController implements DataCodes {
     LoginController loginController = new LoginController(loginView, mainView, communication);
     MainController mainController = new MainController(mainView, loginView, communication);
     loginController.showView();
+    mainController.showView();
   }
 }
