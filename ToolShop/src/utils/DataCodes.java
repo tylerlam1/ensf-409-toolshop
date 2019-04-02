@@ -18,12 +18,12 @@ public interface DataCodes {
   public static final String GET_TOOLS = "GET_TOOLS";
 
   /**
-   * Send String (name), receive Item object back
+   * Send String (name), receive Item object back (or index in ArrayList)
    */
   public static final String SEARCH_TOOL_NAME = "SEARCH_TOOL_NAME";
 
   /**
-   * Send String (ID), receive Item object back
+   * Send String (ID), receive Item object back (or index in ArrayList)
    */
   public static final String SEARCH_TOOL_ID = "SEARCH_TOOL_ID";
 

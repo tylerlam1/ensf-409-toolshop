@@ -160,24 +160,18 @@ public class Communication implements DataCodes {
         }
         default: {
           System.out.println("Unexpected data type received.");
+          socketOut.writeObject(SEND_ERROR);
           break;
         }
         }
       } catch (ClassNotFoundException e) {
-        // TODO: Create formal error handling
         e.printStackTrace();
+        System.err.println("Ensure that the class files are consistent between client and server.");
       } catch (IOException e) {
         // TODO: Create formal error handling
         e.printStackTrace();
       }
     }
-  }
-
-  /**
-   * Lists all of the tools held within the shop.
-   */
-  private void listTools() {
-    System.out.println(theShop.getItems());
   }
 
   /**
