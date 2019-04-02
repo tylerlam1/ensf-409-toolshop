@@ -105,8 +105,8 @@ public class Communication implements DataCodes {
           System.out.println("Received " + DECREASE_ITEM);
           break;
         }
-        case QUIT: {
-          System.out.println("Received " + QUIT);
+        case STOP_SERVER: {
+          System.out.println("Received " + STOP_SERVER);
           return;
         }
         default: {
