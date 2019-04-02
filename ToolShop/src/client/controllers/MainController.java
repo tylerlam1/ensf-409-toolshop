@@ -1,10 +1,11 @@
 package client.controllers;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
+import client.models.Item;
 import client.views.ItemDialogView;
 import client.views.LoginView;
 import client.views.MainView;
@@ -23,6 +24,11 @@ public class MainController implements DataCodes {
    * the MainView object used which will be used to control the main GUI screen
    */
   MainView mainView;
+
+  /**
+   * An arrayList of all the items
+   */
+  ArrayList<Item> itemCollection;
 
   /**
    * Communication object that allows for communication with server
@@ -75,7 +81,7 @@ public class MainController implements DataCodes {
             if (hasEmptyField) {
               itemPrompt.setLabel("Please fill out all the fields.");
             } else {
-              communication.sendItemInfo(description, quantity, price, supplierId);
+              itemCollection = (ArrayList<Item>) communication.sendItemInfo(description, quantity, price, supplierId);
               itemPrompt.setVisible(false);
             }
           }
@@ -87,8 +93,9 @@ public class MainController implements DataCodes {
       @Override
       public void actionPerformed(ActionEvent e) {
         // int row = mainView.getTextArea().getSelectedRow();
-        // TODO: Potentially pass the row to the server side to correctly retrieve the
-        // item to delete
+        // Item deleteThisItem = itemCollection.get(row);
+        // itemCollection = (ArrayList<Item>)communication.send(DELETE_ITEM,
+        // deleteThisItem);
       }
     });
 
