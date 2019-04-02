@@ -58,8 +58,6 @@ public class LoginController implements DataCodes {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("Button clicked");
-        // TODO: Change test login listener
         communication.send(SEND_USERDATA, "test");
         // TODO: we need to validate user here
         loginView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
