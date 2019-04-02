@@ -1,10 +1,12 @@
 package client.controllers;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import server.models.Item;
 import client.views.ItemDialogView;
 import client.views.LoginView;
 import client.views.MainView;
@@ -45,6 +47,11 @@ public class MainController implements DataCodes {
     mainView = view;
     this.loginView = loginView;
     this.communication = communication;
+
+    ArrayList<Item> items = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+
+    mainView.setTableData(items);
+
     addMainListeners();
   }
 
@@ -99,5 +106,9 @@ public class MainController implements DataCodes {
         loginView.setVisible(true);
       }
     });
+  }
+
+  public void showView() {
+    mainView.setVisible(true);
   }
 }

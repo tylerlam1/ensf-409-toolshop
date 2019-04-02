@@ -1,6 +1,7 @@
 package client.views;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -8,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import server.models.Item;
 
 /**
  * Main Tool Shop GUI used for handling client requests and actions
@@ -52,7 +55,16 @@ public class MainView extends JFrame {
   JComboBox dropDownMenu;
 
   public MainView(String name) {
+    ToolShopTableModel tableModel = new ToolShopTableModel();
+    leftTextArea = new JTable(tableModel);
+    add(leftTextArea);
+    pack();
+  }
 
+  public void setTableData(ArrayList<Item> data) {
+    ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
+    theModel.setData(data);
+    theModel.fireTableDataChanged();
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
