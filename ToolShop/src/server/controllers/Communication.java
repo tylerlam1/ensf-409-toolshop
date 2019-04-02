@@ -55,6 +55,7 @@ public class Communication implements DataCodes {
    */
   public Communication(int portNumber, ToolShop theShop) {
     try {
+      this.theShop = theShop;
       serverSocket = new ServerSocket(3000);
       System.out.println("Server is now running.");
       aSocket = serverSocket.accept();
