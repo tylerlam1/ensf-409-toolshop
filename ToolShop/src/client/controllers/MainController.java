@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import client.views.ItemDialogView;
+import client.views.LoginView;
 import client.views.MainView;
 import utils.DataCodes;
 
@@ -29,14 +30,20 @@ public class MainController implements DataCodes {
   Communication communication;
 
   /**
+   * the LoginView object used which will be opened upon quitting the Main view
+   */
+  LoginView loginView;
+
+  /**
    * Constructs the main controller by setting the MainView of the Controller as
    * well as the communication
    * 
    * @param view          the MainView object
    * @param communication the communication object
    */
-  public MainController(MainView view, Communication communication) {
+  public MainController(MainView view, LoginView loginView, Communication communication) {
     mainView = view;
+    this.loginView = loginView;
     this.communication = communication;
     addMainListeners();
   }
@@ -89,7 +96,7 @@ public class MainController implements DataCodes {
       @Override
       public void actionPerformed(ActionEvent e) {
         mainView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // TODO: Potentially open the login window again?
+        loginView.setVisible(true);
       }
     });
   }
