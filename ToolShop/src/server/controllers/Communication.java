@@ -53,7 +53,7 @@ public class Communication implements DataCodes {
    * 
    * @param portNumber the port number used to connect the client and server
    */
-  public Communication(int portNumber) {
+  public Communication(int portNumber, ToolShop theShop) {
     try {
       serverSocket = new ServerSocket(3000);
       System.out.println("Server is now running.");
@@ -231,8 +231,8 @@ public class Communication implements DataCodes {
    * the ItemList.
    */
   public Item addNewTool(String description, int quantity, double price, int supplierId) {
-      Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
-      return newItem;
+    Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
+    return newItem;
   }
 
   /**
@@ -245,7 +245,18 @@ public class Communication implements DataCodes {
   }
 
   public static void main(String[] args) {
-    Communication theServer = new Communication(3000);
-    theServer.communicateWithClient();
+    try {
+      SupplierList suppliers = new SupplierList("suppliers.txt");
+      ItemList items = new ItemList("items.txt", suppliers);
+      ToolShop theShop = new ToolShop(suppliers, items);
+      Communication theServer = new Communication(3000, theShop);
+      theServer.communicateWithClient();
+    } catch (FileNotFoundException e) {
+      System.out.println("File(s) \"suppliers.txt\" and/or \"items.txt\" not found. Please try again.");
+      System.exit(1);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 }
