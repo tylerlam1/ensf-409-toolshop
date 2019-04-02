@@ -124,7 +124,8 @@ public class Communication implements DataCodes {
           if (newItem == null) {
             socketOut.writeObject(SEND_ERROR);
           } else {
-            socketOut.writeObject(newItem);
+            ArrayList<Item> toolList = theShop.getItems().getList();
+            socketOut.writeObject(toolList);
           }
           break;
         }
@@ -132,7 +133,8 @@ public class Communication implements DataCodes {
           System.out.println("Received " + DELETE_ITEM);
           Item itemToDelete = (Item) socketIn.readObject();
           deleteTool(itemToDelete);
-          socketOut.writeObject(SEND_SUCCESS);
+          ArrayList<Item> toolList = theShop.getItems().getList();
+          socketOut.writeObject(toolList);
           break;
         }
         case ORDER_ITEM: {
@@ -148,7 +150,8 @@ public class Communication implements DataCodes {
           Item itemToDecrease = (Item) socketIn.readObject();
           int count = Integer.parseInt((String) socketIn.readObject());
           decreaseItemQuantity(itemToDecrease, count);
-          socketOut.writeObject(SEND_SUCCESS);
+          ArrayList<Item> toolList = theShop.getItems().getList();
+          socketOut.writeObject(toolList);
           break;
         }
         case STOP_SERVER: {
