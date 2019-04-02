@@ -50,7 +50,7 @@ public interface DataCodes {
   /**
    * Send nothing after, receive SEND_SUCCESS back
    */
-  public static final String QUIT = "QUIT";
+  public static final String STOP_SERVER = "STOP_SERVER";
 
   /* Server Codes */
   /**
