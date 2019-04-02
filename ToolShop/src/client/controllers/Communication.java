@@ -57,7 +57,7 @@ public class Communication implements DataCodes {
    */
   public Object send(String dataType, Object object) {
     Object obj = null;
-    
+
     try {
       socketOut.writeObject(dataType);
       socketOut.writeObject(object);
@@ -71,6 +71,28 @@ public class Communication implements DataCodes {
       System.out.println("Class not found.");
     }
 
+    return obj;
+  }
+
+  /**
+   * sends the Item Information used for creating a new Item
+   * 
+   * @return the return item object
+   */
+  public Object sendItemInfo(String itemDescription, String quantity, String price, String supplierId) {
+    Object obj = null;
+    try {
+      socketOut.writeObject(CREATE_ITEM);
+      socketOut.writeObject(itemDescription);
+      socketOut.writeObject(quantity);
+      socketOut.writeObject(price);
+      socketOut.writeObject(supplierId);
+      obj = socketIn.readObject();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      System.out.println("Class not found.");
+    }
     return obj;
   }
 }
