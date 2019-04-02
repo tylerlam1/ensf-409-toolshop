@@ -151,8 +151,8 @@ public class Communication implements DataCodes {
           socketOut.writeObject(SEND_SUCCESS);
           break;
         }
-        case QUIT: {
-          System.out.println("Received " + QUIT);
+        case STOP_SERVER: {
+          System.out.println("Received " + STOP_SERVER);
           return;
         }
         default: {
