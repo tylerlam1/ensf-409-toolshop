@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -26,7 +26,7 @@ public class MainView extends JFrame {
    * button - which is used for deleting a particular item. A CREATE ITEM - which
    * is used for creating a item to add into the tool shop.
    */
-  JButton restoreAllBtn, createOrderBtn, quitBtn, deleteItemBtn, createItemBtn;
+  JButton createOrderBtn, quitBtn, deleteItemBtn, createItemBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -35,10 +35,10 @@ public class MainView extends JFrame {
   JPanel leftPanel, southPanel, northPanel, centerPanel;
 
   /**
-   * this is the textArea, which will have the list of tools in the toolshop for
-   * the client
+   * this is the Table, which will have the list of tools in the toolshop for the
+   * client
    */
-  JTextArea leftTextArea;
+  JTable leftTextArea;
 
   /**
    * Search bar available for the client for a variety of functions, including
@@ -74,17 +74,6 @@ public class MainView extends JFrame {
    * @param title the title on the dialog box
    */
   public void showErrorDialog(String msg, String title) {
-
-  }
-
-  /**
-   * add the listener for the 'restore all' button. Restores all the basic tools
-   * available to the client as initially available in database
-   * 
-   * @param l the ActionListener object used to enable on-click response
-   *          functionality
-   */
-  public void addRestoreAllListener(ActionListener l) {
 
   }
 
