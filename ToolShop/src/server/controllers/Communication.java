@@ -75,91 +75,44 @@ public class Communication implements DataCodes {
     while (true) {
       try {
         String dataType = (String) socketIn.readObject();
+        System.out.println("Received " + dataType);
         switch (dataType) {
         case SEND_USERDATA: {
-          System.out.println("Received " + SEND_USERDATA);
-          // TODO: Change this test input
-          UserInformation user = (UserInformation) socketIn.readObject();
+          validateUser();
           break;
         }
         case GET_TOOLS: {
-          System.out.println("Received " + GET_TOOLS);
-          ArrayList<Item> toolList = theShop.getItems().getList();
-          socketOut.writeObject(toolList);
+          getTools();
           break;
         }
         case SEARCH_TOOL_NAME: {
-          System.out.println("Received " + SEARCH_TOOL_NAME);
-          String name = (String) socketIn.readObject();
-          Item item = searchToolName(name);
-          if (item == null) {
-            socketOut.writeObject(SEND_ERROR);
-          } else {
-            socketOut.writeObject(item);
-          }
+          searchToolName();
           break;
         }
         case SEARCH_TOOL_ID: {
-          System.out.println("Received " + SEARCH_TOOL_ID);
-          try {
-            int id = Integer.parseInt((String) socketIn.readObject());
-            Item item = searchToolId(id);
-            if (item == null) {
-              socketOut.writeObject(SEND_ERROR);
-            } else {
-              socketOut.writeObject(item);
-            }
-          } catch (NumberFormatException e) {
-            socketOut.writeObject(SEND_ERROR);
-          }
+          searchToolId();
           break;
         }
         case CREATE_ITEM: {
-          System.out.println("Received " + CREATE_ITEM);
-          String description = (String) socketIn.readObject();
-          int quantity = Integer.parseInt((String) socketIn.readObject());
-          double price = Double.parseDouble((String) socketIn.readObject());
-          int supplierId = Integer.parseInt((String) socketIn.readObject());
-          Item newItem = addNewTool(description, quantity, price, supplierId);
-          if (newItem == null) {
-            socketOut.writeObject(SEND_ERROR);
-          } else {
-            ArrayList<Item> toolList = theShop.getItems().getList();
-            socketOut.writeObject(toolList);
-          }
+          addNewTool();
           break;
         }
         case DELETE_ITEM: {
-          System.out.println("Received " + DELETE_ITEM);
-          Item itemToDelete = (Item) socketIn.readObject();
-          deleteTool(itemToDelete);
-          ArrayList<Item> toolList = theShop.getItems().getList();
-          socketOut.writeObject(toolList);
+          deleteTool();
           break;
         }
         case ORDER_ITEM: {
-          System.out.println("Received " + ORDER_ITEM);
-          ArrayList<Item> toolList = theShop.getItems().getList();
-          socketOut.writeObject(toolList);
           checkItemQuantity();
-
           break;
         }
         case DECREASE_ITEM: {
-          System.out.println("Received " + DECREASE_ITEM);
-          Item itemToDecrease = (Item) socketIn.readObject();
-          int count = Integer.parseInt((String) socketIn.readObject());
-          decreaseItemQuantity(itemToDecrease, count);
-          ArrayList<Item> toolList = theShop.getItems().getList();
-          socketOut.writeObject(toolList);
+          decreaseItemQuantity();
           break;
         }
         case STOP_SERVER: {
-          System.out.println("Received " + STOP_SERVER);
           return;
         }
         default: {
-          System.out.println("Unexpected data type received.");
           socketOut.writeObject(SEND_ERROR);
           break;
         }
@@ -174,6 +127,23 @@ public class Communication implements DataCodes {
     }
   }
 
+  private void validateUser() throws ClassNotFoundException, IOException {
+    UserInformation user = (UserInformation) socketIn.readObject();
+    // TODO: Implement user validation with SQL database
+    boolean validUser = true;
+
+    if (validUser) {
+      socketOut.writeObject(user);
+    } else {
+      socketOut.writeObject(SEND_ERROR);
+    }
+  }
+
+  private void getTools() throws IOException {
+    ArrayList<Item> toolList = theShop.getItems().getList();
+    socketOut.writeObject(toolList);
+  }
+
   /**
    * Asks the user for a name of an object, then prints the object information to
    * the console, then returns the object.
@@ -181,9 +151,14 @@ public class Communication implements DataCodes {
    * @return The Item if it exists, otherwise returns null
    * @throws IOException
    */
-  private Item searchToolName(String name) {
+  private void searchToolName() throws IOException, ClassNotFoundException {
+    String name = (String) socketIn.readObject();
     Item item = theShop.getItems().getItemByName(name);
-    return item;
+    if (item == null) {
+      socketOut.writeObject(SEND_ERROR);
+    } else {
+      socketOut.writeObject(item);
+    }
   }
 
   /**
@@ -193,10 +168,18 @@ public class Communication implements DataCodes {
    * @return The Item if it exists, otherwise returns null
    * @throws IOException
    */
-  private Item searchToolId(int id) {
-    Item item = theShop.getItems().getItemById(id);
-
-    return item;
+  private void searchToolId() throws ClassNotFoundException, IOException {
+    try {
+      int id = Integer.parseInt((String) socketIn.readObject());
+      Item item = theShop.getItems().getItemById(id);
+      if (item == null) {
+        socketOut.writeObject(SEND_ERROR);
+      } else {
+        socketOut.writeObject(item);
+      }
+    } catch (NumberFormatException e) {
+      socketOut.writeObject(SEND_ERROR);
+    }
   }
 
   /**
@@ -205,13 +188,16 @@ public class Communication implements DataCodes {
    * 
    * @throws FileNotFoundException
    */
-  private void checkItemQuantity() throws FileNotFoundException {
+  private void checkItemQuantity() throws FileNotFoundException, IOException {
     System.out.println("Inventory being checked...");
     if (theShop.checkStock()) {
       System.out.println("An order has been generated. Please check the orders.txt log for the new order.");
     } else {
       System.out.println("All items have enough stock.");
     }
+
+    ArrayList<Item> toolList = theShop.getItems().getList();
+    socketOut.writeObject(toolList);
   }
 
   /**
@@ -219,17 +205,30 @@ public class Communication implements DataCodes {
    * 
    * @throws IOException
    */
-  private void decreaseItemQuantity(Item toDecrease, int count) throws IOException {
-    theShop.buy(toDecrease, count);
+  private void decreaseItemQuantity() throws IOException, ClassNotFoundException {
+    Item itemToDecrease = (Item) socketIn.readObject();
+    int count = Integer.parseInt((String) socketIn.readObject());
+    theShop.buy(itemToDecrease, count);
+    ArrayList<Item> toolList = theShop.getItems().getList();
+    socketOut.writeObject(toolList);
   }
 
   /**
    * Asks the user for information about a new tool, then generates a new tool in
    * the ItemList.
    */
-  public Item addNewTool(String description, int quantity, double price, int supplierId) {
+  public void addNewTool() throws ClassNotFoundException, IOException {
+    String description = (String) socketIn.readObject();
+    int quantity = Integer.parseInt((String) socketIn.readObject());
+    double price = Double.parseDouble((String) socketIn.readObject());
+    int supplierId = Integer.parseInt((String) socketIn.readObject());
     Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
-    return newItem;
+    if (newItem == null) {
+      socketOut.writeObject(SEND_ERROR);
+    } else {
+      ArrayList<Item> toolList = theShop.getItems().getList();
+      socketOut.writeObject(toolList);
+    }
   }
 
   /**
@@ -237,8 +236,11 @@ public class Communication implements DataCodes {
    * 
    * @throws IOException
    */
-  public void deleteTool(Item toDelete) throws IOException {
-    theShop.getItems().deleteItem(toDelete);
+  public void deleteTool() throws IOException, ClassNotFoundException {
+    Item itemToDelete = (Item) socketIn.readObject();
+    theShop.getItems().deleteItem(itemToDelete);
+    ArrayList<Item> toolList = theShop.getItems().getList();
+    socketOut.writeObject(toolList);
   }
 
   public static void main(String[] args) {
