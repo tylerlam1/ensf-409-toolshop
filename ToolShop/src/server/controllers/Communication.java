@@ -32,24 +32,24 @@ public class Communication implements DataCodes {
   private Socket aSocket;
 
   /**
-   * pool of threads
+   * Pool of threads
    */
   private ExecutorService pool;
 
   /**
-   * input socket used to read from the client
+   * Input socket used to read from the client
    */
   ObjectInputStream socketIn;
 
   /**
-   * output socket used to write to the client
+   * Output socket used to write to the client
    */
   ObjectOutputStream socketOut;
 
   ToolShop theShop;
 
   /**
-   * constructs the server and initializes the client and server connection
+   * Constructs the server and initializes the client/server connection.
    * 
    * @param portNumber the port number used to connect the client and server
    */
@@ -68,8 +68,9 @@ public class Communication implements DataCodes {
   }
 
   /**
-   * continously reads and writes to the client to read and display tool shop
-   * information
+   * Communicates with client by listening for datatypes to be written to input
+   * socket, then handling what server should do based on the input datacode
+   * received.
    */
   public void communicateWithClient() {
     while (true) {
@@ -127,6 +128,14 @@ public class Communication implements DataCodes {
     }
   }
 
+  /**
+   * Receives a UserInformation object from the client and validates it with the
+   * server. Sends back the user if successfully validated, or a SEND_ERROR string
+   * if unsuccessfully validated.
+   * 
+   * @throws ClassNotFoundException
+   * @throws IOException
+   */
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
     // TODO: Implement user validation with SQL database
@@ -139,19 +148,24 @@ public class Communication implements DataCodes {
     }
   }
 
+  /**
+   * Sends the ArrayList<Item> of tools to the client.
+   * 
+   * @throws IOException
+   */
   private void getTools() throws IOException {
     ArrayList<Item> toolList = theShop.getItems().getList();
     socketOut.writeObject(toolList);
   }
 
   /**
-   * Asks the user for a name of an object, then prints the object information to
-   * the console, then returns the object.
+   * Reads the name of an object from the client, then sends the Item object back
+   * to the client.
    * 
-   * @return The Item if it exists, otherwise returns null
+   * @throws ClassNotFoundException
    * @throws IOException
    */
-  private void searchToolName() throws IOException, ClassNotFoundException {
+  private void searchToolName() throws ClassNotFoundException, IOException {
     String name = (String) socketIn.readObject();
     Item item = theShop.getItems().getItemByName(name);
     if (item == null) {
@@ -162,10 +176,10 @@ public class Communication implements DataCodes {
   }
 
   /**
-   * Asks the user for an ID of an object, the prints the object information to
-   * the console, then returns the object
+   * Reads the ID of an object from the client, then sends the Item object back to
+   * the client.
    * 
-   * @return The Item if it exists, otherwise returns null
+   * @throws ClassNotFoundException
    * @throws IOException
    */
   private void searchToolId() throws ClassNotFoundException, IOException {
@@ -184,9 +198,11 @@ public class Communication implements DataCodes {
 
   /**
    * Checks all of the item stock in the shop then automatically generates an
-   * order if items need to be ordered.
+   * order if items need to be ordered. Furthermore, sends back the updated tool
+   * list to the client.
    * 
    * @throws FileNotFoundException
+   * @throws IOException
    */
   private void checkItemQuantity() throws FileNotFoundException, IOException {
     System.out.println("Inventory being checked...");
@@ -201,11 +217,13 @@ public class Communication implements DataCodes {
   }
 
   /**
-   * Asks the user for an item to decrease the quantity.
+   * Reads an item and amount to decrease from the client. Sends back the updated
+   * tool list to the client.
    * 
+   * @throws ClassNotFoundException
    * @throws IOException
    */
-  private void decreaseItemQuantity() throws IOException, ClassNotFoundException {
+  private void decreaseItemQuantity() throws ClassNotFoundException, IOException {
     Item itemToDecrease = (Item) socketIn.readObject();
     int count = Integer.parseInt((String) socketIn.readObject());
     theShop.buy(itemToDecrease, count);
@@ -214,8 +232,11 @@ public class Communication implements DataCodes {
   }
 
   /**
-   * Asks the user for information about a new tool, then generates a new tool in
-   * the ItemList.
+   * Reads item information from the input socket, then creates an Item and adds
+   * it to the shop.
+   * 
+   * @throws ClassNotFoundException
+   * @throws IOException
    */
   public void addNewTool() throws ClassNotFoundException, IOException {
     String description = (String) socketIn.readObject();
@@ -232,11 +253,13 @@ public class Communication implements DataCodes {
   }
 
   /**
-   * Asks the user for a tool, then deletes the tool from the shop inventory.
+   * Reads an item from the client, then deletes the item from the ToolShop. Sends
+   * back the updated full tool list to the client.
    * 
+   * @throws ClassNotFoundException
    * @throws IOException
    */
-  public void deleteTool() throws IOException, ClassNotFoundException {
+  public void deleteTool() throws ClassNotFoundException, IOException {
     Item itemToDelete = (Item) socketIn.readObject();
     theShop.getItems().deleteItem(itemToDelete);
     ArrayList<Item> toolList = theShop.getItems().getList();
@@ -254,7 +277,6 @@ public class Communication implements DataCodes {
       System.out.println("File(s) \"suppliers.txt\" and/or \"items.txt\" not found. Please try again.");
       System.exit(1);
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
