@@ -102,7 +102,7 @@ public class Communication implements DataCodes {
           deleteTool();
           break;
         }
-        case ORDER_ITEM: {
+        case ORDER_ITEMS: {
           checkItemQuantity();
           break;
         }

@@ -54,7 +54,7 @@ public interface DataCodes {
    * 
    * SEND: nothing RECEIVE: ArrayList<Item> of tools.
    */
-  public static final String ORDER_ITEM = "ORDER_ITEM";
+  public static final String ORDER_ITEMS = "ORDER_ITEMS";
 
   /**
    * Code for simulating the purchase of an item.
