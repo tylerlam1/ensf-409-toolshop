@@ -1,5 +1,9 @@
 package client.views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -26,7 +30,7 @@ public class MainView extends JFrame {
    * button - which is used for deleting a particular item. A CREATE ITEM - which
    * is used for creating a item to add into the tool shop.
    */
-  JButton createOrderBtn, quitBtn, deleteItemBtn, createItemBtn;
+  JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -52,7 +56,30 @@ public class MainView extends JFrame {
   JComboBox dropDownMenu;
 
   public MainView(String name) {
+    super(name);
+    setSize(1000,1000);
 
+    buyBtn = new JButton("Order");
+    quitBtn = new JButton("Quit");
+    deleteItemBtn = new JButton("Delete Item");
+    createItemBtn = new JButton("Create Item");
+    searchBar = new JTextField("Search for a item");
+
+    centerPanel = new JPanel(new BorderLayout());
+    leftPanel = new JPanel();
+    leftPanel.setPreferredSize(new Dimension(400,1000));
+    leftPanel.setBackground(Color.CYAN);
+    northPanel = new JPanel();
+    northPanel.add(searchBar);
+    northPanel.setBackground(Color.GRAY);
+    southPanel = new JPanel();
+    southPanel.setPreferredSize(new Dimension(600, 700));
+    southPanel.setBackground(Color.MAGENTA);
+
+    centerPanel.add(leftPanel, BorderLayout.WEST);
+    centerPanel.add(northPanel, BorderLayout.NORTH);
+    centerPanel.add(southPanel, BorderLayout.CENTER);
+    add(centerPanel);
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
