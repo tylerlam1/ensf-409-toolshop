@@ -69,7 +69,7 @@ public class LoginController implements DataCodes {
   }
 
   public void showView() {
-    loginView.setVisible(true);
+    mainView.setVisible(true);
   }
 
   /**

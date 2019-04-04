@@ -65,7 +65,7 @@ public class MainView extends JFrame {
     createItemBtn = new JButton("Create Item");
     searchBar = new JTextField("Search for a item");
 
-    centerPanel = new JPanel(new BorderLayout());
+    centerPanel = new JPanel(new FlowLayout());
     leftPanel = new JPanel();
     leftPanel.setPreferredSize(new Dimension(400,1000));
     leftPanel.setBackground(Color.CYAN);
@@ -76,9 +76,9 @@ public class MainView extends JFrame {
     southPanel.setPreferredSize(new Dimension(600, 700));
     southPanel.setBackground(Color.MAGENTA);
 
-    centerPanel.add(leftPanel, BorderLayout.WEST);
-    centerPanel.add(northPanel, BorderLayout.NORTH);
-    centerPanel.add(southPanel, BorderLayout.CENTER);
+    centerPanel.add(leftPanel);
+    centerPanel.add(northPanel);
+    centerPanel.add(southPanel);
     add(centerPanel);
   }
 
