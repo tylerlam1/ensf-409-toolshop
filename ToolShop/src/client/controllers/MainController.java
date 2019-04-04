@@ -100,6 +100,7 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         // int row = mainView.getTextArea().getSelectedRow();
         // Item deleteThisItem = itemCollection.get(row);
+        // i
         // itemCollection = (ArrayList<Item>)communication.sendObject(DELETE_ITEM,
         // deleteThisItem);
       }
@@ -113,7 +114,7 @@ public class MainController implements DataCodes {
         // String count = JOptionPane.showInputDialog(null, "How much quantity would you
         // like to remove?");
         // itemCollection =
-        // (ArrayList<Item>)communication.sendObjectAndCount(DECREASE_ITEM,
+        // (ArrayList<Item>)communication.sendObjectTwoObjects(DECREASE_ITEM,
         // decreaseThisItem, count);
       }
     });
@@ -124,8 +125,11 @@ public class MainController implements DataCodes {
         // Item itemOfInterest = null;
         // String searchChoice = (String) comboBox.getSelectedItem();
         // if (searchChoice.equals("ID")) {
-        // itemOfInterest = communication.send(SEARCH_TOOL_ID,
+        // Object itemOfInterest = communication.send(SEARCH_TOOL_ID,
         // mainView.getSearchArea());
+        // if(itemOfInterest instanceof Item) {
+        // Item item = (Item) itemOfInterest;
+        // }
         // } else {
         // itemOfInterest = communication.send(SEARCH_TOOL_NAME,
         // mainView.getSearchArea());
