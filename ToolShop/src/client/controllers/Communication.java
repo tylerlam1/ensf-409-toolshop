@@ -55,12 +55,30 @@ public class Communication implements DataCodes {
    * @param dataType
    * @param object
    */
-  public Object send(String dataType, Object object) {
+  public Object sendObject(String dataType, Object object) {
     Object obj = null;
 
     try {
       socketOut.writeObject(dataType);
       socketOut.writeObject(object);
+
+      obj = socketIn.readObject();
+
+    } catch (IOException e) {
+      // TODO: Create formal error handling
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      System.out.println("Class not found.");
+    }
+
+    return obj;
+  }
+
+  public Object sendCode(String dataType) {
+    Object obj = null;
+
+    try {
+      socketOut.writeObject(dataType);
 
       obj = socketIn.readObject();
 

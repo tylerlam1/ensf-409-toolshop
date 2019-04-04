@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import server.models.Item;
 
 /**
  * Main Tool Shop GUI used for handling client requests and actions
@@ -56,6 +59,7 @@ public class MainView extends JFrame {
   JComboBox dropDownMenu;
 
   public MainView(String name) {
+<<<<<<< HEAD
     super(name);
     setSize(1000,1000);
 
@@ -80,6 +84,18 @@ public class MainView extends JFrame {
     centerPanel.add(northPanel);
     centerPanel.add(southPanel);
     add(centerPanel);
+=======
+    ToolShopTableModel tableModel = new ToolShopTableModel();
+    leftTextArea = new JTable(tableModel);
+    add(leftTextArea);
+    pack();
+  }
+
+  public void setTableData(ArrayList<Item> data) {
+    ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
+    theModel.setData(data);
+    theModel.fireTableDataChanged();
+>>>>>>> Tyler/ActionListeners
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
@@ -121,6 +137,25 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addQuitListener(ActionListener l) {
+
+  }
+
+  /**
+   * decreases the quantity of a selected item. Creates a DECREASE ITEM button
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
+  public void addDecreaseQuantityListener(ActionListener l) {
+
+  }
+
+  /**
+   * add the search bar listener. Depending on the options available on the
+   * dropdown menu, the listener will get the input correspondingly
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
+  public void addSearchBarListener(ActionListener l) {
 
   }
 

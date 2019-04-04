@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ItemList {
 
+
   /**
    * The list of items in the Shop
    */
@@ -61,15 +62,17 @@ public class ItemList {
    * @param supplierId  The id of the supplier
    * @param suppliers   The list of suppliers to get the supplier of the item from
    */
-  public void addItem(int id, String description, int quantity, double price, int supplierId, SupplierList suppliers) {
+  public Item addItem(int id, String description, int quantity, double price, int supplierId, SupplierList suppliers) {
     Supplier supplier = suppliers.getSupplierById(supplierId);
     if (supplier == null) {
       System.out.println("Could not add item: supplier with ID " + supplierId + " not found.");
-      return;
+      return null;
     }
     Item newItem = new Item(id, description, quantity, price, supplier);
 
     list.add(newItem);
+
+    return newItem;
   }
 
   /**

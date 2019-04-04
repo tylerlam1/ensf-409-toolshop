@@ -8,47 +8,66 @@ package utils;
  * @since April 1, 2019
  */
 public interface DataCodes {
-  // Comment denote the procedure after the datacode is sent.
+  // SEND denotes what is sent after the datacode is sent.
+  // RECEIVE denotes what the client should expect to receive.
 
   /* Client codes */
 
   /**
-   * Send nothing after, receive ArrayList<Item> back
+   * Code for getting the list of tools from the server.
+   * 
+   * SEND: nothing. RECEIVE: ArrayList<Item> of tools.
    */
   public static final String GET_TOOLS = "GET_TOOLS";
 
   /**
-   * Send String (name), receive Item object back
+   * Code for searching the server for a name.
+   * 
+   * SEND: name (String). RECEIVE: Item object, or SEND_ERROR if not found.
    */
   public static final String SEARCH_TOOL_NAME = "SEARCH_TOOL_NAME";
-  
+
   /**
-   * Send String (ID), receive Item object back
+   * Code for searching the server for an ID.
+   * 
+   * SEND: id (String). RECEIVE: Item object, or SEND_ERROR if not found.
    */
   public static final String SEARCH_TOOL_ID = "SEARCH_TOOL_ID";
-  
+
   /**
-   *  Send description, quantity, price, supplierId, receive Item object back 
+   * Code for creating a new item.
+   * 
+   * SEND: description (String), quantity (String), price (String), supplierId
+   * (String). RECEIVE: ArrayList<Item> of tools.
    */
   public static final String CREATE_ITEM = "CREATE_ITEM";
-  
+
   /**
-   * Send Item object, receive SEND_SUCCESS or SEND_ERROR back
+   * Code for deleting an item.
+   * 
+   * SEND: Item object to delete RECEIVE: ArrayList<Item> of tools.
    */
   public static final String DELETE_ITEM = "DELETE_ITEM";
 
   /**
-   * Send nothing after, restock then send ArrayList<Item> back
+   * Code for auto-restocking.
+   * 
+   * SEND: nothing RECEIVE: ArrayList<Item> of tools.
    */
-  public static final String ORDER_ITEM = "ORDER_ITEM";
+  public static final String ORDER_ITEMS = "ORDER_ITEMS";
+
   /**
-   * Send Item object, send quantity to decrease, receive SEND_SUCCESS back
-   * Assume that getItems will be called after to update the list.
+   * Code for simulating the purchase of an item.
+   * 
+   * SEND: Item object to purchase, quantity to decrease (String) RECEIVE:
+   * ArrayList<Item> of tools.
    */
   public static final String DECREASE_ITEM = "DECREASE_ITEM";
 
   /**
-   * Send nothing after, receive SEND_SUCCESS back
+   * Code to tell server to stop running.
+   * 
+   * SEND: nothing RECEIVE: SEND_SUCCESS
    */
   public static final String STOP_SERVER = "STOP_SERVER";
 
@@ -65,8 +84,10 @@ public interface DataCodes {
   /* Login */
 
   /**
-   * Send a UserInformation object, receive UserInformation back or SEND_ERROR if
-   * authentication failed.
+   * Code to handle user authentication.
+   * 
+   * SEND: UserInformation object RECEIVE: UserInformation object, or SEND_ERROR
+   * if failed.
    */
   public static final String SEND_USERDATA = "SEND_USERDATA";
 }

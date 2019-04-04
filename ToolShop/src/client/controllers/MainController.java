@@ -1,10 +1,12 @@
 package client.controllers;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import server.models.Item;
 import client.views.ItemDialogView;
 import client.views.LoginView;
 import client.views.MainView;
@@ -23,6 +25,11 @@ public class MainController implements DataCodes {
    * the MainView object used which will be used to control the main GUI screen
    */
   MainView mainView;
+
+  /**
+   * An arrayList of all the items
+   */
+  ArrayList<Item> itemCollection;
 
   /**
    * Communication object that allows for communication with server
@@ -45,6 +52,11 @@ public class MainController implements DataCodes {
     mainView = view;
     this.loginView = loginView;
     this.communication = communication;
+
+    ArrayList<Item> items = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+
+    mainView.setTableData(items);
+
     addMainListeners();
   }
 
@@ -75,7 +87,7 @@ public class MainController implements DataCodes {
             if (hasEmptyField) {
               itemPrompt.setLabel("Please fill out all the fields.");
             } else {
-              communication.sendItemInfo(description, quantity, price, supplierId);
+              itemCollection = (ArrayList<Item>) communication.sendItemInfo(description, quantity, price, supplierId);
               itemPrompt.setVisible(false);
             }
           }
@@ -87,17 +99,57 @@ public class MainController implements DataCodes {
       @Override
       public void actionPerformed(ActionEvent e) {
         // int row = mainView.getTextArea().getSelectedRow();
-        // TODO: Potentially pass the row to the server side to correctly retrieve the
-        // item to delete
+        // Item deleteThisItem = itemCollection.get(row);
+        // itemCollection = (ArrayList<Item>)communication.sendObject(DELETE_ITEM,
+        // deleteThisItem);
+      }
+    });
+
+    mainView.addDecreaseQuantityListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // int row = mainView.getTextArea().getSelectedRow();
+        // Item decreaseThisItem = itemCollection.get(row);
+        // String count = JOptionPane.showInputDialog(null, "How much quantity would you
+        // like to remove?");
+        // itemCollection =
+        // (ArrayList<Item>)communication.sendObjectAndCount(DECREASE_ITEM,
+        // decreaseThisItem, count);
+      }
+    });
+
+    mainView.addSearchBarListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // Item itemOfInterest = null;
+        // String searchChoice = (String) comboBox.getSelectedItem();
+        // if (searchChoice.equals("ID")) {
+        // itemOfInterest = communication.send(SEARCH_TOOL_ID,
+        // mainView.getSearchArea());
+        // } else {
+        // itemOfInterest = communication.send(SEARCH_TOOL_NAME,
+        // mainView.getSearchArea());
+        // }
+        // if (itemOfInterest == null) {
+        // JOptionPane.showMessageDialog(null, "Item not found!");
+        // }
+        // JOptionPane.showMessageDialog(null, itemOfInterest);
       }
     });
 
     mainView.addQuitListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        mainView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainView.setVisible(false);
         loginView.setVisible(true);
       }
     });
+  }
+
+  /**
+   * shows the main toolShop GUI
+   */
+  public void showView() {
+    mainView.setVisible(true);
   }
 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import server.models.UserInformation;
 
 import client.views.LoginView;
 import client.views.MainView;
@@ -58,16 +59,27 @@ public class LoginController implements DataCodes {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("Button clicked");
-        // TODO: Change test login listener
-        communication.send(SEND_USERDATA, "test");
-        // TODO: we need to validate user here
-        loginView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // String id = loginView.getIdField();
+        // String password = loginView.getPasswordField();
+        // UserInformation newUser = new UserInformation();
+        // newUser.setId(id);
+        // newUser.setPassword(password);
+        // String verify = (String) communication.sendObject(SEND_USERDATA, newUser);
+        // if (verification.equals(SEND_ERROR)) {
+        // JOptionPane.showMessageDialog(null, "Please enter a valid username and
+        // password.");
+        // return;
+        // }
+        //
+        loginView.setVisible(false);
         mainView.setVisible(true);
       }
     });
   }
 
+  /**
+   * shows the login screen view
+   */
   public void showView() {
     mainView.setVisible(true);
   }
@@ -84,5 +96,6 @@ public class LoginController implements DataCodes {
     LoginController loginController = new LoginController(loginView, mainView, communication);
     MainController mainController = new MainController(mainView, loginView, communication);
     loginController.showView();
+    mainController.showView();
   }
 }

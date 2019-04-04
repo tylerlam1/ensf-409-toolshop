@@ -159,10 +159,12 @@ public class ToolShop implements Quantities {
    * @param price The initial price of the item
    * @param supplierId The id of the supplier that the item is ordered from
    */
-  public void addNewItem(String description, int quantity, double price, int supplierId) {
+  public Item addNewItem(String description, int quantity, double price, int supplierId) {
     // new Id is automatically one greater than the last item in the list.
     int newId = items.getList().get(items.getList().size() - 1).getId() + 1;
 
-    items.addItem(newId, description, quantity, price, supplierId, suppliers);
+    Item newItem = items.addItem(newId, description, quantity, price, supplierId, suppliers);
+
+    return newItem;
   }
 }
