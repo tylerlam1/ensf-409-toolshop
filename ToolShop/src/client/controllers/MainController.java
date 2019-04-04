@@ -107,7 +107,7 @@ public class MainController implements DataCodes {
     mainView.addQuitListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        mainView.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainView.setVisible(false);
         loginView.setVisible(true);
       }
     });
