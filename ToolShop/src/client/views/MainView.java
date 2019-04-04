@@ -110,6 +110,25 @@ public class MainView extends JFrame {
   }
 
   /**
+   * decreases the quantity of a selected item. Creates a DECREASE ITEM button
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
+  public void addDecreaseQuantityListener(ActionListener l) {
+
+  }
+
+  /**
+   * add the search bar listener. Depending on the options available on the
+   * dropdown menu, the listener will get the input correspondingly
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
+  public void addSearchBarListener(ActionListener l) {
+
+  }
+
+  /**
    * adds the 'delete item' listener. Creates a DELETE ITEM button used to delete
    * a particular item from the toolshop database of the client.
    * 
