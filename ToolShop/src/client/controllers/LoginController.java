@@ -59,7 +59,6 @@ public class LoginController implements DataCodes {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        // do {
         // String id = loginView.getIdField();
         // String password = loginView.getPasswordField();
         // UserInformation newUser = new UserInformation();
@@ -69,8 +68,9 @@ public class LoginController implements DataCodes {
         // if (verification.equals(SEND_ERROR)) {
         // JOptionPane.showMessageDialog(null, "Please enter a valid username and
         // password.");
+        // return;
         // }
-        // } while (verification.equals(SEND_ERROR));
+        //
         loginView.setVisible(false);
         mainView.setVisible(true);
       }
