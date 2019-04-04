@@ -264,6 +264,9 @@ public class Communication implements DataCodes {
     Item itemToDelete = (Item) socketIn.readObject();
     theShop.getItems().deleteItem(itemToDelete);
     ArrayList<Item> toolList = theShop.getItems().getList();
+    for (Item a : toolList) {
+      System.out.println(a);
+    }
     socketOut.writeObject(toolList);
   }
 

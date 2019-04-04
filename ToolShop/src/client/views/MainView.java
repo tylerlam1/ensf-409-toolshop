@@ -1,12 +1,16 @@
 package client.views;
 
+import java.awt.FlowLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -29,7 +33,7 @@ public class MainView extends JFrame {
    * button - which is used for deleting a particular item. A CREATE ITEM - which
    * is used for creating a item to add into the tool shop.
    */
-  JButton createOrderBtn, quitBtn, deleteItemBtn, createItemBtn;
+  JButton createOrderBtn, quitBtn, deleteItemBtn, createItemBtn, decreaseQuantityBtn, searchBarBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -55,10 +59,39 @@ public class MainView extends JFrame {
   JComboBox dropDownMenu;
 
   public MainView(String name) {
+
+    setLayout(new FlowLayout());
+
+    northPanel = new JPanel();
+    northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
+
+    createOrderBtn = new JButton("Create Order");
+    quitBtn = new JButton("Quit");
+    deleteItemBtn = new JButton("Delete Item");
+    createItemBtn = new JButton("Create item");
+    decreaseQuantityBtn = new JButton("Decrease Item Quantity");
+    searchBarBtn = new JButton("Search");
+
     ToolShopTableModel tableModel = new ToolShopTableModel();
     leftTextArea = new JTable(tableModel);
+    JScrollPane scroll = new JScrollPane(leftTextArea);
     add(leftTextArea);
-    pack();
+    add(scroll);
+    add(deleteItemBtn);
+    add(createOrderBtn);
+    add(createItemBtn);
+    add(decreaseQuantityBtn);
+
+    String[] options = { "Description", "ID" };
+    dropDownMenu = new JComboBox(options);
+    searchBar = new JTextField(10);
+    northPanel.add(dropDownMenu);
+    northPanel.add(searchBar);
+    northPanel.add(searchBarBtn);
+
+    add(northPanel);
+
+    // pack();
   }
 
   public void setTableData(ArrayList<Item> data) {
@@ -74,8 +107,8 @@ public class MainView extends JFrame {
   /**
    * returns the text area. Used for writing the list of tools to the text area.
    */
-  public void getTextArea() {
-
+  public JTable getTextArea() {
+    return leftTextArea;
   }
 
   /**
@@ -96,7 +129,11 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addCreateOrderListener(ActionListener l) {
+    createOrderBtn.addActionListener(l);
+  }
 
+  public void addCreateItemListener(ActionListener l) {
+    createItemBtn.addActionListener(l);
   }
 
   /**
@@ -106,7 +143,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addQuitListener(ActionListener l) {
-
+    quitBtn.addActionListener(l);
   }
 
   /**
@@ -115,7 +152,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addDecreaseQuantityListener(ActionListener l) {
-
+    decreaseQuantityBtn.addActionListener(l);
   }
 
   /**
@@ -125,7 +162,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addSearchBarListener(ActionListener l) {
-
+    searchBarBtn.addActionListener(l);
   }
 
   /**
@@ -135,6 +172,6 @@ public class MainView extends JFrame {
    * @param l the Actionlistener object used to enable on-click functionality
    */
   public void addDeleteItemListener(ActionListener l) {
-
+    deleteItemBtn.addActionListener(l);
   }
 }

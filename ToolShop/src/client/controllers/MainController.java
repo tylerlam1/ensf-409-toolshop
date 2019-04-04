@@ -53,9 +53,8 @@ public class MainController implements DataCodes {
     this.loginView = loginView;
     this.communication = communication;
 
-    ArrayList<Item> items = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
-
-    mainView.setTableData(items);
+    itemCollection = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+    mainView.setTableData(itemCollection);
 
     addMainListeners();
   }
@@ -89,6 +88,7 @@ public class MainController implements DataCodes {
             } else {
               itemCollection = (ArrayList<Item>) communication.sendItemInfo(description, quantity, price, supplierId);
               itemPrompt.setVisible(false);
+              mainView.setTableData(itemCollection);
             }
           }
         });
@@ -98,11 +98,13 @@ public class MainController implements DataCodes {
     mainView.addDeleteItemListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // int row = mainView.getTextArea().getSelectedRow();
-        // Item deleteThisItem = itemCollection.get(row);
-        // i
-        // itemCollection = (ArrayList<Item>)communication.sendObject(DELETE_ITEM,
-        // deleteThisItem);
+        int row = mainView.getTextArea().getSelectedRow();
+        Item deleteThisItem = itemCollection.get(row);
+        itemCollection = (ArrayList<Item>) communication.sendObject(DELETE_ITEM, deleteThisItem);
+        for (Item a : itemCollection) {
+          System.out.println(a);
+        }
+        mainView.setTableData(itemCollection);
       }
     });
 
