@@ -99,6 +99,6 @@ public class LoginController implements DataCodes {
 
     LoginController loginController = new LoginController(loginView, mainView, communication);
     MainController mainController = new MainController(mainView, loginView, communication);
-    loginController.showView();
+    mainController.showView();
   }
 }

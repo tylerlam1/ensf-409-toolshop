@@ -96,6 +96,9 @@ public class MainView extends JFrame {
 
   public void setTableData(ArrayList<Item> data) {
     ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
+    for(Item i : data) {
+      System.out.println(i);
+    }
     theModel.setData(data);
     theModel.fireTableDataChanged();
   }

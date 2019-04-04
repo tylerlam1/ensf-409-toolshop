@@ -115,7 +115,7 @@ public class Communication implements DataCodes {
           return;
         }
         default: {
-          socketOut.writeObject(SEND_ERROR);
+          writeObject(SEND_ERROR);
           break;
         }
         }
@@ -143,9 +143,9 @@ public class Communication implements DataCodes {
     boolean validUser = true;
 
     if (validUser) {
-      socketOut.writeObject(user);
+      writeObject(user);
     } else {
-      socketOut.writeObject(SEND_ERROR);
+      writeObject(SEND_ERROR);
     }
   }
 
@@ -156,7 +156,7 @@ public class Communication implements DataCodes {
    */
   private void getTools() throws IOException {
     ArrayList<Item> toolList = theShop.getItems().getList();
-    socketOut.writeObject(toolList);
+    writeObject(toolList);
   }
 
   /**
@@ -170,9 +170,9 @@ public class Communication implements DataCodes {
     String name = (String) socketIn.readObject();
     Item item = theShop.getItems().getItemByName(name);
     if (item == null) {
-      socketOut.writeObject(SEND_ERROR);
+      writeObject(SEND_ERROR);
     } else {
-      socketOut.writeObject(item);
+      writeObject(item);
     }
   }
 
@@ -188,12 +188,12 @@ public class Communication implements DataCodes {
       int id = Integer.parseInt((String) socketIn.readObject());
       Item item = theShop.getItems().getItemById(id);
       if (item == null) {
-        socketOut.writeObject(SEND_ERROR);
+        writeObject(SEND_ERROR);
       } else {
-        socketOut.writeObject(item);
+        writeObject(item);
       }
     } catch (NumberFormatException e) {
-      socketOut.writeObject(SEND_ERROR);
+      writeObject(SEND_ERROR);
     }
   }
 
@@ -214,7 +214,7 @@ public class Communication implements DataCodes {
     }
 
     ArrayList<Item> toolList = theShop.getItems().getList();
-    socketOut.writeObject(toolList);
+    writeObject(toolList);
   }
 
   /**
@@ -229,7 +229,7 @@ public class Communication implements DataCodes {
     int count = Integer.parseInt((String) socketIn.readObject());
     theShop.buy(itemToDecrease, count);
     ArrayList<Item> toolList = theShop.getItems().getList();
-    socketOut.writeObject(toolList);
+    writeObject(toolList);
   }
 
   /**
@@ -246,10 +246,13 @@ public class Communication implements DataCodes {
     int supplierId = Integer.parseInt((String) socketIn.readObject());
     Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
     if (newItem == null) {
-      socketOut.writeObject(SEND_ERROR);
+      writeObject(SEND_ERROR);
     } else {
       ArrayList<Item> toolList = theShop.getItems().getList();
-      socketOut.writeObject(toolList);
+      for(Item i : toolList) {
+        System.out.println(i);
+      }
+      writeObject(toolList);
     }
   }
 
@@ -267,7 +270,12 @@ public class Communication implements DataCodes {
     for (Item a : toolList) {
       System.out.println(a);
     }
-    socketOut.writeObject(toolList);
+    writeObject(toolList);
+  }
+
+  private void writeObject(Object obj) throws IOException {
+    socketOut.writeObject(obj);
+    socketOut.reset();
   }
 
   public static void main(String[] args) {

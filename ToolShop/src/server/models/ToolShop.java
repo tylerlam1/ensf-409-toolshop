@@ -18,7 +18,7 @@ public class ToolShop implements Quantities {
    * suppliers and items.
    * 
    * @param suppliers the list of suppliers the shop contacts
-   * @param items the list of items in the shop
+   * @param items     the list of items in the shop
    */
   public ToolShop(SupplierList suppliers, ItemList items) {
     this.suppliers = suppliers;
@@ -134,20 +134,29 @@ public class ToolShop implements Quantities {
    * @param item  The item to buy from
    * @param count The number of items to buy
    */
-  public void buy(Item item, int count) {
+  public void buy(Item inputItem, int count) {
     // Check if decreasing more than the current stock
-    int newQuantity = item.getQuantity() - count;
-    if (newQuantity < 0) {
-      count = item.getQuantity();
-      System.out
-          .println("Specified amount is greater than the current stock. Will only decrease by " + count + " items.");
-      newQuantity = 0;
+    Item item = null;
+    for (Item i : items.getList()) {
+      if (inputItem.equals(i)) {
+        item = i;
+      }
     }
-    item.setQuantity(newQuantity);
-    System.out.println(item.getDescription() + " has been decreased by " + count + " items. The new amount is "
-        + item.getQuantity() + ".");
-    if (checkStock(item)) {
-      System.out.println("The new quantity is below 40. An order has been automatically made to restock.");
+
+    if (item != null) {
+      int newQuantity = item.getQuantity() - count;
+      if (newQuantity < 0) {
+        count = item.getQuantity();
+        System.out
+            .println("Specified amount is greater than the current stock. Will only decrease by " + count + " items.");
+        newQuantity = 0;
+      }
+      item.setQuantity(newQuantity);
+      System.out.println(item.getDescription() + " has been decreased by " + count + " items. The new amount is "
+          + item.getQuantity() + ".");
+      if (checkStock(item)) {
+        System.out.println("The new quantity is below 40. An order has been automatically made to restock.");
+      }
     }
   }
 
@@ -155,9 +164,9 @@ public class ToolShop implements Quantities {
    * Create a new item based on parameters from user input
    * 
    * @param description The description of the item
-   * @param quantity The initial quantitiy of the item
-   * @param price The initial price of the item
-   * @param supplierId The id of the supplier that the item is ordered from
+   * @param quantity    The initial quantitiy of the item
+   * @param price       The initial price of the item
+   * @param supplierId  The id of the supplier that the item is ordered from
    */
   public Item addNewItem(String description, int quantity, double price, int supplierId) {
     // new Id is automatically one greater than the last item in the list.

@@ -59,8 +59,8 @@ public class Communication implements DataCodes {
     Object obj = null;
 
     try {
-      socketOut.writeObject(dataType);
-      socketOut.writeObject(object);
+      writeObject(dataType);
+      writeObject(object);
 
       obj = socketIn.readObject();
 
@@ -78,7 +78,7 @@ public class Communication implements DataCodes {
     Object obj = null;
 
     try {
-      socketOut.writeObject(dataType);
+      writeObject(dataType);
 
       obj = socketIn.readObject();
 
@@ -100,11 +100,11 @@ public class Communication implements DataCodes {
   public Object sendItemInfo(String itemDescription, String quantity, String price, String supplierId) {
     Object obj = null;
     try {
-      socketOut.writeObject(CREATE_ITEM);
-      socketOut.writeObject(itemDescription);
-      socketOut.writeObject(quantity);
-      socketOut.writeObject(price);
-      socketOut.writeObject(supplierId);
+      writeObject(CREATE_ITEM);
+      writeObject(itemDescription);
+      writeObject(quantity);
+      writeObject(price);
+      writeObject(supplierId);
       obj = socketIn.readObject();
     } catch (IOException e) {
       e.printStackTrace();
@@ -112,5 +112,10 @@ public class Communication implements DataCodes {
       System.out.println("Class not found.");
     }
     return obj;
+  }
+
+  private void writeObject(Object obj) throws IOException {
+    socketOut.writeObject(obj);
+    socketOut.reset();
   }
 }
