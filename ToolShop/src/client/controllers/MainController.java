@@ -99,7 +99,7 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         // int row = mainView.getTextArea().getSelectedRow();
         // Item deleteThisItem = itemCollection.get(row);
-        // itemCollection = (ArrayList<Item>)communication.send(DELETE_ITEM,
+        // itemCollection = (ArrayList<Item>)communication.sendObject(DELETE_ITEM,
         // deleteThisItem);
       }
     });

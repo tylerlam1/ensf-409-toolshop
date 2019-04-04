@@ -59,21 +59,26 @@ public class LoginController implements DataCodes {
       @Override
       public void actionPerformed(ActionEvent e) {
         // do {
-        // String username = loginView.getUserNameField();
+        // String id = loginView.getIdField();
         // String password = loginView.getPasswordField();
-        // String verify = (String) communication.sendObject(SEND_USERDATA, "test");
+        // UserInformation newUser = new UserInformation();
+        // newUser.setId(id);
+        // newUser.setPassword(password);
+        // String verify = (String) communication.sendObject(SEND_USERDATA, newUser);
         // if (verification.equals(SEND_ERROR)) {
         // JOptionPane.showMessageDialog(null, "Please enter a valid username and
         // password.");
         // }
         // } while (verification.equals(SEND_ERROR));
-        // TODO: we need to validate user here
         loginView.setVisible(false);
         mainView.setVisible(true);
       }
     });
   }
 
+  /**
+   * shows the login screen view
+   */
   public void showView() {
     loginView.setVisible(true);
   }

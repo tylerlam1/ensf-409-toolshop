@@ -1,4 +1,4 @@
-package server.models;
+package client.models;
 
 /**
  * Stores the relevant loginID and password for a particular user
