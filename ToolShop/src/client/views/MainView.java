@@ -59,7 +59,6 @@ public class MainView extends JFrame {
   JComboBox dropDownMenu;
 
   public MainView(String name) {
-<<<<<<< HEAD
     super(name);
     setSize(1000,1000);
 
@@ -84,7 +83,6 @@ public class MainView extends JFrame {
     centerPanel.add(northPanel);
     centerPanel.add(southPanel);
     add(centerPanel);
-=======
     ToolShopTableModel tableModel = new ToolShopTableModel();
     leftTextArea = new JTable(tableModel);
     add(leftTextArea);
@@ -95,7 +93,6 @@ public class MainView extends JFrame {
     ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
     theModel.setData(data);
     theModel.fireTableDataChanged();
->>>>>>> Tyler/ActionListeners
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
