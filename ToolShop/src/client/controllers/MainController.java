@@ -91,7 +91,7 @@ public class MainController implements DataCodes {
                 itemCollection = (ArrayList<Item>) temp;
                 mainView.setTableData(itemCollection);
               } else {
-                JOptionPane.showMessageDialog(null, "Cannot add item. Supplier not found or entries were invalid.");
+                mainView.showErrorDialog("Cannot add item. Supplier not found or entries were invalid.", "Error Found");
                 itemPrompt.setVisible(false);
                 return;
               }
@@ -114,7 +114,7 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         int row = mainView.getTextArea().getSelectedRow();
         if (row == -1) {
-          JOptionPane.showMessageDialog(null, "Please select a item on the table to the left.");
+          mainView.showErrorDialog("Please select a item on the table to the left.", "Error Found");
           return;
         }
         Item deleteThisItem = itemCollection.get(row);
@@ -128,17 +128,17 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         int row = mainView.getTextArea().getSelectedRow();
         if (row == -1) {
-          JOptionPane.showMessageDialog(null, "Please select a item on the table to the left.");
+          mainView.showErrorDialog("Please select a item on the table to the left.", "Error Found");
           return;
         }
         Item decreaseThisItem = itemCollection.get(row);
-        String count = JOptionPane.showInputDialog(null, "How much quantity would you like to remove?");
+        String count = mainView.createInputDialog("How much quantity would you like to remove?");
         Object temp = communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
         if (temp instanceof ArrayList<?>) {
           itemCollection = (ArrayList<Item>) temp;
           mainView.setTableData(itemCollection);
         } else {
-          JOptionPane.showMessageDialog(null, "Invalid entry.");
+          mainView.showErrorDialog("Invalid Entry. Please try again!", "Error Found");
         }
       }
     });
@@ -154,7 +154,7 @@ public class MainController implements DataCodes {
           if (temporaryObject instanceof Item) {
             itemOfInterest = (Item) temporaryObject;
           } else {
-            JOptionPane.showMessageDialog(null, "Item Not Found!");
+            mainView.showErrorDialog("Item Not Found!", "Error Found");
             return;
           }
         } else {
@@ -163,11 +163,18 @@ public class MainController implements DataCodes {
           if (temporaryObject instanceof Item) {
             itemOfInterest = (Item) temporaryObject;
           } else {
-            JOptionPane.showMessageDialog(null, "Item Not Found!");
+            mainView.showErrorDialog("Item Not Found!", "Error Found");
             return;
           }
         }
-        JOptionPane.showMessageDialog(null, itemOfInterest);
+        int index = 0;
+        for (Item a : itemCollection) {
+          if (a.equals(itemOfInterest)) {
+            break;
+          }
+          index++;
+        }
+        mainView.getTextArea().setRowSelectionInterval(index, index);
       }
     });
 

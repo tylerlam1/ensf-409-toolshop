@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -92,7 +93,6 @@ public class MainView extends JFrame {
 
     add(northPanel);
 
-    // pack();
   }
 
   public JTextField getSearchArea() {
@@ -131,7 +131,17 @@ public class MainView extends JFrame {
    * @param title the title on the dialog box
    */
   public void showErrorDialog(String msg, String title) {
+    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.ERROR_MESSAGE);
+  }
 
+  /**
+   * shows a message dialog for information
+   * 
+   * @param msg the main message of the dialog box
+   * @return the input message placed into input area on dialog box
+   */
+  public String createInputDialog(String message) {
+    return JOptionPane.showInputDialog(null, message);
   }
 
   /**
@@ -144,6 +154,11 @@ public class MainView extends JFrame {
     createOrderBtn.addActionListener(l);
   }
 
+  /**
+   * adds a listener for a restock all button.
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
   public void addRestoreAllListener(ActionListener l) {
     restoreAllBtn.addActionListener(l);
   }

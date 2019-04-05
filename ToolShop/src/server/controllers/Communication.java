@@ -167,12 +167,16 @@ public class Communication implements DataCodes {
    * @throws IOException
    */
   private void searchToolName() throws ClassNotFoundException, IOException {
-    String name = (String) socketIn.readObject();
-    Item item = theShop.getItems().getItemByName(name);
-    if (item == null) {
-      writeObject(SEND_ERROR);
-    } else {
-      writeObject(item);
+    try {
+      String name = (String) socketIn.readObject();
+      Item item = theShop.getItems().getItemByName(name);
+      if (item == null) {
+        writeObject(SEND_ERROR);
+      } else {
+        writeObject(item);
+      }
+    } catch (NumberFormatException e) {
+      socketOut.writeObject(SEND_ERROR);
     }
   }
 
@@ -244,16 +248,31 @@ public class Communication implements DataCodes {
    * @throws IOException
    */
   public void addNewTool() throws ClassNotFoundException, IOException {
-    String description = (String) socketIn.readObject();
-    int quantity = Integer.parseInt((String) socketIn.readObject());
-    double price = Double.parseDouble((String) socketIn.readObject());
-    int supplierId = Integer.parseInt((String) socketIn.readObject());
-    Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
-    if (newItem == null) {
+    int readCount = 0;
+
+    try {
+      String description = (String) socketIn.readObject();
+      readCount++;
+      int quantity = Integer.parseInt((String) socketIn.readObject());
+      readCount++;
+      double price = Double.parseDouble((String) socketIn.readObject());
+      readCount++;
+      int supplierId = Integer.parseInt((String) socketIn.readObject());
+      readCount++;
+      Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
+      if (newItem == null) {
+        writeObject(SEND_ERROR);
+      } else {
+        ArrayList<Item> toolList = theShop.getItems().getList();
+        writeObject(toolList);
+      }
+    } catch (NumberFormatException e) {
+      // if an exception occurs, read the rest of what the client sends
+      while (readCount < 4 - 1) {
+        readCount++;
+        socketIn.readObject();
+      }
       writeObject(SEND_ERROR);
-    } else {
-      ArrayList<Item> toolList = theShop.getItems().getList();
-      writeObject(toolList);
     }
   }
 
@@ -271,6 +290,11 @@ public class Communication implements DataCodes {
     writeObject(toolList);
   }
 
+  /**
+   * writes out to a socket and resets it
+   * 
+   * @param obj the object that will be written out
+   */
   private void writeObject(Object obj) throws IOException {
     socketOut.writeObject(obj);
     socketOut.reset();

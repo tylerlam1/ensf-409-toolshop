@@ -110,6 +110,8 @@ public class ItemDialogView extends JFrame {
 
     /**
      * constructs the panels and Create Item window dialog with different components
+     * 
+     * @param name the name in the Item Dialog
      */
     public ItemDialogView(String name) {
         super(name);
