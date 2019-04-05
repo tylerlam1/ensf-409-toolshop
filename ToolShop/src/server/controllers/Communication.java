@@ -249,9 +249,6 @@ public class Communication implements DataCodes {
       writeObject(SEND_ERROR);
     } else {
       ArrayList<Item> toolList = theShop.getItems().getList();
-      for(Item i : toolList) {
-        System.out.println(i);
-      }
       writeObject(toolList);
     }
   }

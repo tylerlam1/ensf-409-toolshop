@@ -82,13 +82,19 @@ public class MainController implements DataCodes {
 
             boolean hasEmptyField = description.length() == 0 || supplierId.length() == 0 || quantity.length() == 0
                 || price.length() == 0;
-
             if (hasEmptyField) {
               itemPrompt.setLabel("Please fill out all the fields.");
             } else {
-              itemCollection = (ArrayList<Item>) communication.sendItemInfo(description, quantity, price, supplierId);
-              itemPrompt.setVisible(false);
-              mainView.setTableData(itemCollection);
+              Object temp = communication.sendItemInfo(description, quantity, price, supplierId);
+              if (temp instanceof ArrayList<?>) {
+                itemPrompt.setVisible(false);
+                itemCollection = (ArrayList<Item>) temp;
+                mainView.setTableData(itemCollection);
+              } else {
+                JOptionPane.showMessageDialog(null, "Cannot add item. Supplier not found.");
+                itemPrompt.setVisible(false);
+                return;
+              }
             }
           }
         });
@@ -138,15 +144,23 @@ public class MainController implements DataCodes {
         Item itemOfInterest = null;
         String searchChoice = (String) mainView.getDropdown().getSelectedItem();
         if (searchChoice.equals("ID")) {
-          itemOfInterest = (Item) communication.sendObject(SEARCH_TOOL_ID, mainView.getSearchArea().getText());
-          if (itemOfInterest instanceof Item) {
-            Item item = (Item) itemOfInterest;
+          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID,
+              mainView.getSearchArea().getText());
+          if (temporaryObject instanceof Item) {
+            itemOfInterest = (Item) temporaryObject;
+          } else {
+            JOptionPane.showMessageDialog(null, "Item Not Found!");
+            return;
           }
         } else {
-          itemOfInterest = (Item) communication.sendObject(SEARCH_TOOL_NAME, mainView.getSearchArea().getText());
-        }
-        if (itemOfInterest == null) {
-          JOptionPane.showMessageDialog(null, "Item not found!");
+          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME,
+              mainView.getSearchArea().getText());
+          if (temporaryObject instanceof Item) {
+            itemOfInterest = (Item) temporaryObject;
+          } else {
+            JOptionPane.showMessageDialog(null, "Item Not Found!");
+            return;
+          }
         }
         JOptionPane.showMessageDialog(null, itemOfInterest);
       }
