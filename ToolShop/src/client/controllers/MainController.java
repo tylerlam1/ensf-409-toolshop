@@ -62,7 +62,7 @@ public class MainController implements DataCodes {
    */
   public void addMainListeners() {
 
-    mainView.addCreateOrderListener(new ActionListener() {
+    mainView.addCreateItemListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         ItemDialogView itemPrompt = new ItemDialogView("Create Item");
@@ -98,7 +98,7 @@ public class MainController implements DataCodes {
       }
     });
 
-    mainView.addRestoreAllListener(new ActionListener() {
+    mainView.addRestockListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         itemCollection = (ArrayList<Item>) communication.sendCode(ORDER_ITEMS);
@@ -121,7 +121,7 @@ public class MainController implements DataCodes {
       }
     });
 
-    mainView.addDecreaseQuantityListener(new ActionListener() {
+    mainView.addBuyListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         int row = mainView.getTextArea().getSelectedRow();

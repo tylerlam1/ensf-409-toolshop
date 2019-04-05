@@ -41,7 +41,7 @@ public class MainView extends JFrame {
    * is used for creating a item to add into the tool shop. A SEARCH button which
    * allows for searching. A restore all that restocks all button
    */
-  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restoreBtn;
+  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -99,7 +99,7 @@ public class MainView extends JFrame {
 
     southPanel.add(buyBtn);
     southPanel.add(createItemBtn);
-    southPanel.add(restoreBtn);
+    southPanel.add(restockBtn);
     southPanel.add(deleteItemBtn);
     southPanel.add(quitBtn);
 
@@ -132,7 +132,7 @@ public class MainView extends JFrame {
   public void addMainInfo() {
     ImageIcon icon = new ImageIcon("56377101_2186558651413414_7823467754991648768_n.png");
     Image img = icon.getImage();
-    Image newImg = img.getScaledInstance(345, 255, java.awt.Image.SCALE_SMOOTH);
+    Image newImg = img.getScaledInstance(480, 201, java.awt.Image.SCALE_SMOOTH);
     icon = new ImageIcon(newImg);
 
     mainTitle = new JLabel("Welcome to the Toolshop");
@@ -222,8 +222,8 @@ public class MainView extends JFrame {
     createItemBtn = new JButton("Create Item");
     createItemBtn.setPreferredSize(new Dimension(225, 225));
 
-    restoreBtn = new JButton("Restock");
-    restoreBtn.setPreferredSize(new Dimension(225, 225));
+    restockBtn = new JButton("Restock");
+    restockBtn.setPreferredSize(new Dimension(225, 225));
 
     searchBarBtn = new JButton("Search");
     searchBarBtn.setPreferredSize(new Dimension(800, 70));
@@ -296,7 +296,7 @@ public class MainView extends JFrame {
    * 
    * @param l the ActionListener object used to enable on-click functionality
    */
-  public void addCreateOrderListener(ActionListener l) {
+  public void addCreateItemListener(ActionListener l) {
     createItemBtn.addActionListener(l);
   }
 
@@ -305,8 +305,8 @@ public class MainView extends JFrame {
    * 
    * @param l the ActionListener object used to enable on-click functionality
    */
-  public void addRestoreAllListener(ActionListener l) {
-    restoreBtn.addActionListener(l);
+  public void addRestockListener(ActionListener l) {
+    restockBtn.addActionListener(l);
   }
 
   /**
@@ -324,7 +324,7 @@ public class MainView extends JFrame {
    * 
    * @param l the ActionListener object used to enable on-click functionality
    */
-  public void addDecreaseQuantityListener(ActionListener l) {
+  public void addBuyListener(ActionListener l) {
     buyBtn.addActionListener(l);
   }
 
