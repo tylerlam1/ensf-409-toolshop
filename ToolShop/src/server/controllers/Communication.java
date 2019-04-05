@@ -249,7 +249,7 @@ public class Communication implements DataCodes {
    */
   public void addNewTool() throws ClassNotFoundException, IOException {
     int readCount = 0;
-    
+
     try {
       String description = (String) socketIn.readObject();
       readCount++;
@@ -268,7 +268,7 @@ public class Communication implements DataCodes {
       }
     } catch (NumberFormatException e) {
       // if an exception occurs, read the rest of what the client sends
-      while(readCount < 4 - 1) {
+      while (readCount < 4 - 1) {
         readCount++;
         socketIn.readObject();
       }
@@ -290,6 +290,11 @@ public class Communication implements DataCodes {
     writeObject(toolList);
   }
 
+  /**
+   * writes out to a socket and resets it
+   * 
+   * @param obj the object that will be written out
+   */
   private void writeObject(Object obj) throws IOException {
     socketOut.writeObject(obj);
     socketOut.reset();

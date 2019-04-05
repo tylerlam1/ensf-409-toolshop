@@ -52,8 +52,8 @@ public class Communication implements DataCodes {
   /**
    * Function to send data to the backend.
    * 
-   * @param dataType
-   * @param object
+   * @param dataType the type of command requested
+   * @param object   the object of interest
    */
   public Object sendObject(String dataType, Object object) {
     Object obj = null;
@@ -74,6 +74,11 @@ public class Communication implements DataCodes {
     return obj;
   }
 
+  /**
+   * sends the datatype to the server to perform certain actions
+   * 
+   * @param dataType the datatype (type of command)
+   */
   public Object sendCode(String dataType) {
     Object obj = null;
 
@@ -134,6 +139,11 @@ public class Communication implements DataCodes {
     return object;
   }
 
+  /**
+   * write the object to the output socket
+   * 
+   * @param obj the object that will be written out
+   */
   private void writeObject(Object obj) throws IOException {
     socketOut.writeObject(obj);
     socketOut.reset();
