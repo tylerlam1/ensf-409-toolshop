@@ -53,9 +53,8 @@ public class MainController implements DataCodes {
     this.loginView = loginView;
     this.communication = communication;
 
-    ArrayList<Item> items = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
-
-    mainView.setTableData(items);
+    itemCollection = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+    mainView.setTableData(itemCollection);
 
     addMainListeners();
   }
@@ -83,57 +82,99 @@ public class MainController implements DataCodes {
 
             boolean hasEmptyField = description.length() == 0 || supplierId.length() == 0 || quantity.length() == 0
                 || price.length() == 0;
-
             if (hasEmptyField) {
               itemPrompt.setLabel("Please fill out all the fields.");
             } else {
-              itemCollection = (ArrayList<Item>) communication.sendItemInfo(description, quantity, price, supplierId);
-              itemPrompt.setVisible(false);
+              Object temp = communication.sendItemInfo(description, quantity, price, supplierId);
+              if (temp instanceof ArrayList<?>) {
+                itemPrompt.setVisible(false);
+                itemCollection = (ArrayList<Item>) temp;
+                mainView.setTableData(itemCollection);
+              } else {
+                mainView.showErrorDialog("Cannot add item. Supplier not found or entries were invalid.", "Error Found");
+                itemPrompt.setVisible(false);
+                return;
+              }
             }
           }
         });
       }
     });
 
+    mainView.addRestoreAllListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        itemCollection = (ArrayList<Item>) communication.sendCode(ORDER_ITEMS);
+        mainView.setTableData(itemCollection);
+      }
+    });
+
     mainView.addDeleteItemListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // int row = mainView.getTextArea().getSelectedRow();
-        // Item deleteThisItem = itemCollection.get(row);
-        // itemCollection = (ArrayList<Item>)communication.sendObject(DELETE_ITEM,
-        // deleteThisItem);
+        int row = mainView.getTextArea().getSelectedRow();
+        if (row == -1) {
+          mainView.showErrorDialog("Please select a item on the table to the left.", "Error Found");
+          return;
+        }
+        Item deleteThisItem = itemCollection.get(row);
+        itemCollection = (ArrayList<Item>) communication.sendObject(DELETE_ITEM, deleteThisItem);
+        mainView.setTableData(itemCollection);
       }
     });
 
     mainView.addDecreaseQuantityListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // int row = mainView.getTextArea().getSelectedRow();
-        // Item decreaseThisItem = itemCollection.get(row);
-        // String count = JOptionPane.showInputDialog(null, "How much quantity would you
-        // like to remove?");
-        // itemCollection =
-        // (ArrayList<Item>)communication.sendObjectAndCount(DECREASE_ITEM,
-        // decreaseThisItem, count);
+        int row = mainView.getTextArea().getSelectedRow();
+        if (row == -1) {
+          mainView.showErrorDialog("Please select a item on the table to the left.", "Error Found");
+          return;
+        }
+        Item decreaseThisItem = itemCollection.get(row);
+        String count = mainView.createInputDialog("How much quantity would you like to remove?");
+        Object temp = communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
+        if (temp instanceof ArrayList<?>) {
+          itemCollection = (ArrayList<Item>) temp;
+          mainView.setTableData(itemCollection);
+        } else {
+          mainView.showErrorDialog("Invalid Entry. Please try again!", "Error Found");
+        }
       }
     });
 
     mainView.addSearchBarListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // Item itemOfInterest = null;
-        // String searchChoice = (String) comboBox.getSelectedItem();
-        // if (searchChoice.equals("ID")) {
-        // itemOfInterest = communication.send(SEARCH_TOOL_ID,
-        // mainView.getSearchArea());
-        // } else {
-        // itemOfInterest = communication.send(SEARCH_TOOL_NAME,
-        // mainView.getSearchArea());
-        // }
-        // if (itemOfInterest == null) {
-        // JOptionPane.showMessageDialog(null, "Item not found!");
-        // }
-        // JOptionPane.showMessageDialog(null, itemOfInterest);
+        Item itemOfInterest = null;
+        String searchChoice = (String) mainView.getDropdown().getSelectedItem();
+        if (searchChoice.equals("ID")) {
+          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID,
+              mainView.getSearchArea().getText());
+          if (temporaryObject instanceof Item) {
+            itemOfInterest = (Item) temporaryObject;
+          } else {
+            mainView.showErrorDialog("Item Not Found!", "Error Found");
+            return;
+          }
+        } else {
+          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME,
+              mainView.getSearchArea().getText());
+          if (temporaryObject instanceof Item) {
+            itemOfInterest = (Item) temporaryObject;
+          } else {
+            mainView.showErrorDialog("Item Not Found!", "Error Found");
+            return;
+          }
+        }
+        int index = 0;
+        for (Item a : itemCollection) {
+          if (a.equals(itemOfInterest)) {
+            break;
+          }
+          index++;
+        }
+        mainView.getTextArea().setRowSelectionInterval(index, index);
       }
     });
 

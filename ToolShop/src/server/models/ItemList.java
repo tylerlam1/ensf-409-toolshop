@@ -83,7 +83,7 @@ public class ItemList {
    */
   public void deleteItem(Item toDelete) {
     for (Item item : list) {
-      if (item == toDelete) {
+      if (item.equals(toDelete)) {
         list.remove(item);
         return;
       }

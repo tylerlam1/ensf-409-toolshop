@@ -110,6 +110,8 @@ public class ItemDialogView extends JFrame {
 
     /**
      * constructs the panels and Create Item window dialog with different components
+     * 
+     * @param name the name in the Item Dialog
      */
     public ItemDialogView(String name) {
         super(name);
@@ -130,8 +132,8 @@ public class ItemDialogView extends JFrame {
         JPanel thirdPanel = new JPanel(new FlowLayout());
         JPanel fourthPanel = new JPanel(new FlowLayout());
 
-        JLabel title = new JLabel("Create a New Item");
-        firstPanel.add(title);
+        label = new JLabel("Create a New Item");
+        firstPanel.add(label);
         secondPanel.add(new JLabel("Item Description: "));
         secondPanel.add(descriptionField);
         secondPanel.add(new JLabel("Item Supplier ID: "));

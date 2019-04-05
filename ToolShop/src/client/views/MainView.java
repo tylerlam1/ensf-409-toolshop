@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -108,6 +109,10 @@ public class MainView extends JFrame {
     add(centerPanel);
 
     pack();
+  }
+
+  public JTextField getSearchArea() {
+    return searchBar;
   }
 
   /**
@@ -221,8 +226,15 @@ public class MainView extends JFrame {
    */
   public void setTableData(ArrayList<Item> data) {
     ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
+    for (Item i : data) {
+      System.out.println(i);
+    }
     theModel.setData(data);
     theModel.fireTableDataChanged();
+  }
+
+  public JComboBox getDropdown() {
+    return dropDownMenu;
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
@@ -232,8 +244,8 @@ public class MainView extends JFrame {
   /**
    * returns the text area. Used for writing the list of tools to the text area.
    */
-  public void getTextArea() {
-
+  public JTable getTextArea() {
+    return leftTextArea;
   }
 
   /**
@@ -244,7 +256,17 @@ public class MainView extends JFrame {
    * @param title the title on the dialog box
    */
   public void showErrorDialog(String msg, String title) {
+    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.ERROR_MESSAGE);
+  }
 
+  /**
+   * shows a message dialog for information
+   * 
+   * @param msg the main message of the dialog box
+   * @return the input message placed into input area on dialog box
+   */
+  public String createInputDialog(String message) {
+    return JOptionPane.showInputDialog(null, message);
   }
 
   /**
@@ -254,7 +276,16 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addCreateOrderListener(ActionListener l) {
+    createItemBtn.addActionListener(l);
+  }
 
+  /**
+   * adds a listener for a restock all button.
+   * 
+   * @param l the ActionListener object used to enable on-click functionality
+   */
+  public void addRestoreAllListener(ActionListener l) {
+    restoreBtn.addActionListener(l);
   }
 
   /**
@@ -264,7 +295,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addQuitListener(ActionListener l) {
-
+    quitBtn.addActionListener(l);
   }
 
   /**
@@ -273,7 +304,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addDecreaseQuantityListener(ActionListener l) {
-
+    buyBtn.addActionListener(l);
   }
 
   /**
@@ -283,7 +314,7 @@ public class MainView extends JFrame {
    * @param l the ActionListener object used to enable on-click functionality
    */
   public void addSearchBarListener(ActionListener l) {
-
+    searchBarBtn.addActionListener(l);
   }
 
   /**
@@ -293,6 +324,6 @@ public class MainView extends JFrame {
    * @param l the Actionlistener object used to enable on-click functionality
    */
   public void addDeleteItemListener(ActionListener l) {
-
+    deleteItemBtn.addActionListener(l);
   }
 }

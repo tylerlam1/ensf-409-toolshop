@@ -113,6 +113,11 @@ public class Item implements Serializable {
     return String.format("%4d%16s%11d%8.2f  %-24s\n", id, description, quantity, price, supplier.getName());
   }
 
+  public boolean equals(Item other) {
+    return id == other.getId() && quantity == other.getQuantity() && description.equals(other.getDescription())
+        && price == other.getPrice() && supplier.getId() == other.getSupplier().getId();
+  }
+
   /**
    * Gets a header for labelling the stringified version of a single item or
    * multiple items in a table. Implemented as a static class as it does not
