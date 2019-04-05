@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 /**
  * Contains the information about each tool/item in the shop.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class Item implements Serializable {
 
@@ -111,6 +115,11 @@ public class Item implements Serializable {
    */
   public String toString() {
     return String.format("%4d%16s%11d%8.2f  %-24s\n", id, description, quantity, price, supplier.getName());
+  }
+
+  public boolean equals(Item other) {
+    return id == other.getId() && quantity == other.getQuantity() && description.equals(other.getDescription())
+        && price == other.getPrice() && supplier.getId() == other.getSupplier().getId();
   }
 
   /**

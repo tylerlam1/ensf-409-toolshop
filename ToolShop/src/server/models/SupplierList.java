@@ -10,6 +10,10 @@ import java.util.ArrayList;
 /**
  * A wrapper for the ArrayList that contains all the suppliers that provide
  * items to the shop.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class SupplierList {
 

@@ -1,14 +1,29 @@
 package server.models;
 
-/**
- * UserInformation
- */
-public class UserInformation {
+import java.io.Serializable;
 
+/**
+ * Stores the relevant loginID and password for a particular user
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
+ */
+public class UserInformation implements Serializable {
+
+  /**
+   * the login ID
+   */
   private String loginId;
+
+  /**
+   * the login password
+   */
   private String loginPassword;
 
   /**
+   * Returns the ID of the user
+   * 
    * @return the login Id
    */
   public String getId() {
@@ -16,6 +31,8 @@ public class UserInformation {
   }
 
   /**
+   * Returns the login Password
+   * 
    * @return the loginPassword
    */
   public String getPassword() {
@@ -23,6 +40,8 @@ public class UserInformation {
   }
 
   /**
+   * sets the ID of the user
+   * 
    * @param loginId the loginId to set
    */
   public void setId(String loginId) {
@@ -30,6 +49,8 @@ public class UserInformation {
   }
 
   /**
+   * Sets the password of the user
+   * 
    * @param loginPassword the loginPassword to set
    */
   public void setPassword(String loginPassword) {

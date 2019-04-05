@@ -2,6 +2,10 @@ package server.models;
 
 /**
  * Contains settings for orders made by the shop.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public interface Quantities {
 

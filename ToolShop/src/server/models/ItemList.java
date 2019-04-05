@@ -10,9 +10,12 @@ import java.util.ArrayList;
 /**
  * A wrapper for an ArrayList of Item objects. Contains logic for adding items,
  * searching for items by name/id, and reading items from text.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class ItemList {
-
 
   /**
    * The list of items in the Shop
@@ -83,7 +86,7 @@ public class ItemList {
    */
   public void deleteItem(Item toDelete) {
     for (Item item : list) {
-      if (item == toDelete) {
+      if (item.equals(toDelete)) {
         list.remove(item);
         return;
       }

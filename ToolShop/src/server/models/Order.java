@@ -6,6 +6,10 @@ import java.util.Random;
 
 /**
  * The class that contains all information for each order.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class Order implements Quantities {
 

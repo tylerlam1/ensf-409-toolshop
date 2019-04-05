@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Communication",
+            "request": "launch",
+            "mainClass": "server.controllers.Communication",
+            "projectName": "src_d34a7ef5"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LoginController",
+            "request": "launch",
+            "mainClass": "client.controllers.LoginController",
+            "projectName": "src_d34a7ef5"
+        }
+    ]
+}
