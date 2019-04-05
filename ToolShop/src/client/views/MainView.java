@@ -193,7 +193,7 @@ public class MainView extends JFrame {
   public void addSearchArea() {
     String[] options = { "Description", "ID" };
 
-    searchBar = new JTextField("Search for a item");
+    searchBar = new JTextField("Search for an item");
     searchBar.setPreferredSize(new Dimension(800, 100));
     searchBar.setMaximumSize(searchBar.getPreferredSize());
 
