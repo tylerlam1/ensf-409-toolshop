@@ -57,6 +57,17 @@ public class ToolShopTableModel extends AbstractTableModel {
   }
 
   /**
+   * returns the name of a column
+   * 
+   * @param column the index of the column
+   * @return the name of the column
+   */
+  @Override
+  public String getColumnName(int column) {
+    return columnHeaders[column];
+  }
+
+  /**
    * gets a particular data value at a chosen row index and column index
    * 
    * @return the item data with the data at the specified row and column

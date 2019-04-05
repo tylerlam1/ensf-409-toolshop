@@ -81,7 +81,7 @@ public class LoginController implements DataCodes {
    * shows the login screen view
    */
   public void showView() {
-    mainView.setVisible(true);
+    loginView.setVisible(true);
   }
 
   /**
@@ -90,7 +90,7 @@ public class LoginController implements DataCodes {
    */
   public static void main(String[] args) {
     LoginView loginView = new LoginView("Login");
-    MainView mainView = new MainView("Main");
+    MainView mainView = new MainView("Main Window");
     Communication communication = new Communication("localhost", 3000);
 
     LoginController loginController = new LoginController(loginView, mainView, communication);
