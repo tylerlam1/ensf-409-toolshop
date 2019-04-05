@@ -1,6 +1,6 @@
 ****************************************
-ORDER ID:                93121
-Date ordered:            Thu Apr 04 21:06:24 MDT 2019
+ORDER ID:                34929
+Date ordered:            Thu Apr 04 21:38:46 MDT 2019
 
 Item description:        Widgets
 Amount ordered:          40
@@ -34,25 +34,9 @@ Item description:        Barge Bogs
 Amount ordered:          15
 Supplier:                Biff Builders
 
-Item description:        Iggy Orks
-Amount ordered:          28
-Supplier:                Irkle Industries
-
 Item description:        Orf Dappers
 Amount ordered:          18
 Supplier:                Fiddleys Makes Stuff Inc.
-
-Item description:        Tin Wits
-Amount ordered:          27
-Supplier:                Tic Tac Manufacturing
-
-Item description:        hey
-Amount ordered:          38
-Supplier:                Irkle Industries
-
-Item description:        heya
-Amount ordered:          38
-Supplier:                Flip Works Inc.
 
 ****************************************
 

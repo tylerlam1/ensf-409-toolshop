@@ -91,7 +91,7 @@ public class MainController implements DataCodes {
                 itemCollection = (ArrayList<Item>) temp;
                 mainView.setTableData(itemCollection);
               } else {
-                JOptionPane.showMessageDialog(null, "Cannot add item. Supplier not found.");
+                JOptionPane.showMessageDialog(null, "Cannot add item. Supplier not found or entries were invalid.");
                 itemPrompt.setVisible(false);
                 return;
               }
@@ -133,8 +133,13 @@ public class MainController implements DataCodes {
         }
         Item decreaseThisItem = itemCollection.get(row);
         String count = JOptionPane.showInputDialog(null, "How much quantity would you like to remove?");
-        itemCollection = (ArrayList<Item>) communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
-        mainView.setTableData(itemCollection);
+        Object temp = communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
+        if (temp instanceof ArrayList<?>) {
+          itemCollection = (ArrayList<Item>) temp;
+          mainView.setTableData(itemCollection);
+        } else {
+          JOptionPane.showMessageDialog(null, "Invalid entry.");
+        }
       }
     });
 
