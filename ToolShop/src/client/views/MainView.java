@@ -130,7 +130,7 @@ public class MainView extends JFrame {
    * Adds the logo and a welcome message to the GUI
    */
   public void addMainInfo() {
-    ImageIcon icon = new ImageIcon("56377101_2186558651413414_7823467754991648768_n.png");
+    ImageIcon icon = new ImageIcon("logo.png");
     Image img = icon.getImage();
     Image newImg = img.getScaledInstance(480, 201, java.awt.Image.SCALE_SMOOTH);
     icon = new ImageIcon(newImg);
