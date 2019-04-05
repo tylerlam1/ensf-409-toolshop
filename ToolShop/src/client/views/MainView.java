@@ -249,10 +249,6 @@ public class MainView extends JFrame {
     return dropDownMenu;
   }
 
-  // TODO: add your own private helper functions, I'll leave that to your
-  // discretion and how you want to organize things
-
-  // UML says this is void but should probably return string or JTextArea
   /**
    * returns the text area. Used for writing the list of tools to the text area.
    */
