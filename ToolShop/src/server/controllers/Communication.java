@@ -248,11 +248,17 @@ public class Communication implements DataCodes {
    * @throws IOException
    */
   public void addNewTool() throws ClassNotFoundException, IOException {
+    int readCount = 0;
+    
     try {
       String description = (String) socketIn.readObject();
+      readCount++;
       int quantity = Integer.parseInt((String) socketIn.readObject());
+      readCount++;
       double price = Double.parseDouble((String) socketIn.readObject());
+      readCount++;
       int supplierId = Integer.parseInt((String) socketIn.readObject());
+      readCount++;
       Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
       if (newItem == null) {
         writeObject(SEND_ERROR);
@@ -261,6 +267,11 @@ public class Communication implements DataCodes {
         writeObject(toolList);
       }
     } catch (NumberFormatException e) {
+      // if an exception occurs, read the rest of what the client sends
+      while(readCount < 4 - 1) {
+        readCount++;
+        socketIn.readObject();
+      }
       writeObject(SEND_ERROR);
     }
   }
