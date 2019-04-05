@@ -13,8 +13,19 @@ import java.util.ArrayList;
  */
 public class ToolShop implements Quantities {
 
+  /**
+   * list of suppliers
+   */
   private SupplierList suppliers;
+
+  /**
+   * the inventory of items
+   */
   private ItemList items;
+
+  /**
+   * ArrayList of all the orders
+   */
   private ArrayList<Order> orders;
 
   /**

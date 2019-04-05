@@ -1,15 +1,6 @@
 ****************************************
-ORDER ID:                98132
-Date ordered:            Fri Apr 05 13:17:28 MDT 2019
-
-Item description:        Piddley Wicks
-Amount ordered:          0
-Supplier:                Piddles Industries
-
-****************************************
-
-ORDER ID:                45956
-Date ordered:            Fri Apr 05 13:18:07 MDT 2019
+ORDER ID:                74249
+Date ordered:            Fri Apr 05 14:05:34 MDT 2019
 
 Item description:        Widgets
 Amount ordered:          40

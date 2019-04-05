@@ -11,7 +11,14 @@ import java.io.Serializable;
  */
 public class UserInformation implements Serializable {
 
+  /**
+   * the login ID
+   */
   private String loginId;
+
+  /**
+   * the login password
+   */
   private String loginPassword;
 
   /**

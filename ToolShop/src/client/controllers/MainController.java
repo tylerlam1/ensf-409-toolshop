@@ -146,24 +146,17 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         Item itemOfInterest = null;
         String searchChoice = (String) mainView.getDropdown().getSelectedItem();
+        Object temporaryObject = null;
         if (searchChoice.equals("ID")) {
-          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID,
-              mainView.getSearchArea().getText());
-          if (temporaryObject instanceof Item) {
-            itemOfInterest = (Item) temporaryObject;
-          } else {
-            mainView.showErrorDialog("Item Not Found!", "Error Found");
-            return;
-          }
+          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID, mainView.getSearchArea().getText());
         } else {
-          Object temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME,
-              mainView.getSearchArea().getText());
-          if (temporaryObject instanceof Item) {
-            itemOfInterest = (Item) temporaryObject;
-          } else {
-            mainView.showErrorDialog("Item Not Found!", "Error Found");
-            return;
-          }
+          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME, mainView.getSearchArea().getText());
+        }
+        if (temporaryObject instanceof Item) {
+          itemOfInterest = (Item) temporaryObject;
+        } else {
+          mainView.showErrorDialog("Item Not Found!", "Error Found");
+          return;
         }
         int index = 0;
         for (Item a : itemCollection) {
