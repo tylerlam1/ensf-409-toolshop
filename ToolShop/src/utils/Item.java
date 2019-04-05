@@ -1,4 +1,6 @@
-package server.models;
+package utils;
+
+import server.models.*;
 
 import java.io.Serializable;
 

@@ -3,7 +3,7 @@ package client.views;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-import server.models.Item;
+import utils.Item;
 
 /**
  * Displays the Table that holds all the tool information to the user

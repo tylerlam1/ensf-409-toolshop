@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import server.models.Item;
+import utils.Item;
 
 /**
  * Main Tool Shop GUI used for handling client requests and actions

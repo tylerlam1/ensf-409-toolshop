@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import utils.Item;
+
 /**
  * The Shop object that represents the entire Shop as a whole.
  * 

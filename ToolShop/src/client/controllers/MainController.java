@@ -3,7 +3,7 @@ package client.controllers;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import server.models.Item;
+import utils.Item;
 import client.views.ItemDialogView;
 import client.views.LoginView;
 import client.views.MainView;

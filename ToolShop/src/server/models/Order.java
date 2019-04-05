@@ -3,6 +3,7 @@ package server.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import utils.Item;
 
 /**
  * The class that contains all information for each order.

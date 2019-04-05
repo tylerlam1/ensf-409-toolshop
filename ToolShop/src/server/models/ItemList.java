@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import utils.Item;
 
 /**
  * A wrapper for an ArrayList of Item objects. Contains logic for adding items,
