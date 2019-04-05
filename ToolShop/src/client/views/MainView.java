@@ -33,7 +33,7 @@ public class MainView extends JFrame {
    * button - which is used for deleting a particular item. A CREATE ITEM - which
    * is used for creating a item to add into the tool shop.
    */
-  JButton createOrderBtn, quitBtn, deleteItemBtn, createItemBtn, decreaseQuantityBtn, searchBarBtn;
+  JButton createOrderBtn, quitBtn, deleteItemBtn, restoreAllBtn, decreaseQuantityBtn, searchBarBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -68,7 +68,7 @@ public class MainView extends JFrame {
     createOrderBtn = new JButton("Create Order");
     quitBtn = new JButton("Quit");
     deleteItemBtn = new JButton("Delete Item");
-    createItemBtn = new JButton("Create item");
+    restoreAllBtn = new JButton("Restore deprived quantities to 50");
     decreaseQuantityBtn = new JButton("Decrease Item Quantity");
     searchBarBtn = new JButton("Search");
 
@@ -79,8 +79,9 @@ public class MainView extends JFrame {
     add(scroll);
     add(deleteItemBtn);
     add(createOrderBtn);
-    add(createItemBtn);
+    add(restoreAllBtn);
     add(decreaseQuantityBtn);
+    add(quitBtn);
 
     String[] options = { "Description", "ID" };
     dropDownMenu = new JComboBox(options);
@@ -94,13 +95,21 @@ public class MainView extends JFrame {
     // pack();
   }
 
+  public JTextField getSearchArea() {
+    return searchBar;
+  }
+
   public void setTableData(ArrayList<Item> data) {
     ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
-    for(Item i : data) {
+    for (Item i : data) {
       System.out.println(i);
     }
     theModel.setData(data);
     theModel.fireTableDataChanged();
+  }
+
+  public JComboBox getDropdown() {
+    return dropDownMenu;
   }
 
   // TODO: add your own private helper functions, I'll leave that to your
@@ -135,8 +144,8 @@ public class MainView extends JFrame {
     createOrderBtn.addActionListener(l);
   }
 
-  public void addCreateItemListener(ActionListener l) {
-    createItemBtn.addActionListener(l);
+  public void addRestoreAllListener(ActionListener l) {
+    restoreAllBtn.addActionListener(l);
   }
 
   /**

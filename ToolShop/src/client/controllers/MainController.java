@@ -95,15 +95,24 @@ public class MainController implements DataCodes {
       }
     });
 
+    mainView.addRestoreAllListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        itemCollection = (ArrayList<Item>) communication.sendCode(ORDER_ITEMS);
+        mainView.setTableData(itemCollection);
+      }
+    });
+
     mainView.addDeleteItemListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         int row = mainView.getTextArea().getSelectedRow();
+        if (row == -1) {
+          JOptionPane.showMessageDialog(null, "Please select a item on the table to the left.");
+          return;
+        }
         Item deleteThisItem = itemCollection.get(row);
         itemCollection = (ArrayList<Item>) communication.sendObject(DELETE_ITEM, deleteThisItem);
-        for (Item a : itemCollection) {
-          System.out.println(a);
-        }
         mainView.setTableData(itemCollection);
       }
     });
@@ -111,35 +120,35 @@ public class MainController implements DataCodes {
     mainView.addDecreaseQuantityListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // int row = mainView.getTextArea().getSelectedRow();
-        // Item decreaseThisItem = itemCollection.get(row);
-        // String count = JOptionPane.showInputDialog(null, "How much quantity would you
-        // like to remove?");
-        // itemCollection =
-        // (ArrayList<Item>)communication.sendObjectTwoObjects(DECREASE_ITEM,
-        // decreaseThisItem, count);
+        int row = mainView.getTextArea().getSelectedRow();
+        if (row == -1) {
+          JOptionPane.showMessageDialog(null, "Please select a item on the table to the left.");
+          return;
+        }
+        Item decreaseThisItem = itemCollection.get(row);
+        String count = JOptionPane.showInputDialog(null, "How much quantity would you like to remove?");
+        itemCollection = (ArrayList<Item>) communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
+        mainView.setTableData(itemCollection);
       }
     });
 
     mainView.addSearchBarListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // Item itemOfInterest = null;
-        // String searchChoice = (String) comboBox.getSelectedItem();
-        // if (searchChoice.equals("ID")) {
-        // Object itemOfInterest = communication.send(SEARCH_TOOL_ID,
-        // mainView.getSearchArea());
-        // if(itemOfInterest instanceof Item) {
-        // Item item = (Item) itemOfInterest;
-        // }
-        // } else {
-        // itemOfInterest = communication.send(SEARCH_TOOL_NAME,
-        // mainView.getSearchArea());
-        // }
-        // if (itemOfInterest == null) {
-        // JOptionPane.showMessageDialog(null, "Item not found!");
-        // }
-        // JOptionPane.showMessageDialog(null, itemOfInterest);
+        Item itemOfInterest = null;
+        String searchChoice = (String) mainView.getDropdown().getSelectedItem();
+        if (searchChoice.equals("ID")) {
+          itemOfInterest = (Item) communication.sendObject(SEARCH_TOOL_ID, mainView.getSearchArea().getText());
+          if (itemOfInterest instanceof Item) {
+            Item item = (Item) itemOfInterest;
+          }
+        } else {
+          itemOfInterest = (Item) communication.sendObject(SEARCH_TOOL_NAME, mainView.getSearchArea().getText());
+        }
+        if (itemOfInterest == null) {
+          JOptionPane.showMessageDialog(null, "Item not found!");
+        }
+        JOptionPane.showMessageDialog(null, itemOfInterest);
       }
     });
 

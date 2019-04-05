@@ -114,6 +114,26 @@ public class Communication implements DataCodes {
     return obj;
   }
 
+  /**
+   * Sends both the count and the Object to decrease a particular item's quantity
+   * 
+   * @return the item object
+   */
+  public Object sendTwoObjects(String dataType, Object obj, Object count) {
+    Object object = null;
+    try {
+      writeObject(dataType);
+      writeObject(obj);
+      writeObject(count);
+      object = socketIn.readObject();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      System.out.println("Class not found.");
+    }
+    return object;
+  }
+
   private void writeObject(Object obj) throws IOException {
     socketOut.writeObject(obj);
     socketOut.reset();
