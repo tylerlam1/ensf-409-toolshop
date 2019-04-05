@@ -232,7 +232,7 @@ public class Communication implements DataCodes {
       ArrayList<Item> toolList = theShop.getItems().getList();
       writeObject(toolList);
     } catch (NumberFormatException e) {
-      socketOut.writeObject(SEND_ERROR);
+      writeObject(SEND_ERROR);
     }
   }
 
