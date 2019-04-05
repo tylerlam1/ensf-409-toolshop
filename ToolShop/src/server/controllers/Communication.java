@@ -225,11 +225,15 @@ public class Communication implements DataCodes {
    * @throws IOException
    */
   private void decreaseItemQuantity() throws ClassNotFoundException, IOException {
-    Item itemToDecrease = (Item) socketIn.readObject();
-    int count = Integer.parseInt((String) socketIn.readObject());
-    theShop.buy(itemToDecrease, count);
-    ArrayList<Item> toolList = theShop.getItems().getList();
-    writeObject(toolList);
+    try {
+      Item itemToDecrease = (Item) socketIn.readObject();
+      int count = Integer.parseInt((String) socketIn.readObject());
+      theShop.buy(itemToDecrease, count);
+      ArrayList<Item> toolList = theShop.getItems().getList();
+      writeObject(toolList);
+    } catch (NumberFormatException e) {
+      socketOut.writeObject(SEND_ERROR);
+    }
   }
 
   /**
