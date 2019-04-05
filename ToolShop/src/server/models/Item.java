@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 /**
  * Contains the information about each tool/item in the shop.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class Item implements Serializable {
 

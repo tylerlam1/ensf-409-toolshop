@@ -17,12 +17,12 @@ public class ToolShopTableModel extends AbstractTableModel {
   /**
    * all the column headers for the table to display data
    */
-  String[] columnHeaders = { "ID", "Description", "Quantity", "Price", "Supplier" };
+  private String[] columnHeaders = { "ID", "Description", "Quantity", "Price", "Supplier" };
 
   /**
    * an arrayList of all the items available in the toolshop
    */
-  ArrayList<Item> data = new ArrayList<Item>();
+  private ArrayList<Item> data = new ArrayList<Item>();
 
   /**
    * sets the data ArrayList
@@ -31,9 +31,6 @@ public class ToolShopTableModel extends AbstractTableModel {
    */
   public void setData(ArrayList<Item> data) {
     this.data = data;
-  }
-
-  public ToolShopTableModel() {
   }
 
   /**

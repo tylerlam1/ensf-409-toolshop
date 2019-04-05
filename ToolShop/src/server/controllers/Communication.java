@@ -300,6 +300,11 @@ public class Communication implements DataCodes {
     socketOut.reset();
   }
 
+  /**
+   * the MAIN function that runs the server side of the application
+   * 
+   * @param args the command line argument that will not be used
+   */
   public static void main(String[] args) {
     try {
       SupplierList suppliers = new SupplierList("suppliers.txt");

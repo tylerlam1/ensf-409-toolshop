@@ -5,6 +5,10 @@ import java.io.Serializable;
 /**
  * Contains the data from the text file for the Supplier, which supplies the
  * items to the shop.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class Supplier implements Serializable {
 
@@ -25,7 +29,7 @@ public class Supplier implements Serializable {
    */
   private String address;
 
-  /** 
+  /**
    * The primary contact of the supplier
    */
   private String contact;
@@ -34,8 +38,8 @@ public class Supplier implements Serializable {
    * Generates a new Supplier object and initializes its member variables. This
    * information is normally obtained from the text file.
    * 
-   * @param id The id of the supplier
-   * @param name The name of the supplier
+   * @param id      The id of the supplier
+   * @param name    The name of the supplier
    * @param address The address that the supplier is located at
    * @param contact The primary contact of the supplier
    */

@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 /**
  * The Shop object that represents the entire Shop as a whole.
+ * 
+ * @author Navjot Brar, Jofred Cayabyab and Tyler Lam
+ * @version 1.0.0
+ * @since March 31, 2019
  */
 public class ToolShop implements Quantities {
 

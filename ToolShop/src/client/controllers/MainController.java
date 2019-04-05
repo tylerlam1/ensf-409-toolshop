@@ -3,9 +3,6 @@ package client.controllers;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import server.models.Item;
 import client.views.ItemDialogView;
 import client.views.LoginView;
@@ -24,22 +21,22 @@ public class MainController implements DataCodes {
   /**
    * the MainView object used which will be used to control the main GUI screen
    */
-  MainView mainView;
+  private MainView mainView;
 
   /**
    * An arrayList of all the items
    */
-  ArrayList<Item> itemCollection;
+  private ArrayList<Item> itemCollection;
 
   /**
    * Communication object that allows for communication with server
    */
-  Communication communication;
+  private Communication communication;
 
   /**
    * the LoginView object used which will be opened upon quitting the Main view
    */
-  LoginView loginView;
+  private LoginView loginView;
 
   /**
    * Constructs the main controller by setting the MainView of the Controller as
@@ -106,6 +103,7 @@ public class MainController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         itemCollection = (ArrayList<Item>) communication.sendCode(ORDER_ITEMS);
         mainView.setTableData(itemCollection);
+        mainView.createMessageDialog("All items with quantity under 40 have been restocked to a quantity of 50.");
       }
     });
 

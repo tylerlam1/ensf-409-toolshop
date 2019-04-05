@@ -38,46 +38,52 @@ public class MainView extends JFrame {
    * order- which Creates an Order for the client. Additionally, QUIT - which is
    * used to quit from the main menu back into the login screen. A DELETE ITEM
    * button - which is used for deleting a particular item. A CREATE ITEM - which
-   * is used for creating a item to add into the tool shop.
+   * is used for creating a item to add into the tool shop. A SEARCH button which
+   * allows for searching. A restore all that restocks all button
    */
-  JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restoreBtn;
+  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restoreBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
    * component will be displaying a different aspect of the toolshop menu
    */
-  JPanel leftPanel, southPanel, northPanel, centerPanel, rightPanel;
+  private JPanel leftPanel, southPanel, northPanel, centerPanel, rightPanel;
 
   /**
    * this is the Table, which will have the list of tools in the toolshop for the
    * client
    */
-  JTable leftTextArea;
+  private JTable leftTextArea;
 
   /**
    * Search bar available for the client for a variety of functions, including
    * searching, etc.
    */
-  JTextField searchBar;
+  private JTextField searchBar;
 
   /**
    * Drop-Down menu available used for different functions in the search bar
    */
-  JComboBox dropDownMenu;
+  private JComboBox dropDownMenu;
 
   /**
    * The scrolling pane for the leftTextArea JTable
    */
-  JScrollPane tableScroll;
+  private JScrollPane tableScroll;
 
   /**
    * The titles for the Search area and Table
    */
   JLabel searchPrompt, tableTitle, mainTitle, toolLogo;
 
+  /**
+   * constructs the main panels, buttons and fields in the main GUI
+   * 
+   * @param name the name of the JFrame
+   */
   public MainView(String name) {
     super(name);
-    
+
     addButtons();
     addSearchArea();
     addTable();
@@ -102,7 +108,7 @@ public class MainView extends JFrame {
 
     rightPanel.add(northPanel, BorderLayout.NORTH);
     rightPanel.add(southPanel, BorderLayout.SOUTH);
-    
+
     centerPanel.add(leftPanel, BorderLayout.WEST);
     centerPanel.add(rightPanel, BorderLayout.CENTER);
 
@@ -111,6 +117,11 @@ public class MainView extends JFrame {
     pack();
   }
 
+  /**
+   * returns the search area
+   * 
+   * @return the text field from the search
+   */
   public JTextField getSearchArea() {
     return searchBar;
   }
@@ -118,7 +129,7 @@ public class MainView extends JFrame {
   /**
    * Adds the logo and a welcome message to the GUI
    */
-  public void addMainInfo(){
+  public void addMainInfo() {
     ImageIcon icon = new ImageIcon("56377101_2186558651413414_7823467754991648768_n.png");
     Image img = icon.getImage();
     Image newImg = img.getScaledInstance(345, 255, java.awt.Image.SCALE_SMOOTH);
@@ -136,16 +147,16 @@ public class MainView extends JFrame {
   /**
    * Creates the panels that make up the Main GUI
    */
-  public void addPanels(){
+  public void addPanels() {
     centerPanel = new JPanel(new BorderLayout());
-    
+
     leftPanel = new JPanel();
     leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
-    leftPanel.setPreferredSize(new Dimension(450,1000));
+    leftPanel.setPreferredSize(new Dimension(450, 1000));
 
     northPanel = new JPanel();
     northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-    northPanel.setPreferredSize(new Dimension(550,300));
+    northPanel.setPreferredSize(new Dimension(550, 300));
     northPanel.setBackground(Color.WHITE);
 
     southPanel = new JPanel();
@@ -154,13 +165,13 @@ public class MainView extends JFrame {
 
     rightPanel = new JPanel();
     rightPanel.setBackground(Color.WHITE);
-    rightPanel.setPreferredSize(new Dimension(550,1000));
+    rightPanel.setPreferredSize(new Dimension(550, 1000));
   }
 
   /**
    * Creates the table for the tool information in the Main GUI
    */
-  public void addTable(){
+  public void addTable() {
     ToolShopTableModel tableModel = new ToolShopTableModel();
     leftTextArea = new JTable(tableModel);
     leftTextArea.getColumnModel().getColumn(4).setPreferredWidth(280);
@@ -169,21 +180,21 @@ public class MainView extends JFrame {
     leftTextArea.getColumnModel().getColumn(1).setMaxWidth(150);
 
     tableScroll = new JScrollPane(leftTextArea);
-    tableScroll.setPreferredSize(new Dimension(450,600));
+    tableScroll.setPreferredSize(new Dimension(450, 600));
 
     tableTitle = new JLabel("Items currently in the inventory");
     tableTitle.setFont(new Font("Serif", Font.BOLD, 18));
     tableTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
   }
-  
+
   /**
    * Creates the combinational box and search bar for searching for items
    */
-  public void addSearchArea(){
-    String[] options= {"Description", "ID"};
+  public void addSearchArea() {
+    String[] options = { "Description", "ID" };
 
     searchBar = new JTextField("Search for a item");
-    searchBar.setPreferredSize(new Dimension(800,100));
+    searchBar.setPreferredSize(new Dimension(800, 100));
     searchBar.setMaximumSize(searchBar.getPreferredSize());
 
     dropDownMenu = new JComboBox(options);
@@ -198,21 +209,21 @@ public class MainView extends JFrame {
   /**
    * Creates the buttons for the Main GUI
    */
-  public void addButtons(){
+  public void addButtons() {
     buyBtn = new JButton("Buy");
-    buyBtn.setPreferredSize(new Dimension(225,225));
+    buyBtn.setPreferredSize(new Dimension(225, 225));
 
     quitBtn = new JButton("Quit");
-    quitBtn.setPreferredSize(new Dimension(450,225));
+    quitBtn.setPreferredSize(new Dimension(450, 225));
 
     deleteItemBtn = new JButton("Delete Item");
-    deleteItemBtn.setPreferredSize(new Dimension(225,225));
+    deleteItemBtn.setPreferredSize(new Dimension(225, 225));
 
     createItemBtn = new JButton("Create Item");
-    createItemBtn.setPreferredSize(new Dimension(225,225));
+    createItemBtn.setPreferredSize(new Dimension(225, 225));
 
     restoreBtn = new JButton("Restock");
-    restoreBtn.setPreferredSize(new Dimension(225,225));
+    restoreBtn.setPreferredSize(new Dimension(225, 225));
 
     searchBarBtn = new JButton("Search");
     searchBarBtn.setPreferredSize(new Dimension(800, 70));
@@ -222,6 +233,7 @@ public class MainView extends JFrame {
 
   /**
    * Sets the table data for the table containing the tool information
+   * 
    * @param data The data for the table
    */
   public void setTableData(ArrayList<Item> data) {
@@ -267,6 +279,15 @@ public class MainView extends JFrame {
    */
   public String createInputDialog(String message) {
     return JOptionPane.showInputDialog(null, message);
+  }
+
+  /**
+   * A message dialog used to indicate that all items have been restocked.
+   * 
+   * @param msg the display message
+   */
+  public void createMessageDialog(String msg) {
+    JOptionPane.showMessageDialog(null, msg);
   }
 
   /**

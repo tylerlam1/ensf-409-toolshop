@@ -3,9 +3,6 @@ package client.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import server.models.UserInformation;
 
 import client.views.LoginView;
@@ -24,17 +21,17 @@ public class LoginController implements DataCodes {
   /**
    * the loginView object that holds the GUI for the login screen
    */
-  LoginView loginView;
+  private LoginView loginView;
 
   /**
    * Communication object that allows for communication with server
    */
-  Communication communication;
+  private Communication communication;
 
   /**
    * the mainView object that holds the GUI used to opened upon login
    */
-  MainView mainView;
+  private MainView mainView;
 
   /**
    * constructs the basic functionality of the loginController to handle the login
@@ -69,7 +66,7 @@ public class LoginController implements DataCodes {
         Object checker = communication.sendObject(SEND_USERDATA, newUser);
         if (checker instanceof String) {
           if (checker.equals(SEND_ERROR)) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid username and password.");
+            loginView.showErrorDialog("Please enter a valid username and password.", "Error Found");
             return;
           }
         } else {
@@ -91,6 +88,8 @@ public class LoginController implements DataCodes {
   /**
    * The main function of the client. Since the login screen is shown first, main
    * is run through here as an entry point.
+   * 
+   * @param args input from the command line that will not be used
    */
   public static void main(String[] args) {
     LoginView loginView = new LoginView("Login");

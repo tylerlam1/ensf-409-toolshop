@@ -1,12 +1,14 @@
 package client.views;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -21,17 +23,17 @@ public class LoginView extends JFrame {
   /**
    * login button used to allow for a client to login
    */
-  JButton loginBtn;
+  private JButton loginBtn;
 
   /**
    * individual panel components for each part of the login GUI
    */
-  JPanel southPanel, mainPanel, northPanel;
+  private JPanel southPanel, mainPanel, northPanel, idPanel, passwordPanel;
 
   /**
    * text field areas for ID and password
    */
-  JTextField IDTextField, passwordTextField;
+  private JTextField IDTextField, passwordTextField;
 
   /**
    * constructs the login view by setting the basic titles, panels and frames
@@ -47,14 +49,22 @@ public class LoginView extends JFrame {
 
     southPanel = new JPanel();
     mainPanel = new JPanel();
+    idPanel = new JPanel();
+    idPanel.setLayout(new FlowLayout());
+    passwordPanel = new JPanel();
+    passwordPanel.setLayout(new FlowLayout());
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     northPanel = new JPanel();
 
+    idPanel.add(new JLabel("ID: "));
+    passwordPanel.add(new JLabel("Password: "));
     IDTextField = new JTextField(5);
     passwordTextField = new JTextField(5);
 
-    mainPanel.add(IDTextField);
-    mainPanel.add(passwordTextField);
+    idPanel.add(IDTextField);
+    passwordPanel.add(passwordTextField);
+    mainPanel.add(idPanel);
+    mainPanel.add(passwordPanel);
 
     northPanel.add(new JLabel("Login Screen"));
 
@@ -101,6 +111,6 @@ public class LoginView extends JFrame {
    * @param title the title of the dialog box
    */
   public void showErrorDialog(String msg, String title) {
-
+    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.ERROR_MESSAGE);
   }
 }
