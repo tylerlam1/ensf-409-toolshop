@@ -76,6 +76,13 @@ public class LoginController implements DataCodes {
         mainView.setVisible(true);
       }
     });
+
+    loginView.addCloseAppListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        loginView.setVisible(false);
+      }
+    });
   }
 
   /**
