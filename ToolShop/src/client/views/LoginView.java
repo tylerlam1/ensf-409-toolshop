@@ -1,9 +1,6 @@
 package client.views;
 
 import java.awt.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -20,7 +17,7 @@ public class LoginView extends JFrame {
   /**
    * login button used to allow for a client to login
    */
-  private JButton loginBtn;
+  private JButton loginBtn, closeBtn;
 
   /**
    * individual panel components for each part of the login GUI
@@ -30,7 +27,7 @@ public class LoginView extends JFrame {
   /**
    * Main login screen title and logo as well as ID and password text
    */
-  private JLabel mainTitle, toolLogo, idText, passwordText;
+  private JLabel mainTitle, toolLogo;
 
   /**
    * text field areas for ID and password
@@ -54,6 +51,8 @@ public class LoginView extends JFrame {
     setPanels();
     setCredentialsText();
     setTitles();
+    addButtons();
+    addSubPanels();
     addPanels();
     pack();
     centreWindow();
@@ -61,11 +60,23 @@ public class LoginView extends JFrame {
   }
 
   /**
+   * add buttons
+   */
+  public void addButtons() {
+    loginBtn = new JButton("Login");
+    loginBtn.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    closeBtn = new JButton("Close Application");
+    closeBtn.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    loginBtn.setPreferredSize(new Dimension(110, 55));
+    closeBtn.setPreferredSize(new Dimension(200, 55));
+  }
+
+  /**
    * set the panels
    */
   public void setPanels() {
-    loginBtn = new JButton("Login");
     southPanel = new JPanel();
+    southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
     mainPanel = new JPanel();
     mainPanel.setBorder(new EmptyBorder(65, 20, 20, 20));
     idPanel = new JPanel();
@@ -97,14 +108,18 @@ public class LoginView extends JFrame {
    * add everything to panels
    */
   public void addPanels() {
+    add(northPanel, BorderLayout.NORTH);
+    add(mainPanel, BorderLayout.CENTER);
+    add(southPanel, BorderLayout.SOUTH);
+  }
+
+  public void addSubPanels() {
     mainPanel.add(idPanel);
     mainPanel.add(passwordPanel);
     northPanel.add(toolLogo);
     northPanel.add(mainTitle);
     southPanel.add(loginBtn);
-    add(northPanel, BorderLayout.NORTH);
-    add(mainPanel, BorderLayout.CENTER);
-    add(southPanel, BorderLayout.SOUTH);
+    southPanel.add(closeBtn);
   }
 
   /**
@@ -165,6 +180,16 @@ public class LoginView extends JFrame {
    */
   public void addLoginListener(ActionListener l) {
     loginBtn.addActionListener(l);
+  }
+
+  /**
+   * adds a ActionListener to the close application button to close the window
+   * upon having been clicked
+   * 
+   * @param l ActionListener used to handle clicking close application
+   */
+  public void addCloseAppListener(ActionListener l) {
+    closeBtn.addActionListener(l);
   }
 
   /**

@@ -136,7 +136,7 @@ public class MainView extends JFrame {
     icon = new ImageIcon(newImg);
 
     mainTitle = new JLabel("Welcome to the Toolshop");
-    mainTitle.setFont(new Font("Serif", Font.BOLD, 24));
+    mainTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
     mainTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     toolLogo = new JLabel();
@@ -183,7 +183,7 @@ public class MainView extends JFrame {
     tableScroll.setPreferredSize(new Dimension(450, 600));
 
     tableTitle = new JLabel("Items currently in the inventory");
-    tableTitle.setFont(new Font("Serif", Font.BOLD, 18));
+    tableTitle.setFont(new Font("SansSerif", Font.BOLD, 18));
     tableTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
   }
 
@@ -202,7 +202,7 @@ public class MainView extends JFrame {
     dropDownMenu.setMaximumSize(dropDownMenu.getPreferredSize());
 
     searchPrompt = new JLabel("Search for an item by Description or ID");
-    searchPrompt.setFont(new Font("Serif", Font.BOLD, 18));
+    searchPrompt.setFont(new Font("SansSerif", Font.BOLD, 18));
     searchPrompt.setAlignmentX(Component.CENTER_ALIGNMENT);
   }
 
@@ -212,29 +212,29 @@ public class MainView extends JFrame {
   public void addButtons() {
     buyBtn = new JButton("Buy");
     buyBtn.setPreferredSize(new Dimension(225, 225));
-    buyBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    buyBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     quitBtn = new JButton("Quit");
     quitBtn.setPreferredSize(new Dimension(450, 225));
-    quitBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    quitBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     deleteItemBtn = new JButton("Delete Item");
     deleteItemBtn.setPreferredSize(new Dimension(225, 225));
-    deleteItemBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    deleteItemBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     createItemBtn = new JButton("Create Item");
     createItemBtn.setPreferredSize(new Dimension(225, 225));
-    createItemBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    createItemBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     restockBtn = new JButton("Restock");
     restockBtn.setPreferredSize(new Dimension(225, 225));
-    restockBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    restockBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     searchBarBtn = new JButton("Search");
     searchBarBtn.setPreferredSize(new Dimension(800, 70));
     searchBarBtn.setMaximumSize(searchBarBtn.getPreferredSize());
     searchBarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    searchBarBtn.setFont(new Font("Serif", Font.BOLD, 18));
+    searchBarBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
   }
 
   /**
