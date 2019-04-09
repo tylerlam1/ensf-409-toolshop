@@ -1,4 +1,4 @@
-package client.views;
+package views;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;

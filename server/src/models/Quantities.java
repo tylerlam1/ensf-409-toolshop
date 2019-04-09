@@ -1,4 +1,4 @@
-package server.models;
+package models;
 
 /**
  * Contains settings for orders made by the shop.

@@ -1,4 +1,4 @@
-package server.controllers;
+package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,9 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
+import models.*;
 import utils.DataCodes;
-import server.models.*;
 import utils.Item;
+import utils.UserInformation;
 
 /**
  * Allows for communication between the server and the client as well as create

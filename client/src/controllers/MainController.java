@@ -1,13 +1,13 @@
-package client.controllers;
+package controllers;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 
 import utils.Item;
-import client.views.ItemDialogView;
-import client.views.LoginView;
-import client.views.MainView;
 import utils.DataCodes;
+import views.ItemDialogView;
+import views.LoginView;
+import views.MainView;
 
 /**
  * Controller for the MainView GUI

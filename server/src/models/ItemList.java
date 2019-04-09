@@ -1,4 +1,4 @@
-package server.models;
+package models;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import utils.Item;
+import utils.Supplier;
 
 /**
  * A wrapper for an ArrayList of Item objects. Contains logic for adding items,

@@ -1,4 +1,4 @@
-package server.controllers;
+package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import server.models.*;
+import models.*;
 
 /**
  * Server
@@ -46,6 +46,7 @@ public class Server {
   }
 
   public void communicateClient() {
+    System.out.println("Server is now running.");
     try {
       while (true) {
         Communication communication = new Communication(theShop, serverSocket.accept());

@@ -1,13 +1,12 @@
-package client.controllers;
+package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import server.models.UserInformation;
-
-import client.views.LoginView;
-import client.views.MainView;
+import views.LoginView;
+import views.MainView;
 import utils.DataCodes;
+import utils.UserInformation;
 
 /**
  * Controller for the login screen GUI that handles login screen actions
