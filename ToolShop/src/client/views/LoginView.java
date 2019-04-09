@@ -1,16 +1,10 @@
 package client.views;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Displays the Login view GUI for the user
@@ -31,9 +25,19 @@ public class LoginView extends JFrame {
   private JPanel southPanel, mainPanel, northPanel, idPanel, passwordPanel;
 
   /**
+   * Main login screen title and logo as well as ID and password text
+   */
+  private JLabel mainTitle, toolLogo, idText, passwordText;
+
+  /**
    * text field areas for ID and password
    */
-  private JTextField IDTextField, passwordTextField;
+  private JTextField IDTextField;
+
+  /**
+   * text field for password
+   */
+  private JPasswordField passwordTextField;
 
   /**
    * constructs the login view by setting the basic titles, panels and frames
@@ -42,38 +46,94 @@ public class LoginView extends JFrame {
    */
   public LoginView(String name) {
     super(name);
-    setSize(300, 200);
+    setPreferredSize(new Dimension(700, 550));
     setLayout(new BorderLayout());
+    setPanels();
+    setCredentialsText();
+    setTitles();
+    addPanels();
+    pack();
+    centreWindow();
+    setResizable(false);
+  }
 
+  /**
+   * set the panels
+   */
+  public void setPanels() {
     loginBtn = new JButton("Login");
-
     southPanel = new JPanel();
     mainPanel = new JPanel();
+    mainPanel.setBorder(new EmptyBorder(65, 20, 20, 20));
     idPanel = new JPanel();
     idPanel.setLayout(new FlowLayout());
     passwordPanel = new JPanel();
     passwordPanel.setLayout(new FlowLayout());
+    passwordPanel.setBorder(new EmptyBorder(0, -65, 0, 0));
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     northPanel = new JPanel();
+  }
 
-    idPanel.add(new JLabel("ID: "));
-    passwordPanel.add(new JLabel("Password: "));
-    IDTextField = new JTextField(5);
-    passwordTextField = new JTextField(5);
+  /**
+   * sets the login main picture and title
+   */
+  public void setTitles() {
+    ImageIcon icon = new ImageIcon("logo.png");
+    Image img = icon.getImage();
+    Image newImg = img.getScaledInstance(480, 201, java.awt.Image.SCALE_SMOOTH);
+    icon = new ImageIcon(newImg);
+    mainTitle = new JLabel("Welcome to the Toolshop");
+    mainTitle.setFont(new Font("Serif", Font.BOLD, 24));
+    mainTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+    toolLogo = new JLabel();
+    toolLogo.setIcon(icon);
+    toolLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+  }
 
-    idPanel.add(IDTextField);
-    passwordPanel.add(passwordTextField);
+  /**
+   * add everything to panels
+   */
+  public void addPanels() {
     mainPanel.add(idPanel);
     mainPanel.add(passwordPanel);
-
-    northPanel.add(new JLabel("Login Screen"));
-
+    northPanel.add(toolLogo);
+    northPanel.add(mainTitle);
     southPanel.add(loginBtn);
-
     add(northPanel, BorderLayout.NORTH);
     add(mainPanel, BorderLayout.CENTER);
     add(southPanel, BorderLayout.SOUTH);
-    pack();
+  }
+
+  /**
+   * set login credential text and fields
+   */
+  public void setCredentialsText() {
+    JLabel idText = new JLabel("ID: ");
+    idText.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    idPanel.add(idText);
+    JLabel passwordText = new JLabel("Password: ");
+    passwordText.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    passwordPanel.add(passwordText);
+    IDTextField = new JTextField();
+    IDTextField.setPreferredSize(new Dimension(300, 40));
+    Font idFont = new Font("SansSerif", Font.PLAIN, 20);
+    IDTextField.setFont(idFont);
+    passwordTextField = new JPasswordField();
+    passwordTextField.setPreferredSize(new Dimension(300, 40));
+    Font passwordFont = new Font("SansSerif", Font.PLAIN, 20);
+    passwordTextField.setFont(passwordFont);
+    idPanel.add(IDTextField);
+    passwordPanel.add(passwordTextField);
+  }
+
+  /**
+   * opens the login window in the center of page
+   */
+  public void centreWindow() {
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    int x = (int) ((dim.getWidth() - getWidth()) / 2);
+    int y = (int) ((dim.getHeight() - getHeight()) / 2);
+    setLocation(x, y);
   }
 
   /**
@@ -91,7 +151,7 @@ public class LoginView extends JFrame {
    * @return the password text field
    */
   public String returnPasswordTextField() {
-    return passwordTextField.getText();
+    return new String(passwordTextField.getPassword());
   }
 
   /**

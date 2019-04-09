@@ -57,6 +57,11 @@ public class Server {
     }
   }
 
+  /**
+   * The main part of the application that will begin server side of application
+   * 
+   * @param args the command line argument that will not be used
+   */
   public static void main(String[] args) {
     try {
       SupplierList suppliers = new SupplierList("suppliers.txt");
