@@ -212,23 +212,29 @@ public class MainView extends JFrame {
   public void addButtons() {
     buyBtn = new JButton("Buy");
     buyBtn.setPreferredSize(new Dimension(225, 225));
+    buyBtn.setFont(new Font("Serif", Font.BOLD, 18));
 
     quitBtn = new JButton("Quit");
     quitBtn.setPreferredSize(new Dimension(450, 225));
+    quitBtn.setFont(new Font("Serif", Font.BOLD, 18));
 
     deleteItemBtn = new JButton("Delete Item");
     deleteItemBtn.setPreferredSize(new Dimension(225, 225));
+    deleteItemBtn.setFont(new Font("Serif", Font.BOLD, 18));
 
     createItemBtn = new JButton("Create Item");
     createItemBtn.setPreferredSize(new Dimension(225, 225));
+    createItemBtn.setFont(new Font("Serif", Font.BOLD, 18));
 
     restockBtn = new JButton("Restock");
     restockBtn.setPreferredSize(new Dimension(225, 225));
+    restockBtn.setFont(new Font("Serif", Font.BOLD, 18));
 
     searchBarBtn = new JButton("Search");
     searchBarBtn.setPreferredSize(new Dimension(800, 70));
     searchBarBtn.setMaximumSize(searchBarBtn.getPreferredSize());
     searchBarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    searchBarBtn.setFont(new Font("Serif", Font.BOLD, 18));
   }
 
   /**

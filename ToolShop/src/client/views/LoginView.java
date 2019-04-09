@@ -1,6 +1,7 @@
 package client.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
@@ -42,7 +43,6 @@ public class LoginView extends JFrame {
    */
   public LoginView(String name) {
     super(name);
-    setSize(300, 200);
     setLayout(new BorderLayout());
 
     loginBtn = new JButton("Login");
