@@ -20,26 +20,9 @@ import utils.Item;
  * @version 1.0.0
  * @since March 31, 2019
  */
-public class Communication implements DataCodes {
-
-  /**
-   * Server socket that accepts new incoming connections used to build new sockets
-   */
-  private ServerSocket serverSocket;
-
-  /**
-   * Socket used to implement a client-server connection
-   */
-  private Socket aSocket;
-
-  /**
-   * Pool of threads
-   */
-  private ExecutorService pool;
-
-  /**
-   * Input socket used to read from the client
-   */
+public class Communication implements DataCodes, Runnable {
+  Socket aSocket;
+  
   ObjectInputStream socketIn;
 
   /**
@@ -54,12 +37,11 @@ public class Communication implements DataCodes {
    * 
    * @param portNumber the port number used to connect the client and server
    */
-  public Communication(int portNumber, ToolShop theShop) {
+  public Communication(ToolShop theShop, Socket aSocket) {
     try {
       this.theShop = theShop;
-      serverSocket = new ServerSocket(3000);
       System.out.println("Server is now running.");
-      aSocket = serverSocket.accept();
+      this.aSocket = aSocket;
       System.out.println("A client has connected.");
       socketOut = new ObjectOutputStream(aSocket.getOutputStream());
       socketIn = new ObjectInputStream(aSocket.getInputStream());
@@ -301,23 +283,17 @@ public class Communication implements DataCodes {
     socketOut.reset();
   }
 
+  @Override
+  public void run() {
+    communicateWithClient();
+  }
+
   /**
    * the MAIN function that runs the server side of the application
    * 
    * @param args the command line argument that will not be used
    */
   public static void main(String[] args) {
-    try {
-      SupplierList suppliers = new SupplierList("suppliers.txt");
-      ItemList items = new ItemList("items.txt", suppliers);
-      ToolShop theShop = new ToolShop(suppliers, items);
-      Communication theServer = new Communication(3000, theShop);
-      theServer.communicateWithClient();
-    } catch (FileNotFoundException e) {
-      System.out.println("File(s) \"suppliers.txt\" and/or \"items.txt\" not found. Please try again.");
-      System.exit(1);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
   }
 }
