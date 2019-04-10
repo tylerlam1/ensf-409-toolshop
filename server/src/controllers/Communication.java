@@ -31,7 +31,15 @@ public class Communication implements DataCodes, Runnable {
    */
   ObjectOutputStream socketOut;
 
+  /**
+   * a tool shop class
+   */
   ToolShop theShop;
+
+  /**
+   * the database that holds all the tool information
+   */
+  DatabaseController databaseControl;
 
   /**
    * Constructs the server and initializes the client/server connection.
@@ -46,6 +54,7 @@ public class Communication implements DataCodes, Runnable {
       System.out.println("A client has connected.");
       socketOut = new ObjectOutputStream(aSocket.getOutputStream());
       socketIn = new ObjectInputStream(aSocket.getInputStream());
+      databaseControl = new DatabaseController();
     } catch (IOException e) {
       // TODO: Create formal error handling
       e.printStackTrace();
@@ -140,6 +149,10 @@ public class Communication implements DataCodes, Runnable {
    */
   private void getTools() throws IOException {
     ArrayList<Item> toolList = theShop.getItems().getList();
+    databaseControl.clearDatabase();
+    for (Item a : toolList) {
+      databaseControl.addItem(a);
+    }
     writeObject(toolList);
   }
 

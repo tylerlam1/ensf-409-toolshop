@@ -1,9 +1,54 @@
 ****************************************
-ORDER ID:                83912
-Date ordered:            Mon Apr 08 16:30:57 MDT 2019
+ORDER ID:                59738
+Date ordered:            Tue Apr 09 12:59:06 MDT 2019
+
+Item description:        Iggy Orks
+Amount ordered:          0
+Supplier:                Irkle Industries
+
+****************************************
+
+ORDER ID:                82250
+Date ordered:            Tue Apr 09 12:59:10 MDT 2019
+
+Item description:        Widgets
+Amount ordered:          40
+Supplier:                Winork Manufacturing Inc.
+
+Item description:        Grommets
+Amount ordered:          30
+Supplier:                Grommet Builders
+
+Item description:        Wedges
+Amount ordered:          35
+Supplier:                Wings Works
+
+Item description:        Wing Bats
+Amount ordered:          39
+Supplier:                Wiley Inc.
+
+Item description:        Wiggles
+Amount ordered:          20
+Supplier:                Wings Works
+
+Item description:        Bing Bobs
+Amount ordered:          25
+Supplier:                Grab Bag Inc.
+
+Item description:        Barney Bits
+Amount ordered:          29
+Supplier:                Paddy's Manufacturing
+
+Item description:        Barge Bogs
+Amount ordered:          15
+Supplier:                Biff Builders
+
+Item description:        Orf Dappers
+Amount ordered:          18
+Supplier:                Fiddleys Makes Stuff Inc.
 
 Item description:        Tin Wits
-Amount ordered:          36
+Amount ordered:          27
 Supplier:                Tic Tac Manufacturing
 
 ****************************************
