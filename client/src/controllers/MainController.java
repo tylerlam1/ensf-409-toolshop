@@ -2,7 +2,8 @@ package controllers;
 
 import java.awt.event.*;
 import java.util.ArrayList;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import utils.Item;
 import utils.DataCodes;
 import views.ItemDialogView;
@@ -176,6 +177,7 @@ public class MainController implements DataCodes {
         loginView.setVisible(true);
       }
     });
+    mainView.addSelectionListener(itemCollection);
   }
 
   /**
