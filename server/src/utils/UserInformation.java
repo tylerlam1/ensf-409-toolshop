@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public class UserInformation implements Serializable {
 
+  private static final long serialVersionUID = 5L;
+
   /**
    * the login ID
    */

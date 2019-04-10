@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public class UserInformation implements Serializable {
 
+  private static final long serialVersionUID = 5L;
+
   /**
    * the login ID
    */
@@ -20,6 +22,18 @@ public class UserInformation implements Serializable {
    * the login password
    */
   private String loginPassword;
+
+  /**
+   * Creates a new UserInformation object with the specified id and password for
+   * validation.
+   * 
+   * @param id The ID to check
+   * @param pwd The password to check
+   */
+  public UserInformation(String id, String pwd) {
+    loginId = id;
+    loginPassword = pwd;
+  }
 
   /**
    * Returns the ID of the user

@@ -139,6 +139,18 @@ public class Communication implements DataCodes {
     return object;
   }
 
+  public Object readObject() {
+    try {
+      return socketIn.readObject();
+    } catch (IOException e) {
+      System.err.println("IOException occurred.");
+      return null;
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   /**
    * write the object to the output socket
    * 

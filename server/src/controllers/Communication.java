@@ -125,9 +125,12 @@ public class Communication implements DataCodes, Runnable {
     UserInformation user = (UserInformation) socketIn.readObject();
     // TODO: Implement user validation with SQL database
     boolean validUser = true;
+    // from SQL database, get whether or not the user is a customer or owner, then send boolean
+    boolean isOwner = true;
 
     if (validUser) {
       writeObject(user);
+      writeObject(isOwner);
     } else {
       writeObject(SEND_ERROR);
     }
