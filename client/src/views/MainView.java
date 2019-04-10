@@ -342,6 +342,12 @@ public class MainView extends JFrame {
     deleteItemBtn.addActionListener(l);
   }
 
+  /**
+   * Notices when a field in the JTable has been selected and updates the
+   * "selected" text field, as well as enables the Buy and Delete buttons.
+   * 
+   * @param itemCollection the arraylist of items to get item information from
+   */
   public void addSelectionListener(ArrayList<Item> itemCollection) {
     ListSelectionModel cellSelectionModel = leftTextArea.getSelectionModel();
     cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
@@ -363,6 +369,9 @@ public class MainView extends JFrame {
     });
   }
 
+  /**
+   * Add Components to frame, then show the frame.
+   */
   public void showView() {
     // moved here to handle owner vs customer view
     leftPanel.add(tableTitle);

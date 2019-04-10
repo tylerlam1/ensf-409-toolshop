@@ -139,6 +139,11 @@ public class Communication implements DataCodes {
     return object;
   }
 
+  /**
+   * Read an object from the server socket without sending any information to the server.
+   * 
+   * @return the object from the server socket
+   */
   public Object readObject() {
     try {
       return socketIn.readObject();
