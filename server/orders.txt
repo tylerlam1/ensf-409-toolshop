@@ -1,15 +1,6 @@
 ****************************************
-ORDER ID:                59738
-Date ordered:            Tue Apr 09 12:59:06 MDT 2019
-
-Item description:        Iggy Orks
-Amount ordered:          0
-Supplier:                Irkle Industries
-
-****************************************
-
-ORDER ID:                82250
-Date ordered:            Tue Apr 09 12:59:10 MDT 2019
+ORDER ID:                20442
+Date ordered:            Wed Apr 10 01:23:51 MDT 2019
 
 Item description:        Widgets
 Amount ordered:          40
@@ -42,6 +33,10 @@ Supplier:                Paddy's Manufacturing
 Item description:        Barge Bogs
 Amount ordered:          15
 Supplier:                Biff Builders
+
+Item description:        Iggy Orks
+Amount ordered:          28
+Supplier:                Irkle Industries
 
 Item description:        Orf Dappers
 Amount ordered:          18

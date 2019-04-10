@@ -144,7 +144,7 @@ public class MainController implements DataCodes {
     mainView.addSearchBarListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        Item itemOfInterest = null;
+        Integer foundId;
         String searchChoice = (String) mainView.getDropdown().getSelectedItem();
         Object temporaryObject = null;
         if (searchChoice.equals("ID")) {
@@ -152,15 +152,16 @@ public class MainController implements DataCodes {
         } else {
           temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME, mainView.getSearchArea().getText());
         }
-        if (temporaryObject instanceof Item) {
-          itemOfInterest = (Item) temporaryObject;
+        if (temporaryObject instanceof String) {
+        	mainView.showErrorDialog("Item Not Found!", "Error Found");
+            return;
         } else {
-          mainView.showErrorDialog("Item Not Found!", "Error Found");
-          return;
+          foundId = (Integer)temporaryObject;
         }
+        
         int index = 0;
         for (Item a : itemCollection) {
-          if (a.equals(itemOfInterest)) {
+          if (a.getId() == Integer.parseInt(foundId.toString())) {
             break;
           }
           index++;

@@ -133,7 +133,11 @@ public class Communication implements DataCodes, Runnable {
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
     // TODO: Implement user validation with SQL database
-    boolean validUser = true;
+    UserInformation testUser = new UserInformation();
+    testUser.setId("dog");
+    testUser.setPassword("dog");
+    databaseControl.addUser(testUser);
+    boolean validUser = databaseControl.checkUser(user);
 
     if (validUser) {
       writeObject(user);
@@ -166,11 +170,11 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolName() throws ClassNotFoundException, IOException {
     try {
       String name = (String) socketIn.readObject();
-      Item item = theShop.getItems().getItemByName(name);
-      if (item == null) {
+      int foundInteger = databaseControl.getIdByDescription(name);
+      if (foundInteger == -1) {
         writeObject(SEND_ERROR);
       } else {
-        writeObject(item);
+        writeObject(foundInteger);
       }
     } catch (NumberFormatException e) {
       socketOut.writeObject(SEND_ERROR);
@@ -187,11 +191,12 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolId() throws ClassNotFoundException, IOException {
     try {
       int id = Integer.parseInt((String) socketIn.readObject());
-      Item item = theShop.getItems().getItemById(id);
-      if (item == null) {
+      int returnVal = databaseControl.getItemById(id);
+      Integer returnInteger = new Integer(returnVal);
+      if (returnVal == -1) {
         writeObject(SEND_ERROR);
       } else {
-        writeObject(item);
+        writeObject(returnInteger);
       }
     } catch (NumberFormatException e) {
       writeObject(SEND_ERROR);
@@ -215,6 +220,10 @@ public class Communication implements DataCodes, Runnable {
     }
 
     ArrayList<Item> toolList = theShop.getItems().getList();
+    databaseControl.clearDatabase();
+    for(Item a: toolList) {
+    	databaseControl.addItem(a);
+    }
     writeObject(toolList);
   }
 
@@ -231,6 +240,7 @@ public class Communication implements DataCodes, Runnable {
       int count = Integer.parseInt((String) socketIn.readObject());
       theShop.buy(itemToDecrease, count);
       ArrayList<Item> toolList = theShop.getItems().getList();
+      databaseControl.buyItem(itemToDecrease, count);
       writeObject(toolList);
     } catch (NumberFormatException e) {
       writeObject(SEND_ERROR);
@@ -260,6 +270,7 @@ public class Communication implements DataCodes, Runnable {
       if (newItem == null) {
         writeObject(SEND_ERROR);
       } else {
+    	databaseControl.addItem(newItem);
         ArrayList<Item> toolList = theShop.getItems().getList();
         writeObject(toolList);
       }
@@ -283,6 +294,7 @@ public class Communication implements DataCodes, Runnable {
   public void deleteTool() throws ClassNotFoundException, IOException {
     Item itemToDelete = (Item) socketIn.readObject();
     theShop.getItems().deleteItem(itemToDelete);
+    databaseControl.deleteItem(itemToDelete);
     ArrayList<Item> toolList = theShop.getItems().getList();
     writeObject(toolList);
   }
