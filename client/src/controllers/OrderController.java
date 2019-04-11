@@ -24,10 +24,8 @@ public class OrderController implements DataCodes {
   }
 
   private void getOrders() {
-    // String response = (String) communication.sendCode(GET_ORDERS);
-    // orderView.setTextArea(response);
-
-    orderView.setTextArea("Sample text");
+    String response = (String) communication.sendCode(GET_ORDERS);
+    orderView.setTextArea(response);
   }
 
   private void addListener() {

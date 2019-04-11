@@ -28,6 +28,12 @@ public class Order implements Quantities {
   private ArrayList<Item> items;
 
   /**
+   * A string representation of the order
+   */
+
+   private String orderStr;
+
+  /**
    * Creates a new Order object with a randomized id, the current time and date,
    * and an empty ArrayList of Items.
    */
@@ -36,6 +42,7 @@ public class Order implements Quantities {
     id = rand.nextInt(100000);
     dateOrdered = new Date();
     items = new ArrayList<Item>();
+    orderStr = "";
   }
 
   /**
@@ -59,6 +66,8 @@ public class Order implements Quantities {
    * received by the Shop.
    */
   public void completeOrder() {
+    orderStr = generateString();
+
     for (Item item : getItems()) {
       item.setQuantity(ORDER_TO_AMOUNT);
     }
@@ -68,17 +77,21 @@ public class Order implements Quantities {
    * Prints the complete Order in the specified format to be printed to a text
    * file.
    */
-  public String toString() {
-    String str = String.format("%-25s%d\n", "ORDER ID:", id);
-    str += String.format("%-25s%s\n\n", "Date ordered:", dateOrdered);
+  public String generateString() {
+    String str = String.format("%s\t\t%d\n", "ORDER ID:", id);
+    str += String.format("%s\t\t%s\n\n", "Date ordered:", dateOrdered);
     for (Item item : items) {
-      str += String.format("%-25s%s\n", "Item description:", item.getDescription());
-      str += String.format("%-25s%d\n", "Amount ordered:", ORDER_TO_AMOUNT - item.getQuantity());
-      str += String.format("%-25s%s\n\n", "Supplier:", item.getSupplier().getName());
+      str += String.format("%s\t%s\n", "Item description:", item.getDescription());
+      str += String.format("%s\t%d\n", "Amount ordered:", ORDER_TO_AMOUNT - item.getQuantity());
+      str += String.format("%s\t\t%s\n\n", "Supplier:", item.getSupplier().getName());
     }
 
     str += "****************************************\n";
 
     return str;
+  }
+
+  public String toString() {
+    return orderStr;
   }
 }
