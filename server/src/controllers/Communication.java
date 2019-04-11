@@ -20,8 +20,14 @@ import utils.UserInformation;
  * @since March 31, 2019
  */
 public class Communication implements DataCodes, Runnable {
+  /**
+   * Socket object to connect to the client
+   */
   Socket aSocket;
 
+  /**
+   * Reads input from client
+   */
   ObjectInputStream socketIn;
 
   /**
@@ -225,8 +231,10 @@ public class Communication implements DataCodes, Runnable {
     try {
       Item itemToDecrease = (Item) socketIn.readObject();
       int count = Integer.parseInt((String) socketIn.readObject());
-      databaseControl.getItemDatabase().buyItem(itemToDecrease, count);
+      int finalQuantity = databaseControl.getItemDatabase().buyItem(itemToDecrease, count);
       ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
+      System.out.println(finalQuantity);
+      databaseControl.getItemDatabase().updateNewQuantity(itemToDecrease, finalQuantity);
       writeObject(toolList);
     } catch (NumberFormatException e) {
       writeObject(SEND_ERROR);
@@ -318,6 +326,11 @@ public class Communication implements DataCodes, Runnable {
     return item;
   }
 
+  /**
+   * Gets the order strings
+   * 
+   * @throws IOException
+   */
   private void getOrders() throws IOException {
     String orderString = databaseControl.getItemDatabase().getOrderString();
     writeObject(orderString);

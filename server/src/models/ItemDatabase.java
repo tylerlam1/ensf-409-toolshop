@@ -174,24 +174,25 @@ public class ItemDatabase implements Quantities, DBCredentials {
     return null;
   }
 
-  public void buyItem(Item itemToDecrease, int count) {
+  public int buyItem(Item itemToDecrease, int count) {
     if (itemToDecrease.getQuantity() < count) {
       count = itemToDecrease.getQuantity();
     }
     try {
       PreparedStatement buy = connection.prepareStatement(BUY_ITEM);
-      int finalQuantity = itemToDecrease.getQuantity() - count;
+      int finalQuantity = buyHelper(itemToDecrease, count);
       buy.setInt(1, finalQuantity);
       buy.setInt(2, itemToDecrease.getId());
       buy.execute();
-      buyHelper(itemToDecrease, count);
       buy.close();
+      return finalQuantity;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return count;
   }
 
-  public void buyHelper(Item inputItem, int count) {
+  public int buyHelper(Item inputItem, int count) {
     // Check if decreasing more than the current stock
     Item item = null;
     for (Item i : items.getList()) {
@@ -215,6 +216,8 @@ public class ItemDatabase implements Quantities, DBCredentials {
         System.out.println("The new quantity is below 40. An order has been automatically made to restock.");
       }
     }
+
+    return item.getQuantity();
   }
 
   /**
@@ -245,7 +248,6 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
-      updateDatabase();
       return true;
     }
     return false;
@@ -266,7 +268,6 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
-      updateDatabase();
       return true;
     }
     return false;
@@ -295,16 +296,33 @@ public class ItemDatabase implements Quantities, DBCredentials {
   public ItemList getItemList() {
     return items;
   }
-  
+
   /**
    * updates the database to reflect locally saved toolshop
    */
   public void updateDatabase() {
-	    clearDatabase();
-	    for (Item a : items.getList()) {
-	    	System.out.println(a);
-	        addItem(a);
-	    }
+    clearDatabase();
+    for (Item a : items.getList()) {
+      System.out.println(a);
+      addItem(a);
+    }
+  }
+
+  /**
+   * 
+   */
+  public void updateNewQuantity(Item itemToDecrease, int finalQuantity) {
+    try {
+      PreparedStatement updateStmt = connection.prepareStatement(BUY_ITEM);
+
+      updateStmt.setInt(1, finalQuantity);
+      updateStmt.setInt(2, itemToDecrease.getId());
+      System.out.println(updateStmt.toString());
+      updateStmt.execute();
+      // updateStmt.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
