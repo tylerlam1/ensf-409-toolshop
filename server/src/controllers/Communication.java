@@ -125,8 +125,9 @@ public class Communication implements DataCodes, Runnable {
    */
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
-    boolean validUser = databaseControl.getLoginDatabase().checkUser(user);
-    boolean isOwner = user.getIsOwner();
+    boolean[] results = databaseControl.getLoginDatabase().checkUser(user);
+    boolean validUser = results[0];
+    boolean isOwner = results[1];
     if (validUser) {
       writeObject(user);
       writeObject(isOwner);

@@ -38,5 +38,5 @@ public interface DBCredentials {
 	/**
 	 * adds a user into the pre-existing database
 	 */
-	public static final String ADD_USER = "INSERT INTO logins (username, password) values(?,?)";
+	public static final String ADD_USER = "INSERT INTO logins (username, password, isOwner) values(?,?,?)";
 }

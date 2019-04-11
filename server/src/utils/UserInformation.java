@@ -24,11 +24,6 @@ public class UserInformation implements Serializable {
   private String loginPassword;
 
   /**
-   * determines if the user is owner or customer
-   */
-  private boolean isOwner;
-
-  /**
    * Returns the ID of the user
    * 
    * @return the login Id
@@ -44,10 +39,6 @@ public class UserInformation implements Serializable {
    */
   public String getPassword() {
     return loginPassword;
-  }
-
-  public void setIsOwner(boolean isOwner) {
-    this.isOwner = isOwner;
   }
 
   /**
@@ -68,7 +59,4 @@ public class UserInformation implements Serializable {
     this.loginPassword = loginPassword;
   }
 
-  public boolean getIsOwner() {
-    return isOwner;
-  }
 }

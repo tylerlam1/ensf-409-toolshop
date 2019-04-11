@@ -47,19 +47,22 @@ public class LoginDatabase implements DBCredentials {
 
         String id = dataValues[0];
         String password = dataValues[1];
-        boolean isOwner = Boolean.parseBoolean(dataValues[2]);
+        boolean isOwner = false;
+        if (dataValues[2].equals("true")) {
+            isOwner = true;
+        }
         UserInformation newUser = new UserInformation();
         newUser.setId(id);
         newUser.setPassword(password);
-        newUser.setIsOwner(isOwner);
-        addUser(newUser);
+        addUser(newUser, isOwner);
     }
 
-    public void addUser(UserInformation user) {
+    public void addUser(UserInformation user, boolean isOwner) {
         try {
             PreparedStatement newUser = connection.prepareStatement(ADD_USER);
             newUser.setString(1, user.getId());
             newUser.setString(2, user.getPassword());
+            newUser.setBoolean(3, isOwner);
             newUser.execute();
             newUser.close();
         } catch (SQLException e) {
@@ -67,19 +70,22 @@ public class LoginDatabase implements DBCredentials {
         }
     }
 
-    public boolean checkUser(UserInformation user) {
+    public boolean[] checkUser(UserInformation user) {
+        boolean[] retVal = new boolean[2];
         try {
             PreparedStatement findUser = connection.prepareStatement(CHECK_USER);
             findUser.setString(1, user.getId());
             findUser.setString(2, user.getPassword());
             ResultSet rs = findUser.executeQuery();
             if (rs.next()) {
-                return true;
+
+                retVal[0] = true;
+                retVal[1] = rs.getBoolean("isOwner");
             }
             findUser.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return retVal;
     }
 }
