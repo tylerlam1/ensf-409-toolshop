@@ -1,4 +1,5 @@
 ****************************************
+<<<<<<< HEAD
 ORDER ID:                10813
 Date ordered:            Thu Apr 11 13:18:27 MDT 2019
 
@@ -47,4 +48,6 @@ Amount ordered:          27
 Supplier:                Tic Tac Manufacturing
 
 ****************************************
+=======
+>>>>>>> JayJay/database-orderview
 

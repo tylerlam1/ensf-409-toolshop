@@ -12,6 +12,7 @@ import utils.DataCodes;
 import views.ItemDialogView;
 import views.LoginView;
 import views.MainView;
+import views.OrderView;
 
 /**
  * Controller for the MainView GUI
@@ -41,7 +42,11 @@ public class MainController implements DataCodes {
    * the LoginView object used which will be opened upon quitting the Main view
    */
   private LoginView loginView;
-
+  
+  /**
+   * the LoginView object used which will be opened upon quitting the Main view
+   */
+  private OrderView orderView;
   /**
    * Constructs the main controller by setting the MainView of the Controller as
    * well as the communication
@@ -49,9 +54,10 @@ public class MainController implements DataCodes {
    * @param view          the MainView object
    * @param communication the communication object
    */
-  public MainController(MainView view, LoginView loginView, Communication communication) {
+  public MainController(MainView view, LoginView loginView, OrderView orderView, Communication communication) {
     mainView = view;
     this.loginView = loginView;
+    this.orderView = orderView;
     this.communication = communication;
 
     itemCollection = (ArrayList<Item>) communication.sendCode(GET_TOOLS);

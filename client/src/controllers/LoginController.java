@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import views.LoginView;
 import views.MainView;
+import views.OrderView;
 import utils.DataCodes;
 import utils.UserInformation;
 
@@ -97,11 +98,12 @@ public class LoginController implements DataCodes {
   public static void main(String[] args) {
     LoginView loginView = new LoginView("Login");
     MainView mainView = new MainView("Main Window");
+    OrderView orderView = new OrderView("Order View");
     Communication communication = new Communication("localhost", 3000);
 
     LoginController loginController = new LoginController(loginView, mainView, communication);
-    MainController mainController = new MainController(mainView, loginView, communication);
-
+    MainController mainController = new MainController(mainView, loginView, orderView, communication);
+    OrderController orderController = new OrderController(mainView, orderView, communication);
     loginController.showView();
   }
 }

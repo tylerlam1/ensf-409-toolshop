@@ -95,6 +95,10 @@ public class Communication implements DataCodes, Runnable {
           decreaseItemQuantity();
           break;
         }
+        case GET_ORDERS: {
+          getOrders();
+          break;
+        }
         case STOP_SERVER: {
           return;
         }
@@ -315,6 +319,11 @@ public class Communication implements DataCodes, Runnable {
     }
     Item item = databaseControl.getItemDatabase().getItemByDescription(closestString);
     return item;
+  }
+
+  private void getOrders() throws IOException {
+    String orderString = databaseControl.getItemDatabase().getOrderString();
+    writeObject(orderString);
   }
 
   /**

@@ -315,6 +315,18 @@ public class ItemDatabase implements Quantities, DBCredentials {
   }
 
   /**
+   * Get order text file as a string..
+   */
+  public String getOrderString() {
+    String s = "****************************************\n";
+    for (Order order : orders) {
+      s += order;
+    }
+
+    return s;
+  }
+
+  /**
    * Create a new item based on parameters from user input
    * 
    * @param description The description of the item
