@@ -176,8 +176,7 @@ public class ItemDatabase implements Quantities, DBCredentials {
 
   public void buyItem(Item itemToDecrease, int count) {
     if (itemToDecrease.getQuantity() < count) {
-      deleteItem(itemToDecrease);
-      return;
+      count = itemToDecrease.getQuantity();
     }
     try {
       PreparedStatement buy = connection.prepareStatement(BUY_ITEM);

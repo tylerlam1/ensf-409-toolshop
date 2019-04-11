@@ -42,11 +42,12 @@ public class MainController implements DataCodes {
    * the LoginView object used which will be opened upon quitting the Main view
    */
   private LoginView loginView;
-  
+
   /**
    * the LoginView object used which will be opened upon quitting the Main view
    */
   private OrderView orderView;
+
   /**
    * Constructs the main controller by setting the MainView of the Controller as
    * well as the communication
@@ -141,13 +142,21 @@ public class MainController implements DataCodes {
         }
         Item decreaseThisItem = itemCollection.get(row);
         String count = mainView.createInputDialog("How much quantity would you like to remove?");
-        Object temp = communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
-        if (temp instanceof ArrayList<?>) {
-          itemCollection = (ArrayList<Item>) temp;
-          mainView.setTableData(itemCollection);
+        try {
+          if (Integer.parseInt(count) > 0) {
+          Object temp = communication.sendTwoObjects(DECREASE_ITEM, decreaseThisItem, count);
+          if (temp instanceof ArrayList<?>) {
+            itemCollection = (ArrayList<Item>) temp;
+            mainView.setTableData(itemCollection);
+          } else {
+            mainView.showErrorDialog("Invalid Entry. Please try again!", "Error Found");
+          }
         } else {
-          mainView.showErrorDialog("Invalid Entry. Please try again!", "Error Found");
+          mainView.showErrorDialog("Number must be greater than zero. Please try again!", "Error Found");
         }
+      } catch (NumberFormatException err) {
+        mainView.showErrorDialog("Invalid Entry. Please try again!", "Error Found");
+      }
       }
     });
 
