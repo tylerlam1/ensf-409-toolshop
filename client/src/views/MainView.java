@@ -45,7 +45,8 @@ public class MainView extends JFrame {
    * is used for creating a item to add into the tool shop. A SEARCH button which
    * allows for searching. A restore all that restocks all button
    */
-  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn, refreshBtn;
+
+  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn, refreshBtn, viewOrdersBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -202,9 +203,13 @@ public class MainView extends JFrame {
     buyBtn = new JButton("Buy");
     buyBtn.setPreferredSize(new Dimension(225, 225));
     buyBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
+    
+    viewOrdersBtn = new JButton("View orders");
+    viewOrdersBtn.setPreferredSize(new Dimension(225, 225));
+    viewOrdersBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     quitBtn = new JButton("Quit");
-    quitBtn.setPreferredSize(new Dimension(450, 225));
+    quitBtn.setPreferredSize(new Dimension(225, 225));
     quitBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
     deleteItemBtn = new JButton("Delete Item");
@@ -359,6 +364,16 @@ public class MainView extends JFrame {
   public void addDeleteItemListener(ActionListener l) {
     deleteItemBtn.addActionListener(l);
   }
+  
+  /**
+   * adds the 'delete item' listener. Creates a DELETE ITEM button used to delete
+   * a particular item from the toolshop database of the client.
+   * 
+   * @param l the Actionlistener object used to enable on-click functionality
+   */
+  public void addViewOrdersListener(ActionListener l) {
+    viewOrdersBtn.addActionListener(l);
+  }
 
   /**
    * Notices when a field in the JTable has been selected and updates the
@@ -404,9 +419,11 @@ public class MainView extends JFrame {
       southPanel.add(createItemBtn);
       southPanel.add(restockBtn);
       southPanel.add(deleteItemBtn);
+      southPanel.add(viewOrdersBtn);
     } else {
       // resize for customer view
       buyBtn.setPreferredSize(new Dimension(450, 225));
+      quitBtn.setPreferredSize(new Dimension(450, 225));
     }
     southPanel.add(quitBtn);
 
