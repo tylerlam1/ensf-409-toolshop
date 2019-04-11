@@ -193,4 +193,16 @@ public class ToolShop implements Quantities {
 
     return newItem;
   }
+
+  /**
+   * Returns the names of every item in the shop
+   * @return
+   */
+  public ArrayList<String> getItemName(){
+    ArrayList<String> temp = new ArrayList<String>();
+    for (int i = 0; i<items.getList().size(); i++){
+      temp.add(items.getList().get(i).getDescription().toLowerCase());
+    }
+    return temp;
+  }
 }

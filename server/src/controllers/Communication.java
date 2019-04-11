@@ -158,7 +158,8 @@ public class Communication implements DataCodes, Runnable {
       String name = (String) socketIn.readObject();
       Item item = theShop.getItems().getItemByName(name);
       if (item == null) {
-        writeObject(SEND_ERROR);
+        Item item2 = findClosestItem(name);
+        writeObject(item2);
       } else {
         writeObject(item);
       }
@@ -286,6 +287,51 @@ public class Communication implements DataCodes, Runnable {
     socketOut.writeObject(obj);
     socketOut.reset();
   }
+
+  /**
+   * Retrieves the closest item to what was searched for (in comparison to the name of the item)
+   * @param name name of the item 
+   * @return the closest item to the one searched for
+   */
+  private Item findClosestItem(String name){
+    ArrayList<String> temp = theShop.getItemName();
+    String closestString = temp.get(0);
+    int closestValue = 1000;
+    int costs;
+    for(int i = 0; i<temp.size(); i++){
+      costs = levenshteinDistance(temp.get(i), name);
+      if(costs < closestValue){
+        closestString = temp.get(i);
+        closestValue = costs;
+      }
+    } 
+    Item item = theShop.getItems().getItemByName(closestString);
+    return item;
+  }
+
+  /**
+   * Calculates how many replacements it takes to have one string equal another
+   * @param a a string to be compared
+   * @param b a string that will be compared from
+   * @return how many replacements were made
+   */
+  private int levenshteinDistance(String a, String b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    int [] costs = new int [b.length() + 1];
+    for (int j = 0; j < costs.length; j++)
+        costs[j] = j;
+    for (int i = 1; i <= a.length(); i++) {
+        costs[0] = i;
+        int nw = i - 1;
+        for (int j = 1; j <= b.length(); j++) {
+            int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+            nw = costs[j];
+            costs[j] = cj;
+        }
+    }
+    return costs[b.length()];
+}
 
   @Override
   public void run() {
