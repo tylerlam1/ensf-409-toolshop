@@ -12,14 +12,14 @@ public class DatabaseController implements DBCredentials {
 	private ItemDatabase ItemDatabase;
 	private LoginDatabase loginDatabase;
 
-	public DatabaseController() {
+	public DatabaseController() throws FileNotFoundException, IOException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop", "root", "root");
 			ItemDatabase = new ItemDatabase(connection);
 			loginDatabase = new LoginDatabase(connection);
 		} catch (SQLException e) {
-			e.printStackTrace();
+				printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -53,6 +53,7 @@ public class DatabaseController implements DBCredentials {
 			DatabaseController databaseControl = new DatabaseController();
 			databaseControl.getItemDatabase().setSuppliers(suppliers);
 			databaseControl.getItemDatabase().setItems(items);
+			databaseControl.getLoginDatabase().readFromFile("logins.txt");
 			Server theServer = new Server(3000);
 			theServer.communicateClient(databaseControl);
 		} catch (FileNotFoundException e) {

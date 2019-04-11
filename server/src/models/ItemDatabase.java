@@ -66,6 +66,14 @@ public class ItemDatabase implements Quantities, DBCredentials {
 
   public void setItems(ItemList items) {
     this.items = items;
+    readIntoDatabase();
+  }
+
+  public void readIntoDatabase() {
+    clearDatabase();
+    for (Item a : items.getList()) {
+      fillDatabase(a);
+    }
   }
 
   public int getIdByDescription(String description) {

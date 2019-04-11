@@ -122,8 +122,6 @@ public class Communication implements DataCodes, Runnable {
    */
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
-    databaseControl.getLoginDatabase().clearDatabase();
-    databaseControl.getLoginDatabase().readFromFile("logins.txt");
     boolean validUser = databaseControl.getLoginDatabase().checkUser(user);
 
     if (validUser) {
@@ -139,13 +137,7 @@ public class Communication implements DataCodes, Runnable {
    * @throws IOException
    */
   private void getTools() throws IOException {
-    // ArrayList<Item> toolList = theShop.getItems().getList();
-    // databaseControl.getItemDatabase().fillingDatabase("items.txt");
     ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
-    databaseControl.getItemDatabase().clearDatabase();
-    for (Item a : toolList) {
-      databaseControl.getItemDatabase().fillDatabase(a);
-    }
     writeObject(toolList);
   }
 
