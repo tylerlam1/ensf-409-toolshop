@@ -266,6 +266,7 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
+      updateDatabase();
       return true;
     }
     return false;
@@ -301,7 +302,8 @@ public class ItemDatabase implements Quantities, DBCredentials {
   public void updateDatabase() {
 	    clearDatabase();
 	    for (Item a : items.getList()) {
-	      addItem(a);
+	    	System.out.println(a);
+	        addItem(a);
 	    }
   }
 
