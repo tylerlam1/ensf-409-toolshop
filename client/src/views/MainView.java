@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import utils.Item;
 
@@ -41,7 +45,7 @@ public class MainView extends JFrame {
    * is used for creating a item to add into the tool shop. A SEARCH button which
    * allows for searching. A restore all that restocks all button
    */
-  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn;
+  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn, refreshBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -74,7 +78,9 @@ public class MainView extends JFrame {
   /**
    * The titles for the Search area and Table
    */
-  JLabel searchPrompt, tableTitle, mainTitle, toolLogo;
+  JLabel searchPrompt, tableTitle, mainTitle, toolLogo, selectedItemText;
+
+  private boolean isOwnerView;
 
   /**
    * constructs the main panels, buttons and fields in the main GUI
@@ -90,31 +96,6 @@ public class MainView extends JFrame {
     addPanels();
     addMainInfo();
 
-    leftPanel.add(tableTitle);
-    leftPanel.add(tableScroll);
-    leftPanel.add(searchPrompt);
-    leftPanel.add(dropDownMenu);
-    leftPanel.add(searchBar);
-    leftPanel.add(searchBarBtn);
-
-    southPanel.add(buyBtn);
-    southPanel.add(createItemBtn);
-    southPanel.add(restockBtn);
-    southPanel.add(deleteItemBtn);
-    southPanel.add(quitBtn);
-
-    northPanel.add(toolLogo);
-    northPanel.add(mainTitle);
-
-    rightPanel.add(northPanel, BorderLayout.NORTH);
-    rightPanel.add(southPanel, BorderLayout.SOUTH);
-
-    centerPanel.add(leftPanel, BorderLayout.WEST);
-    centerPanel.add(rightPanel, BorderLayout.CENTER);
-
-    add(centerPanel);
-
-    pack();
   }
 
   /**
@@ -142,6 +123,10 @@ public class MainView extends JFrame {
     toolLogo = new JLabel();
     toolLogo.setIcon(icon);
     toolLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+    selectedItemText = new JLabel("Select an item by clicking it to the left");
+    selectedItemText.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    selectedItemText.setAlignmentX(Component.CENTER_ALIGNMENT);
   }
 
   /**
@@ -178,7 +163,7 @@ public class MainView extends JFrame {
     leftTextArea.getColumnModel().getColumn(4).setMaxWidth(280);
     leftTextArea.getColumnModel().getColumn(1).setPreferredWidth(150);
     leftTextArea.getColumnModel().getColumn(1).setMaxWidth(150);
-
+    leftTextArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     tableScroll = new JScrollPane(leftTextArea);
     tableScroll.setPreferredSize(new Dimension(450, 600));
 
@@ -235,6 +220,30 @@ public class MainView extends JFrame {
     searchBarBtn.setMaximumSize(searchBarBtn.getPreferredSize());
     searchBarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     searchBarBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
+
+    refreshBtn = new JButton();
+    refreshBtn.setPreferredSize(new Dimension(30, 30));
+    refreshBtn.setMaximumSize(refreshBtn.getPreferredSize());
+    refreshBtn.setBorder(BorderFactory.createEmptyBorder());
+
+    ImageIcon icon = new ImageIcon("refresh.png");
+    Image img = icon.getImage();
+    Image newImg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+    icon = new ImageIcon(newImg);
+
+    refreshBtn.setIcon(icon);
+    refreshBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+    // buy and delete are defaulted to disabled until something is selected
+    buyBtn.setEnabled(false);
+    deleteItemBtn.setEnabled(false);
+  }
+
+  /**
+   * @param isOwnerView the ownerView to set
+   */
+  public void setIsOwnerView(boolean isOwnerView) {
+    this.isOwnerView = isOwnerView;
   }
 
   /**
@@ -244,9 +253,6 @@ public class MainView extends JFrame {
    */
   public void setTableData(ArrayList<Item> data) {
     ToolShopTableModel theModel = (ToolShopTableModel) leftTextArea.getModel();
-    for (Item i : data) {
-      System.out.println(i);
-    }
     theModel.setData(data);
     theModel.fireTableDataChanged();
   }
@@ -348,5 +354,88 @@ public class MainView extends JFrame {
    */
   public void addDeleteItemListener(ActionListener l) {
     deleteItemBtn.addActionListener(l);
+  }
+
+  /**
+   * Notices when a field in the JTable has been selected and updates the
+   * "selected" text field, as well as enables the Buy and Delete buttons.
+   * 
+   * @param itemCollection the arraylist of items to get item information from
+   */
+  public void addSelectionListener(ArrayList<Item> itemCollection) {
+    ListSelectionModel cellSelectionModel = leftTextArea.getSelectionModel();
+    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+
+      @Override
+      public void valueChanged(ListSelectionEvent e) {
+        int[] selectedRows = leftTextArea.getSelectedRows();
+        if (selectedRows.length == 0) {
+          selectedItemText.setText("Select an item by clicking it to the left");
+          return;
+        }
+        int row = leftTextArea.getSelectedRows()[0];
+        Item theItem = itemCollection.get(row);
+        selectedItemText.setText("Selected: " + theItem.getId() + " - " + theItem.getDescription());
+
+        buyBtn.setEnabled(true);
+        deleteItemBtn.setEnabled(true);
+      }
+    });
+  }
+
+  /**
+   * adds the refresh button listener. Creates a refresh button to fetch any new
+   * changes made by other clients.
+   * 
+   * @param l the Actionlistener object used to enable on-click functionality
+   */
+  public void addRefreshListener(ActionListener l) {
+    refreshBtn.addActionListener(l);
+  }
+
+  /**
+   * Add Components to frame, then show the frame.
+   */
+  public void showView() {
+    // moved here to handle owner vs customer view
+    JPanel titlePanel = new JPanel();
+
+    titlePanel.add(tableTitle);
+    titlePanel.add(refreshBtn);
+    titlePanel.setPreferredSize(new Dimension(800, 40));
+    titlePanel.setMaximumSize(new Dimension(800, 40));
+    leftPanel.add(titlePanel);
+    leftPanel.add(tableScroll);
+    leftPanel.add(searchPrompt);
+    leftPanel.add(dropDownMenu);
+    leftPanel.add(searchBar);
+    leftPanel.add(searchBarBtn);
+
+    southPanel.add(buyBtn);
+    if (isOwnerView) {
+      southPanel.add(createItemBtn);
+      southPanel.add(restockBtn);
+      southPanel.add(deleteItemBtn);
+    } else {
+      // resize for customer view
+      buyBtn.setPreferredSize(new Dimension(450, 225));
+    }
+    southPanel.add(quitBtn);
+
+    northPanel.add(toolLogo);
+    northPanel.add(mainTitle);
+    northPanel.add(selectedItemText);
+
+    rightPanel.add(northPanel, BorderLayout.NORTH);
+    rightPanel.add(southPanel, BorderLayout.SOUTH);
+
+    centerPanel.add(leftPanel, BorderLayout.WEST);
+    centerPanel.add(rightPanel, BorderLayout.CENTER);
+
+    add(centerPanel);
+
+    pack();
+
+    setVisible(true);
   }
 }

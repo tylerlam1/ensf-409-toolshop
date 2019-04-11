@@ -66,7 +66,6 @@ public class ItemDatabase implements Quantities, DBCredentials {
 
   public void setItems(ItemList items) {
     this.items = items;
-    readIntoDatabase();
   }
 
   public void readIntoDatabase() {
@@ -76,19 +75,26 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
-  public int getIdByDescription(String description) {
+  public Item getItemByDescription(String description) {
     try {
       PreparedStatement searchByDescriptionStatement = connection.prepareStatement(GET_ITEM_BY_DESCRIPTION);
       searchByDescriptionStatement.setString(1, description);
       ResultSet rs = searchByDescriptionStatement.executeQuery();
       if (rs.next()) {
-        return rs.getInt(1);
+        int id = rs.getInt(1);
+        String desc = rs.getString(2);
+        int quantity = rs.getInt(3);
+        double price = rs.getDouble(4);
+        int supplierId = rs.getInt(5);
+        Supplier supplier = suppliers.getSupplierById(supplierId);
+        Item item = new Item(id, desc, quantity, price, supplier);
+        return item;
       }
       searchByDescriptionStatement.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return -1;
+    return null;
   }
 
   public void addItem(Item item) {
@@ -146,19 +152,26 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
-  public int getItemById(int id) {
+  public Item getItemById(int inputId) {
     try {
       PreparedStatement searchByIdStatement = connection.prepareStatement(GET_ITEM_BY_ID);
-      searchByIdStatement.setInt(1, id);
+      searchByIdStatement.setInt(1, inputId);
       ResultSet rs = searchByIdStatement.executeQuery();
       if (rs.next()) {
-        return rs.getInt(1);
+        int id = rs.getInt(1);
+        String description = rs.getString(2);
+        int quantity = rs.getInt(3);
+        double price = rs.getDouble(4);
+        int supplierId = rs.getInt(5);
+        Supplier supplier = suppliers.getSupplierById(supplierId);
+        Item item = new Item(id, description, quantity, price, supplier);
+        searchByIdStatement.close();
+        return item;
       }
-      searchByIdStatement.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return -1;
+    return null;
   }
 
   public void buyItem(Item itemToDecrease, int count) {
@@ -318,4 +331,26 @@ public class ItemDatabase implements Quantities, DBCredentials {
     return newItem;
   }
 
+  /**
+   * Returns the names of every item in the shop
+   * 
+   * @return
+   */
+  public ArrayList<String> getItemName() {
+    String query = "SELECT description FROM item";
+    try {
+      PreparedStatement getStatement = connection.prepareStatement(query);
+      ResultSet rs = getStatement.executeQuery();
+      ArrayList<String> names = new ArrayList<String>();
+      if (rs.next()) {
+        names.add(rs.getString("description"));
+      }
+      getStatement.close();
+      System.out.println(names.size());
+      return names;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LoginController",
+            "request": "launch",
+            "mainClass": "controllers.LoginController",
+            "projectName": "ToolShop"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "controllers.Server",
+            "projectName": "server"
+        }
+    ]
+}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import utils.DataCodes;
 import utils.Item;
@@ -105,8 +106,10 @@ public class Communication implements DataCodes, Runnable {
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
         System.err.println("Ensure that the class files are consistent between client and server.");
+      } catch (SocketException e) {
+        System.out.println("Connection reset: Client closed.");
+        return;
       } catch (IOException e) {
-        // TODO: Create formal error handling
         e.printStackTrace();
       }
     }
@@ -123,9 +126,10 @@ public class Communication implements DataCodes, Runnable {
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
     boolean validUser = databaseControl.getLoginDatabase().checkUser(user);
-
+    boolean isOwner = true;
     if (validUser) {
       writeObject(user);
+      writeObject(isOwner);
     } else {
       writeObject(SEND_ERROR);
     }
@@ -151,11 +155,12 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolName() throws ClassNotFoundException, IOException {
     try {
       String name = (String) socketIn.readObject();
-      int foundInteger = databaseControl.getItemDatabase().getIdByDescription(name);
-      if (foundInteger == -1) {
-        writeObject(SEND_ERROR);
+      Item foundItem = databaseControl.getItemDatabase().getItemByDescription(name);
+      if (foundItem == null) {
+        Item item2 = findClosestItem(name);
+        writeObject(item2);
       } else {
-        writeObject(foundInteger);
+        writeObject(foundItem);
       }
     } catch (NumberFormatException e) {
       socketOut.writeObject(SEND_ERROR);
@@ -172,12 +177,11 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolId() throws ClassNotFoundException, IOException {
     try {
       int id = Integer.parseInt((String) socketIn.readObject());
-      int returnVal = databaseControl.getItemDatabase().getItemById(id);
-      Integer returnInteger = new Integer(returnVal);
-      if (returnVal == -1) {
+      Item foundItem = databaseControl.getItemDatabase().getItemById(id);
+      if (foundItem == null) {
         writeObject(SEND_ERROR);
       } else {
-        writeObject(returnInteger);
+        writeObject(foundItem);
       }
     } catch (NumberFormatException e) {
       writeObject(SEND_ERROR);
@@ -286,6 +290,55 @@ public class Communication implements DataCodes, Runnable {
   private void writeObject(Object obj) throws IOException {
     socketOut.writeObject(obj);
     socketOut.reset();
+  }
+
+  /**
+   * Retrieves the closest item to what was searched for (in comparison to the
+   * name of the item)
+   * 
+   * @param name name of the item
+   * @return the closest item to the one searched for
+   */
+  private Item findClosestItem(String name) {
+    ArrayList<String> temp = databaseControl.getItemDatabase().getItemName();
+    String closestString = temp.get(0);
+    int closestValue = 1000;
+    int costs;
+    for (int i = 0; i < temp.size(); i++) {
+      System.out.println(temp.get(i));
+      costs = levenshteinDistance(temp.get(i), name);
+      if (costs < closestValue) {
+        closestString = temp.get(i);
+        closestValue = costs;
+      }
+    }
+    Item item = databaseControl.getItemDatabase().getItemByDescription(closestString);
+    return item;
+  }
+
+  /**
+   * Calculates how many replacements it takes to have one string equal another
+   * 
+   * @param a a string to be compared
+   * @param b a string that will be compared from
+   * @return how many replacements were made
+   */
+  private int levenshteinDistance(String a, String b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    int[] costs = new int[b.length() + 1];
+    for (int j = 0; j < costs.length; j++)
+      costs[j] = j;
+    for (int i = 1; i <= a.length(); i++) {
+      costs[0] = i;
+      int nw = i - 1;
+      for (int j = 1; j <= b.length(); j++) {
+        int cj = Math.min(1 + Math.min(costs[j], costs[j - 1]), a.charAt(i - 1) == b.charAt(j - 1) ? nw : nw + 1);
+        nw = costs[j];
+        costs[j] = cj;
+      }
+    }
+    return costs[b.length()];
   }
 
   @Override

@@ -59,20 +59,17 @@ public class LoginController implements DataCodes {
       public void actionPerformed(ActionEvent e) {
         String id = loginView.returnIDTextField();
         String password = loginView.returnPasswordTextField();
-        UserInformation newUser = new UserInformation();
-        newUser.setId(id);
-        newUser.setPassword(password);
-        Object checker = communication.sendObject(SEND_USERDATA, newUser);
-        if (checker instanceof String) {
-          if (checker.equals(SEND_ERROR)) {
-            loginView.showErrorDialog("Please enter a valid username and password.", "Error Found");
-            return;
-          }
-        } else {
-          newUser = (UserInformation) checker;
+        UserInformation newUser = new UserInformation(id, password);
+        Object response = communication.sendObject(SEND_USERDATA, newUser);
+        if (response instanceof String && response.equals(SEND_ERROR)) {
+          loginView.showErrorDialog("Please enter a valid username and password.", "Error Found");
+          return;
         }
+        newUser = (UserInformation) response;
+        boolean isOwnerView = (boolean) communication.readObject();
+        mainView.setIsOwnerView(isOwnerView);
         loginView.setVisible(false);
-        mainView.setVisible(true);
+        mainView.showView();
       }
     });
 
@@ -104,6 +101,7 @@ public class LoginController implements DataCodes {
 
     LoginController loginController = new LoginController(loginView, mainView, communication);
     MainController mainController = new MainController(mainView, loginView, communication);
+
     loginController.showView();
   }
 }

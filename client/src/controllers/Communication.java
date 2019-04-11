@@ -140,6 +140,23 @@ public class Communication implements DataCodes {
   }
 
   /**
+   * Read an object from the server socket without sending any information to the server.
+   * 
+   * @return the object from the server socket
+   */
+  public Object readObject() {
+    try {
+      return socketIn.readObject();
+    } catch (IOException e) {
+      System.err.println("IOException occurred.");
+      return null;
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
    * write the object to the output socket
    * 
    * @param obj the object that will be written out

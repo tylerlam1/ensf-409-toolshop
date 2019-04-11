@@ -9,24 +9,24 @@ import utils.*;
 
 public class DatabaseController implements DBCredentials {
 	private Connection connection;
-	private ItemDatabase ItemDatabase;
+	private ItemDatabase itemDatabase;
 	private LoginDatabase loginDatabase;
 
 	public DatabaseController() throws FileNotFoundException, IOException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop", "root", "root");
-			ItemDatabase = new ItemDatabase(connection);
+			itemDatabase = new ItemDatabase(connection);
 			loginDatabase = new LoginDatabase(connection);
 		} catch (SQLException e) {
-				printStackTrace();
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public ItemDatabase getItemDatabase() {
-		return ItemDatabase;
+		return itemDatabase;
 	}
 
 	public LoginDatabase getLoginDatabase() {
@@ -53,6 +53,7 @@ public class DatabaseController implements DBCredentials {
 			DatabaseController databaseControl = new DatabaseController();
 			databaseControl.getItemDatabase().setSuppliers(suppliers);
 			databaseControl.getItemDatabase().setItems(items);
+			databaseControl.getItemDatabase().readIntoDatabase();
 			databaseControl.getLoginDatabase().readFromFile("logins.txt");
 			Server theServer = new Server(3000);
 			theServer.communicateClient(databaseControl);

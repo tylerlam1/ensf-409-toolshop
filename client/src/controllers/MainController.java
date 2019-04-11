@@ -2,7 +2,8 @@ package controllers;
 
 import java.awt.event.*;
 import java.util.ArrayList;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import utils.Item;
 import utils.DataCodes;
 import views.ItemDialogView;
@@ -144,29 +145,44 @@ public class MainController implements DataCodes {
     mainView.addSearchBarListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        Integer foundId;
+        Item itemOfInterest;
         String searchChoice = (String) mainView.getDropdown().getSelectedItem();
         Object temporaryObject = null;
+        String textBox = mainView.getSearchArea().getText();
         if (searchChoice.equals("ID")) {
-          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID, mainView.getSearchArea().getText());
-        } else {
-          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME, mainView.getSearchArea().getText());
-        }
-        if (temporaryObject instanceof String) {
-        	mainView.showErrorDialog("Item Not Found!", "Error Found");
+          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_ID, textBox);
+          if (temporaryObject instanceof Item) {
+            itemOfInterest = (Item) temporaryObject;
+          } else {
+            mainView.showErrorDialog("Item Not Found!", "Error Found");
             return;
+          }
         } else {
-          foundId = (Integer)temporaryObject;
+          temporaryObject = (Object) communication.sendObject(SEARCH_TOOL_NAME, textBox);
+          itemOfInterest = (Item) temporaryObject;
+          if (textBox.equalsIgnoreCase(itemOfInterest.getDescription()) == false) {
+            mainView.showErrorDialog("Item Not Found! Were you looking for " + itemOfInterest.getDescription(),
+                "Error Found");
+          }
         }
-        
+
         int index = 0;
         for (Item a : itemCollection) {
-          if (a.getId() == Integer.parseInt(foundId.toString())) {
+          if (a.equals(itemOfInterest)) {
             break;
           }
           index++;
         }
         mainView.getTextArea().setRowSelectionInterval(index, index);
+      }
+    });
+
+    mainView.addRefreshListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        itemCollection = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+        mainView.setTableData(itemCollection);
       }
     });
 
@@ -177,6 +193,8 @@ public class MainController implements DataCodes {
         loginView.setVisible(true);
       }
     });
+
+    mainView.addSelectionListener(itemCollection);
   }
 
   /**
