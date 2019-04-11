@@ -170,6 +170,15 @@ public class MainController implements DataCodes {
       }
     });
 
+    mainView.addRefreshListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        itemCollection = (ArrayList<Item>) communication.sendCode(GET_TOOLS);
+        mainView.setTableData(itemCollection);
+      }
+    });
+
     mainView.addQuitListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -177,6 +186,7 @@ public class MainController implements DataCodes {
         loginView.setVisible(true);
       }
     });
+
     mainView.addSelectionListener(itemCollection);
   }
 

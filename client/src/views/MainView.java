@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,7 +45,7 @@ public class MainView extends JFrame {
    * is used for creating a item to add into the tool shop. A SEARCH button which
    * allows for searching. A restore all that restocks all button
    */
-  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn;
+  private JButton buyBtn, quitBtn, deleteItemBtn, createItemBtn, searchBarBtn, restockBtn, refreshBtn;
 
   /**
    * Panels used for separating the main menu into different components. Each
@@ -220,6 +221,19 @@ public class MainView extends JFrame {
     searchBarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     searchBarBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
 
+    refreshBtn = new JButton();
+    refreshBtn.setPreferredSize(new Dimension(30, 30));
+    refreshBtn.setMaximumSize(refreshBtn.getPreferredSize());
+    refreshBtn.setBorder(BorderFactory.createEmptyBorder());
+
+    ImageIcon icon = new ImageIcon("refresh.png");
+    Image img = icon.getImage();
+    Image newImg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+    icon = new ImageIcon(newImg);
+
+    refreshBtn.setIcon(icon);
+    refreshBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
     // buy and delete are defaulted to disabled until something is selected
     buyBtn.setEnabled(false);
     deleteItemBtn.setEnabled(false);
@@ -370,11 +384,27 @@ public class MainView extends JFrame {
   }
 
   /**
+   * adds the refresh button listener. Creates a refresh button to fetch any new
+   * changes made by other clients.
+   * 
+   * @param l the Actionlistener object used to enable on-click functionality
+   */
+  public void addRefreshListener(ActionListener l) {
+    refreshBtn.addActionListener(l);
+  }
+
+  /**
    * Add Components to frame, then show the frame.
    */
   public void showView() {
     // moved here to handle owner vs customer view
-    leftPanel.add(tableTitle);
+    JPanel titlePanel = new JPanel();
+
+    titlePanel.add(tableTitle);
+    titlePanel.add(refreshBtn);
+    titlePanel.setPreferredSize(new Dimension(800, 40));
+    titlePanel.setMaximumSize(new Dimension(800, 40));
+    leftPanel.add(titlePanel);
     leftPanel.add(tableScroll);
     leftPanel.add(searchPrompt);
     leftPanel.add(dropDownMenu);
