@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.ListSelectionModel;
+import javax.swing.JTable;
+import javax.swing.JLabel;
 import utils.Item;
 import utils.DataCodes;
 import views.ItemDialogView;
@@ -192,7 +195,23 @@ public class MainController implements DataCodes {
       }
     });
 
-    mainView.addSelectionListener(itemCollection);
+    mainView.addSelectionListener(new ListSelectionListener() {
+      @Override
+      public void valueChanged(ListSelectionEvent e) {
+        JTable leftTextArea = mainView.getTextArea();
+        JLabel selectedItemText = mainView.getSelectedItemText();
+        int[] selectedRows = leftTextArea.getSelectedRows();
+        if (selectedRows.length == 0) {
+          selectedItemText.setText("Select an item by clicking it to the left");
+          return;
+        }
+        int row = leftTextArea.getSelectedRows()[0];
+        Item theItem = itemCollection.get(row);
+        selectedItemText.setText("Selected: " + theItem.getId() + " - " + theItem.getDescription());
+
+        mainView.enableButtons();
+      }
+    });
   }
 
   /**

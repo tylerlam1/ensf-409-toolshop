@@ -107,6 +107,10 @@ public class MainView extends JFrame {
     return searchBar;
   }
 
+  public JLabel getSelectedItemText() {
+    return selectedItemText;
+  }
+
   /**
    * Adds the logo and a welcome message to the GUI
    */
@@ -362,25 +366,9 @@ public class MainView extends JFrame {
    * 
    * @param itemCollection the arraylist of items to get item information from
    */
-  public void addSelectionListener(ArrayList<Item> itemCollection) {
+  public void addSelectionListener(ListSelectionListener l) {
     ListSelectionModel cellSelectionModel = leftTextArea.getSelectionModel();
-    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
-
-      @Override
-      public void valueChanged(ListSelectionEvent e) {
-        int[] selectedRows = leftTextArea.getSelectedRows();
-        if (selectedRows.length == 0) {
-          selectedItemText.setText("Select an item by clicking it to the left");
-          return;
-        }
-        int row = leftTextArea.getSelectedRows()[0];
-        Item theItem = itemCollection.get(row);
-        selectedItemText.setText("Selected: " + theItem.getId() + " - " + theItem.getDescription());
-
-        buyBtn.setEnabled(true);
-        deleteItemBtn.setEnabled(true);
-      }
-    });
+    cellSelectionModel.addListSelectionListener(l);
   }
 
   /**
@@ -437,5 +425,10 @@ public class MainView extends JFrame {
     pack();
 
     setVisible(true);
+  }
+
+  public void enableButtons() {
+    buyBtn.setEnabled(true);
+    deleteItemBtn.setEnabled(true);
   }
 }
