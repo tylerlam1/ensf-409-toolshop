@@ -47,9 +47,11 @@ public class LoginDatabase implements DBCredentials {
 
         String id = dataValues[0];
         String password = dataValues[1];
+        boolean isOwner = Boolean.parseBoolean(dataValues[2]);
         UserInformation newUser = new UserInformation();
         newUser.setId(id);
         newUser.setPassword(password);
+        newUser.setIsOwner(isOwner);
         addUser(newUser);
     }
 

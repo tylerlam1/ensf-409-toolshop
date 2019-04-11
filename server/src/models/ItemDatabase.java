@@ -342,7 +342,7 @@ public class ItemDatabase implements Quantities, DBCredentials {
       PreparedStatement getStatement = connection.prepareStatement(query);
       ResultSet rs = getStatement.executeQuery();
       ArrayList<String> names = new ArrayList<String>();
-      if (rs.next()) {
+      while (rs.next()) {
         names.add(rs.getString("description"));
       }
       getStatement.close();
