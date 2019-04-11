@@ -90,4 +90,11 @@ public interface DataCodes {
    * if failed.
    */
   public static final String SEND_USERDATA = "SEND_USERDATA";
+  
+  /**
+   * Code to handle order information retrieval.
+   * 
+   * SEND: nothing after RECEIVE: String that contains order info
+   */
+  public static final String GET_ORDERS = "GET_ORDERS";
 }
