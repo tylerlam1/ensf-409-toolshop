@@ -1,6 +1,15 @@
 ****************************************
-ORDER ID:                20442
-Date ordered:            Wed Apr 10 01:23:51 MDT 2019
+ORDER ID:                8
+Date ordered:            Thu Apr 11 03:18:02 MDT 2019
+
+Item description:        Wiggles
+Amount ordered:          0
+Supplier:                Wings Works
+
+****************************************
+
+ORDER ID:                87830
+Date ordered:            Thu Apr 11 03:18:11 MDT 2019
 
 Item description:        Widgets
 Amount ordered:          40
@@ -18,10 +27,6 @@ Item description:        Wing Bats
 Amount ordered:          39
 Supplier:                Wiley Inc.
 
-Item description:        Wiggles
-Amount ordered:          20
-Supplier:                Wings Works
-
 Item description:        Bing Bobs
 Amount ordered:          25
 Supplier:                Grab Bag Inc.
@@ -29,10 +34,6 @@ Supplier:                Grab Bag Inc.
 Item description:        Barney Bits
 Amount ordered:          29
 Supplier:                Paddy's Manufacturing
-
-Item description:        Barge Bogs
-Amount ordered:          15
-Supplier:                Biff Builders
 
 Item description:        Iggy Orks
 Amount ordered:          28
@@ -45,6 +46,10 @@ Supplier:                Fiddleys Makes Stuff Inc.
 Item description:        Tin Wits
 Amount ordered:          27
 Supplier:                Tic Tac Manufacturing
+
+Item description:        HEY
+Amount ordered:          38
+Supplier:                Irkle Industries
 
 ****************************************
 

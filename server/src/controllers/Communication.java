@@ -4,11 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import models.*;
 import utils.DataCodes;
 import utils.Item;
 import utils.UserInformation;
@@ -30,12 +27,6 @@ public class Communication implements DataCodes, Runnable {
    * Output socket used to write to the client
    */
   ObjectOutputStream socketOut;
-
-  /**
-   * a tool shop class
-   */
-  ToolShop theShop;
-
   /**
    * the database that holds all the tool information
    */
@@ -46,15 +37,14 @@ public class Communication implements DataCodes, Runnable {
    * 
    * @param portNumber the port number used to connect the client and server
    */
-  public Communication(ToolShop theShop, Socket aSocket) {
+  public Communication(Socket aSocket, DatabaseController databaseControl) {
     try {
-      this.theShop = theShop;
+      this.databaseControl = databaseControl;
       System.out.println("Server is now running.");
       this.aSocket = aSocket;
       System.out.println("A client has connected.");
       socketOut = new ObjectOutputStream(aSocket.getOutputStream());
       socketIn = new ObjectInputStream(aSocket.getInputStream());
-      databaseControl = new DatabaseController();
     } catch (IOException e) {
       // TODO: Create formal error handling
       e.printStackTrace();
@@ -132,12 +122,9 @@ public class Communication implements DataCodes, Runnable {
    */
   private void validateUser() throws ClassNotFoundException, IOException {
     UserInformation user = (UserInformation) socketIn.readObject();
-    // TODO: Implement user validation with SQL database
-    UserInformation testUser = new UserInformation();
-    testUser.setId("dog");
-    testUser.setPassword("dog");
-    databaseControl.addUser(testUser);
-    boolean validUser = databaseControl.checkUser(user);
+    databaseControl.getLoginDatabase().clearDatabase();
+    databaseControl.getLoginDatabase().readFromFile("logins.txt");
+    boolean validUser = databaseControl.getLoginDatabase().checkUser(user);
 
     if (validUser) {
       writeObject(user);
@@ -152,10 +139,12 @@ public class Communication implements DataCodes, Runnable {
    * @throws IOException
    */
   private void getTools() throws IOException {
-    ArrayList<Item> toolList = theShop.getItems().getList();
-    databaseControl.clearDatabase();
+    // ArrayList<Item> toolList = theShop.getItems().getList();
+    // databaseControl.getItemDatabase().fillingDatabase("items.txt");
+    ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
+    databaseControl.getItemDatabase().clearDatabase();
     for (Item a : toolList) {
-      databaseControl.addItem(a);
+      databaseControl.getItemDatabase().fillDatabase(a);
     }
     writeObject(toolList);
   }
@@ -170,7 +159,7 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolName() throws ClassNotFoundException, IOException {
     try {
       String name = (String) socketIn.readObject();
-      int foundInteger = databaseControl.getIdByDescription(name);
+      int foundInteger = databaseControl.getItemDatabase().getIdByDescription(name);
       if (foundInteger == -1) {
         writeObject(SEND_ERROR);
       } else {
@@ -191,7 +180,7 @@ public class Communication implements DataCodes, Runnable {
   private void searchToolId() throws ClassNotFoundException, IOException {
     try {
       int id = Integer.parseInt((String) socketIn.readObject());
-      int returnVal = databaseControl.getItemById(id);
+      int returnVal = databaseControl.getItemDatabase().getItemById(id);
       Integer returnInteger = new Integer(returnVal);
       if (returnVal == -1) {
         writeObject(SEND_ERROR);
@@ -213,16 +202,16 @@ public class Communication implements DataCodes, Runnable {
    */
   private void checkItemQuantity() throws FileNotFoundException, IOException {
     System.out.println("Inventory being checked...");
-    if (theShop.checkStock()) {
+    if (databaseControl.getItemDatabase().checkStock()) {
       System.out.println("An order has been generated. Please check the orders.txt log for the new order.");
     } else {
       System.out.println("All items have enough stock.");
     }
 
-    ArrayList<Item> toolList = theShop.getItems().getList();
-    databaseControl.clearDatabase();
-    for(Item a: toolList) {
-    	databaseControl.addItem(a);
+    ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
+    databaseControl.getItemDatabase().clearDatabase();
+    for (Item a : toolList) {
+      databaseControl.getItemDatabase().addItem(a);
     }
     writeObject(toolList);
   }
@@ -238,9 +227,8 @@ public class Communication implements DataCodes, Runnable {
     try {
       Item itemToDecrease = (Item) socketIn.readObject();
       int count = Integer.parseInt((String) socketIn.readObject());
-      theShop.buy(itemToDecrease, count);
-      ArrayList<Item> toolList = theShop.getItems().getList();
-      databaseControl.buyItem(itemToDecrease, count);
+      databaseControl.getItemDatabase().buyItem(itemToDecrease, count);
+      ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
       writeObject(toolList);
     } catch (NumberFormatException e) {
       writeObject(SEND_ERROR);
@@ -266,12 +254,12 @@ public class Communication implements DataCodes, Runnable {
       readCount++;
       int supplierId = Integer.parseInt((String) socketIn.readObject());
       readCount++;
-      Item newItem = theShop.addNewItem(description, quantity, price, supplierId);
+      Item newItem = databaseControl.getItemDatabase().addNewItem(description, quantity, price, supplierId);
       if (newItem == null) {
         writeObject(SEND_ERROR);
       } else {
-    	databaseControl.addItem(newItem);
-        ArrayList<Item> toolList = theShop.getItems().getList();
+        databaseControl.getItemDatabase().addItem(newItem);
+        ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
         writeObject(toolList);
       }
     } catch (NumberFormatException e) {
@@ -293,9 +281,8 @@ public class Communication implements DataCodes, Runnable {
    */
   public void deleteTool() throws ClassNotFoundException, IOException {
     Item itemToDelete = (Item) socketIn.readObject();
-    theShop.getItems().deleteItem(itemToDelete);
-    databaseControl.deleteItem(itemToDelete);
-    ArrayList<Item> toolList = theShop.getItems().getList();
+    databaseControl.getItemDatabase().deleteItem(itemToDelete);
+    ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
     writeObject(toolList);
   }
 

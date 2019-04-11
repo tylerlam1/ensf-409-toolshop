@@ -74,9 +74,7 @@ public class ItemList {
       return null;
     }
     Item newItem = new Item(id, description, quantity, price, supplier);
-
     list.add(newItem);
-
     return newItem;
   }
 
@@ -131,7 +129,7 @@ public class ItemList {
    * @param textLine  the line from the text file to construct the Item with.
    * @param suppliers the list of suppliers to search for the supplier ID
    */
-  private void addItemFromText(String textLine, SupplierList suppliers) {
+  public void addItemFromText(String textLine, SupplierList suppliers) {
     String[] dataValues = textLine.split(";");
 
     int id = Integer.parseInt(dataValues[0]);
