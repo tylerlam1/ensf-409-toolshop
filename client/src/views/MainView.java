@@ -416,6 +416,8 @@ public class MainView extends JFrame {
 
     southPanel.add(buyBtn);
     if (isOwnerView) {
+      buyBtn.setPreferredSize(new Dimension(225, 225));
+      quitBtn.setPreferredSize(new Dimension(225, 225));
       southPanel.add(createItemBtn);
       southPanel.add(restockBtn);
       southPanel.add(deleteItemBtn);
