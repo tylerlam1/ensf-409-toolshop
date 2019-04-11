@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import models.*;
@@ -106,8 +107,10 @@ public class Communication implements DataCodes, Runnable {
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
         System.err.println("Ensure that the class files are consistent between client and server.");
+      } catch (SocketException e) {
+        System.out.println("Connection reset: Client closed.");
+        return;
       } catch (IOException e) {
-        // TODO: Create formal error handling
         e.printStackTrace();
       }
     }
