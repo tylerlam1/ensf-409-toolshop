@@ -67,4 +67,8 @@ public class UserInformation implements Serializable {
   public void setPassword(String loginPassword) {
     this.loginPassword = loginPassword;
   }
+
+  public boolean getIsOwner() {
+    return isOwner;
+  }
 }

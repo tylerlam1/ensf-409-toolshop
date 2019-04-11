@@ -11,6 +11,7 @@ public class DatabaseController implements DBCredentials {
 	private Connection connection;
 	private ItemDatabase itemDatabase;
 	private LoginDatabase loginDatabase;
+	private SupplierDatabase supplierDatabase;
 
 	public DatabaseController() throws FileNotFoundException, IOException {
 		try {
@@ -18,6 +19,7 @@ public class DatabaseController implements DBCredentials {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop", "root", "root");
 			itemDatabase = new ItemDatabase(connection);
 			loginDatabase = new LoginDatabase(connection);
+			supplierDatabase = new SupplierDatabase(connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -31,6 +33,10 @@ public class DatabaseController implements DBCredentials {
 
 	public LoginDatabase getLoginDatabase() {
 		return loginDatabase;
+	}
+
+	public SupplierDatabase getSupplierDatabase() {
+		return supplierDatabase;
 	}
 
 	public void close() {
@@ -54,6 +60,7 @@ public class DatabaseController implements DBCredentials {
 			databaseControl.getItemDatabase().setSuppliers(suppliers);
 			databaseControl.getItemDatabase().setItems(items);
 			databaseControl.getItemDatabase().readIntoDatabase();
+			databaseControl.getSupplierDatabase().readSuppliersIntoDatabase(suppliers);
 			databaseControl.getLoginDatabase().readFromFile("logins.txt");
 			Server theServer = new Server(3000);
 			theServer.communicateClient(databaseControl);
