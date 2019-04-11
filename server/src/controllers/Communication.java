@@ -209,11 +209,8 @@ public class Communication implements DataCodes, Runnable {
       System.out.println("All items have enough stock.");
     }
 
+    databaseControl.getItemDatabase().updateDatabase();
     ArrayList<Item> toolList = databaseControl.getItemDatabase().getItemList().getList();
-    databaseControl.getItemDatabase().clearDatabase();
-    for (Item a : toolList) {
-      databaseControl.getItemDatabase().addItem(a);
-    }
     writeObject(toolList);
   }
 

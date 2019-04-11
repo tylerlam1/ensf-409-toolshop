@@ -246,6 +246,7 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
+      updateDatabase();
       return true;
     }
     return false;
@@ -293,6 +294,16 @@ public class ItemDatabase implements Quantities, DBCredentials {
 
   public ItemList getItemList() {
     return items;
+  }
+  
+  /**
+   * updates the database to reflect locally saved toolshop
+   */
+  public void updateDatabase() {
+	    clearDatabase();
+	    for (Item a : items.getList()) {
+	      addItem(a);
+	    }
   }
 
   /**
