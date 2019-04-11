@@ -24,6 +24,7 @@ public class LoginDatabase implements DBCredentials {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         String inputStr;
+        clearDatabase();
         while ((inputStr = br.readLine()) != null) {
             addLoginsFromText(inputStr);
         }
