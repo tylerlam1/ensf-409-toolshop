@@ -1,28 +1,10 @@
 ****************************************
-ORDER ID:		16939
-Date ordered:		Thu Apr 11 16:03:28 MDT 2019
+ORDER ID:		14578
+Date ordered:		Thu Apr 11 20:28:49 MDT 2019
 
-Item description:	Widgets
-Amount ordered:	45
-Supplier:		Winork Manufacturing Inc.
-
-****************************************
-
-ORDER ID:		96937
-Date ordered:		Thu Apr 11 16:03:54 MDT 2019
-
-Item description:	Grommets
-Amount ordered:	40
-Supplier:		Grommet Builders
-
-****************************************
-
-ORDER ID:		90202
-Date ordered:		Thu Apr 11 16:05:06 MDT 2019
-
-Item description:	Wing Bats
+Item description:	Wog Wits
 Amount ordered:	50
-Supplier:		Wiley Inc.
+Supplier:		Winork Manufacturing Inc.
 
 ****************************************
 
