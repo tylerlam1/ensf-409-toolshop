@@ -203,7 +203,7 @@ public class MainView extends JFrame {
     buyBtn = new JButton("Buy");
     buyBtn.setPreferredSize(new Dimension(225, 225));
     buyBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
-    
+
     viewOrdersBtn = new JButton("View orders");
     viewOrdersBtn.setPreferredSize(new Dimension(225, 225));
     viewOrdersBtn.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -364,7 +364,7 @@ public class MainView extends JFrame {
   public void addDeleteItemListener(ActionListener l) {
     deleteItemBtn.addActionListener(l);
   }
-  
+
   /**
    * adds the 'delete item' listener. Creates a DELETE ITEM button used to delete
    * a particular item from the toolshop database of the client.
@@ -426,6 +426,8 @@ public class MainView extends JFrame {
       // resize for customer view
       buyBtn.setPreferredSize(new Dimension(450, 225));
       quitBtn.setPreferredSize(new Dimension(450, 225));
+      southPanel.removeAll();
+      southPanel.add(buyBtn);
     }
     southPanel.add(quitBtn);
 
