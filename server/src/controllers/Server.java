@@ -7,7 +7,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Server
+ * The server of the client-server application.
+ * 
+ * @author Navjot Brar, Tyler Lam, Jofred Cayabyab
+ * @since April 11, 2018
+ * @version 1.0
  */
 public class Server {
 
@@ -26,6 +30,9 @@ public class Server {
    */
   private ExecutorService pool;
 
+  /**
+   * Constructor for the server
+   */
   public Server(int portNumber) {
     try {
       serverSocket = new ServerSocket(portNumber);
@@ -35,6 +42,9 @@ public class Server {
     }
   }
 
+  /**
+   * Communicates with the client
+   */
   public void communicateClient(DatabaseController databaseControl) {
     System.out.println("Server is now running.");
     try {

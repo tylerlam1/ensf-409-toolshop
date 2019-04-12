@@ -58,16 +58,26 @@ public class ItemDatabase implements Quantities, DBCredentials {
   }
 
   /**
+   * sets the suppliers in the item database
    * 
+   * @param suppliers2 the list of suppliers
    */
   public void setSuppliers(SupplierList suppliers2) {
     suppliers = suppliers2;
   }
 
+  /**
+   * sets the itemList class for the database
+   * 
+   * @param items the itemList class
+   */
   public void setItems(ItemList items) {
     this.items = items;
   }
 
+  /**
+   * reads the arrayList information in items into database
+   */
   public void readIntoDatabase() {
     clearDatabase();
     for (Item a : items.getList()) {
@@ -75,6 +85,12 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
+  /**
+   * returns the Item after searching by description
+   * 
+   * @param description the item description
+   * @return the item object
+   */
   public Item getItemByDescription(String description) {
     try {
       PreparedStatement searchByDescriptionStatement = connection.prepareStatement(GET_ITEM_BY_DESCRIPTION);
@@ -97,6 +113,11 @@ public class ItemDatabase implements Quantities, DBCredentials {
     return null;
   }
 
+  /**
+   * adds a new item into the database
+   * 
+   * @param item the item object that will be read into the database
+   */
   public void addItem(Item item) {
     try {
       PreparedStatement addItemStatement = connection.prepareStatement(ADD_ITEM);
@@ -113,6 +134,11 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
+  /**
+   * fill up the database with information from the text file
+   * 
+   * @param item individual item objects
+   */
   public void fillDatabase(Item item) {
     try {
       PreparedStatement addItemStatement = connection.prepareStatement(ADD_ITEM);
@@ -129,6 +155,9 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
+  /**
+   * empty the database
+   */
   public void clearDatabase() {
     String query = "DELETE FROM item";
     try {
@@ -140,6 +169,11 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
+  /**
+   * delete a particular item from the database
+   * 
+   * @param item the item object of interest
+   */
   public void deleteItem(Item item) {
     try {
       PreparedStatement deleteItemStatement = connection.prepareStatement(DELETE_ITEM);
@@ -152,6 +186,12 @@ public class ItemDatabase implements Quantities, DBCredentials {
     }
   }
 
+  /**
+   * find the particular item by item ID
+   * 
+   * @param inputId the ID of the item
+   * @return the item object
+   */
   public Item getItemById(int inputId) {
     try {
       PreparedStatement searchByIdStatement = connection.prepareStatement(GET_ITEM_BY_ID);
@@ -174,24 +214,39 @@ public class ItemDatabase implements Quantities, DBCredentials {
     return null;
   }
 
-  public void buyItem(Item itemToDecrease, int count) {
+  /**
+   * Buy Item from the toolshop
+   * 
+   * @param itemToDecrease the item you want to buy
+   * @param count          the amount you want to buy
+   * @return the final quantity of the object
+   */
+  public int buyItem(Item itemToDecrease, int count) {
     if (itemToDecrease.getQuantity() < count) {
       count = itemToDecrease.getQuantity();
     }
     try {
       PreparedStatement buy = connection.prepareStatement(BUY_ITEM);
-      int finalQuantity = itemToDecrease.getQuantity() - count;
+      int finalQuantity = buyHelper(itemToDecrease, count);
       buy.setInt(1, finalQuantity);
       buy.setInt(2, itemToDecrease.getId());
       buy.execute();
-      buyHelper(itemToDecrease, count);
       buy.close();
+      return finalQuantity;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return count;
   }
 
-  public void buyHelper(Item inputItem, int count) {
+  /**
+   * Checks the stock of the item after buying it as well as creates a order
+   * 
+   * @param inputItem the item you're trying to buy
+   * @param count     amount being bought
+   * @return the final quantity of the item
+   */
+  public int buyHelper(Item inputItem, int count) {
     // Check if decreasing more than the current stock
     Item item = null;
     for (Item i : items.getList()) {
@@ -215,6 +270,8 @@ public class ItemDatabase implements Quantities, DBCredentials {
         System.out.println("The new quantity is below 40. An order has been automatically made to restock.");
       }
     }
+
+    return item.getQuantity();
   }
 
   /**
@@ -245,7 +302,6 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
-      updateDatabase();
       return true;
     }
     return false;
@@ -266,7 +322,6 @@ public class ItemDatabase implements Quantities, DBCredentials {
       orders.add(newOrder);
       printOrdersToFile();
       newOrder.completeOrder();
-      updateDatabase();
       return true;
     }
     return false;
@@ -295,16 +350,35 @@ public class ItemDatabase implements Quantities, DBCredentials {
   public ItemList getItemList() {
     return items;
   }
-  
+
   /**
    * updates the database to reflect locally saved toolshop
    */
   public void updateDatabase() {
-	    clearDatabase();
-	    for (Item a : items.getList()) {
-	    	System.out.println(a);
-	        addItem(a);
-	    }
+    clearDatabase();
+    for (Item a : items.getList()) {
+      System.out.println(a);
+      addItem(a);
+    }
+  }
+
+  /**
+   * updates the database with the new quantity
+   * 
+   * @param itemToDecrease the item you bought of
+   * @param finalQuantity  the final quantity of the item
+   */
+  public void updateNewQuantity(Item itemToDecrease, int finalQuantity) {
+    try {
+      PreparedStatement updateStmt = connection.prepareStatement(BUY_ITEM);
+
+      updateStmt.setInt(1, finalQuantity);
+      updateStmt.setInt(2, itemToDecrease.getId());
+      System.out.println(updateStmt.toString());
+      updateStmt.execute();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   /**

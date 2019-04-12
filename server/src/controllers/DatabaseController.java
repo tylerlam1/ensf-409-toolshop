@@ -7,12 +7,37 @@ import models.*;
 
 import utils.*;
 
+/**
+ * Controls the Database (memory control for the program).
+ * 
+ * @author Navjot Brar, Jofred Cayabyab, Tyler Lam
+ * @since April 11, 2019
+ * @version 1.0
+ */
 public class DatabaseController implements DBCredentials {
+	/**
+	 * Connect to the SQL database
+	 */
 	private Connection connection;
+	/**
+	 * The database for the items
+	 */
 	private ItemDatabase itemDatabase;
+	/**
+	 * The database for the login information
+	 */
 	private LoginDatabase loginDatabase;
+	/**
+	 * The database for the supplier information
+	 */
 	private SupplierDatabase supplierDatabase;
 
+	/**
+	 * Constructor for the databases (login, supplier, and items)
+	 * 
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public DatabaseController() throws FileNotFoundException, IOException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,18 +52,36 @@ public class DatabaseController implements DBCredentials {
 		}
 	}
 
+	/**
+	 * Returns the item database
+	 * 
+	 * @return the item database
+	 */
 	public ItemDatabase getItemDatabase() {
 		return itemDatabase;
 	}
 
+	/**
+	 * Returns the login database
+	 * 
+	 * @return the login database
+	 */
 	public LoginDatabase getLoginDatabase() {
 		return loginDatabase;
 	}
 
+	/**
+	 * Returns the supplier database
+	 * 
+	 * @return the supplier database
+	 */
 	public SupplierDatabase getSupplierDatabase() {
 		return supplierDatabase;
 	}
 
+	/**
+	 * Closes the connection to SQL database
+	 */
 	public void close() {
 		try {
 			connection.close();

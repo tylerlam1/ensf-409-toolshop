@@ -120,8 +120,8 @@ public class Item implements Serializable {
   }
 
   public boolean equals(Item other) {
-    return id == other.getId() && quantity == other.getQuantity() && description.equals(other.getDescription())
-        && price == other.getPrice() && supplier.getId() == other.getSupplier().getId();
+    return id == other.getId() && description.equals(other.getDescription()) && price == other.getPrice()
+        && supplier.getId() == other.getSupplier().getId();
   }
 
   /**
