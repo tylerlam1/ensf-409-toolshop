@@ -448,6 +448,9 @@ public class MainView extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * Enables the buttons to be clickable
+   */
   public void enableButtons() {
     buyBtn.setEnabled(true);
     deleteItemBtn.setEnabled(true);
